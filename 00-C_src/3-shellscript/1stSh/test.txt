@@ -1,0 +1,9 @@
+total 28
+drwxr-xr-x 2 fly fly 4096 Dec  2 11:41 .
+drwxr-xr-x 3 fly fly 4096 Oct 18 09:17 ..
+-rwxr--r-- 1 fly fly  273 Dec  2 09:59 first
+-rwxr--r-- 1 fly fly 1123 Sep 22 14:49 first.sh
+-rwxrwxr-x 1 fly fly 1034 Dec  2 10:43 init_isp.sh
+-rwxr--r-- 1 fly fly  164 Sep 22 14:54 second.sh
+-rw-rw-r-- 1 fly fly    0 Dec  2 11:41 test.txt
+-rwxr--r-- 1 fly fly   87 Sep 22 19:37 three_suanshu.sh

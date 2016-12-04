@@ -1,0 +1,6 @@
+#example1
+
+B = $(A)
+A = later
+ALL:
+	@echo $(B)
