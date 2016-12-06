@@ -10,6 +10,7 @@ int BigOrLittle_endian(void)
 	unsigned int word = 0x12345678;
 
 	unsigned char byte0 = *((unsigned char *)&word);
+#if 0
 	unsigned char byte1 = *((unsigned char *)&word+1);
 	unsigned char byte2 = *((unsigned char *)&word+2);
 	unsigned char byte3 = *((unsigned char *)&word+3);
@@ -18,6 +19,7 @@ int BigOrLittle_endian(void)
 	printf("%hhx\n",byte1);
 	printf("%hhx\n",byte2);
 	printf("%hhx\n\n",byte3);
+#endif
 
 	if(byte0 == 0x12)
 	{

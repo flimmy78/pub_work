@@ -17,11 +17,27 @@ int munmap(void *addr, size_t length);
 #endif
 
 #define DEBUG_TEST
+#define NAMEMAXSIZE 10
 
 #ifdef DEBUG_TEST
 int main(int argc,char **argv)
 {
+	char func[][NAMEMAXSIZE] = {"calloc","free","getpagesize","malloc","mmap","munmap"};
 
+	enum FUNC{
+		CALLOC,
+		FREE,
+		GETPAGESIZE,
+		MALLOC,
+		MMAP,
+		MUNMAP
+	}func_name;
+
+	if(argv < 2)
+	{
+		printf("Usage : %s funcname\n",argv[0]);
+		exit(EXIT_FAILURE);
+	}
 
 	return 0;
 }
