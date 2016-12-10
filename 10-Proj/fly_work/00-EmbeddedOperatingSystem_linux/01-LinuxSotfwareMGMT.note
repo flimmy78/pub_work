@@ -1,0 +1,80 @@
+3.1.1常用软件包管理工具简介
+	交互方式分类
+		类别	常用工具举例	描述
+		命令行	dpkg-deb、dpkg、apt			在命令行模式下完成软件包管理任务，为完成软件包
+	的获取、查询、软件包依赖性检查、安装、卸载等任务，需要使用各自不同的命令；
+		文本窗口界面	dselect、aptitude、tasksel		在文本窗口模式中，使用窗口和菜单可以完成软件包的管理任务;
+		图形界面	synaptic		在X—Window图形桌面环境中运行，具有更好的交互性、可读性、易读性
+
+3.2.2 3个重要的配置文件
+	1.apt镜像的地址文件
+		/etc/apt/sources.list
+		典型的文件格式：
+		deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted
+		deb-src http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted
+	2.本地索引列表
+		/var/lib/apt/lists
+	3.本地文件下载缓存
+		/var/cache/apt/archives
+		通常apt的cron脚本将会限制这个目录占用的存储空间及文件的存放时间；
+3.2.3 apt-get工具集合
+	1.apt-get命令
+	命令格式：apt-get subcommands [ -d | -f | -m | -q | --purge | --reinstall | - b | - s | - y | - U | -h | -v ] pkg
+		子命令	
+			+-------------------------------------------------------------------------------------------------+
+			|子命令							描述
+			|update					下载更新软件包列表信息
+			|upgrade				
+			|install
+			|remove
+			|autoremove
+			|source
+			|build-dep
+			|dist-upgrade
+			|clean
+			|autoclean
+			|check
+			+-------------------------------------------------------------------------------------------------+
+		选项
+			+-------------------------------------------------------------------------------------------------+
+			|选项							描述
+			|-d						仅下载软件包，而不安装或解压
+			|-f						            
+			|-m						
+			|-q						
+			|-purge					      
+			|-reinstall				 
+			|-b						
+			|-s						
+			|-y						
+			|-u						
+			|-h						
+			|-v						
+			+-------------------------------------------------------------------------------------------------+
+	2.刷新软件源
+		配置文件：source.list,告知软件源镜像站点的地址，使用apt-get update命令刷新软件源，建立一个更新软件包列表。
+		为软件包建立索引文件，存放在本地/var/lib/apt/lists中
+	3.更新软件包
+		apt-get upgrade
+	4.安装软件包
+		apt-get install
+	5.重新安装软件包
+		apt-get --reinstall install
+	6.卸载软件包
+		(1)不完全卸载：删除一个软件包，将会连带删除与该软件包有依赖关系的软件包
+			apt-get remove
+		(2)完全卸载：在卸载软件包文件的同时，还删除该软件包所使用的配置文件.
+			apt-get --purge remove
+	7.修复软件包的依赖关系
+		由于某些故障，导致依赖关系破坏，软件既不能重装也不不能删除，需要修复。
+		修复软件包的依赖关系
+			apt-get -f install 
+		检查依赖关系
+			apt-get check
+	8.清理软件包缓冲区
+		清理整个软件包缓冲区，除了lock锁文件和partial目录
+			apt-get clean
+		缓冲区只保留最新版本的软件包，多余版本全部删掉
+			apt-get autoclean
+
+
