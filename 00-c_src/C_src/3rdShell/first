@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# first
+# This file looks through all the files in the current
+# directory  for the string POSIX, and prints the names of
+# those files to the standard output .
+
+POSIX=home
+
+for file in *
+do
+	if grep -q $POSIX $file
+	then
+		echo $file
+	fi
+done
+
+exit 0
