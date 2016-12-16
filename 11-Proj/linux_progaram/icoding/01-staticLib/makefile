@@ -11,7 +11,7 @@ program:obj
 ar:obj
 	ar crv libfoo.a bill.o fred.o
 	#为函数库生成一个内容表
-	ranlib libfoo.a
+	#ranlib libfoo.a
 
 program_WithFUNCLib:ar
 	gcc -c program.c
@@ -22,4 +22,4 @@ program_WithFUNCLib_:ar
 	gcc -o program_WithFUNCLib_ program.o -L. -lfoo
 
 clean:
-	$(RM) a.out *.o program program_WithFUNCLib program_WithFUNCLib_
+	$(RM) a.out *.o program program_WithFUNCLib program_WithFUNCLib_ *.a
