@@ -1,6 +1,0 @@
-#example0
-
-B := $(A)
-A = later
-ALL:
-	@echo $(B)

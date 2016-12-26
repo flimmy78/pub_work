@@ -1,0 +1,16 @@
+auto	else	long	switch
+break	enum	register	typedef
+case	extern	return		union
+char	float	short		unsigned
+const	for		signed		void
+continue	goto	sizeof	volatile
+default		if		static	while
+do		int		struct		_Packed
+double
+
+gcc工具：gcc、g++、ar、ranlib、dlltool
+
+:7:8: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+  c = (a,c = b,a += b);
+          ^
+

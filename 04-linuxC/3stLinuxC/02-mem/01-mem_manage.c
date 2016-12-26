@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #if (0)
 #include <stdlib.h>
@@ -17,12 +18,22 @@ int munmap(void *addr, size_t length);
 #endif
 
 #define DEBUG_TEST
-#define NAMEMAXSIZE 10
+#define MAX_NAME_TYPE 6
+#define NAME_MAX_SIZE 16
+
+void printf_arr_str(int )
 
 #ifdef DEBUG_TEST
 int main(int argc,char **argv)
 {
-	char func[][NAMEMAXSIZE] = {"calloc","free","getpagesize","malloc","mmap","munmap"};
+	char func[MAX_NAME_TYPE][NAME_MAX_SIZE] = {
+		"calloc",
+		"free",
+		"getpagesize",
+		"malloc",
+		"mmap",
+		"munmap"
+	};
 
 	enum FUNC{
 		CALLOC,
@@ -33,7 +44,7 @@ int main(int argc,char **argv)
 		MUNMAP
 	}func_name;
 
-	if(argv < 2)
+	if(argc < 2)
 	{
 		printf("Usage : %s funcname\n",argv[0]);
 		exit(EXIT_FAILURE);
