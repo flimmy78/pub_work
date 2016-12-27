@@ -22,7 +22,7 @@ static int  test(void)
 	char ERR_STR[] = "A write error has occurred on file descriptor 1 \n";
 	int ret1 = -1,ret2 = -1;
 
-	if((ret1 = write(1,"Her is some data\n",18)) != 19)
+	if((ret1 = write(1,"Her is some data\n",18)) != 18)
 		ret2 = write(2,ERR_STR,sizeof(ERR_STR));
 	printf("ret1 = %d\tret2 = %d\n",ret1,ret2);
 

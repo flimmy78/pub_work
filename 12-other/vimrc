@@ -55,6 +55,7 @@ endif
 
 
 "=====================================================================================
+set t_Co=256    "添加256颜色支持
 set mouse=a	"使用鼠标,可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set selection=exclusive
 set selectmode=mouse,key
@@ -63,11 +64,12 @@ set laststatus=2	"显示状态行
 set cmdheight=1		"命令行（在状态行下）的高度
 
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-"状态行显示的内容
-set statusline=%F%m%r%h%w\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "状态行显示的内容
+set statusline=%F%m%r%h%w\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "显示状态行的内容
 
 set cindent		"C代码自动缩进
+set autoindent  "自动缩进
 
+filetype on             "检测文件类型
 filetype indent on		"自适应不同语言的职能缩进
 set expandtab			"将制表符扩展为空格
 set tabstop=4			"设置编辑时制表符占用空格数
