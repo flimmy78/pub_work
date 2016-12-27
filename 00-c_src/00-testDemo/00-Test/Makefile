@@ -12,7 +12,7 @@ CFLAGS= -g -Wall -O0
 #-O3： 表示编译时使用最高级优化。
 #-Os：相当于-O2.5优化，但又不所见代码尺寸
 
-AllObj	:=hello bool ForceChange strlen sizeof strncpy t0 bitLen float define static BitCalculate t1 t2 t3 continue break switch goto _fun1 _fun2 _fun3 _fun4 _GlobalVariables0 _GlobalVariables1 _GlobalVariables2 _funPoint _pointFun _define0 _define1 _define2 _define3 _define4 _funPointArr itoa void0 void1 _ArrInit0 _ArrInit1 _ArrInit2 _ArrUse0 _define5 _define6 t4 sizeofDataType getmac
+AllObj	:=hello bool ForceChange strlen sizeof strncpy t0 bitLen float define static BitCalculate t1 t2 t3 continue break switch goto _fun1 _fun2 _fun3 _fun4 _GlobalVariables0 _GlobalVariables1 _GlobalVariables2 _funPoint _pointFun _define0 _define1 _define2 _define3 _define4 _funPointArr itoa void0 void1 _ArrInit0 _ArrInit1 _ArrInit2 _ArrUse0 _define5 _define6 t4 sizeofDataType getmac pragma
 
 #1
 hello:hello.c
@@ -197,6 +197,9 @@ sizeofDataType:sizeofDataType.c
 #46
 getmac:getmac.c
 
+#47
+pragma:pragma.c
+
 
 ALL:$(AllObj)
 
@@ -221,5 +224,5 @@ clean:
 DATE = $(shell date)
 backup:
 	cp Makefile Makefile.bak
-	@echo "Backup Makefile success $(DATE)"
+	@echo "Backup Makefile succeed $(DATE)"
 	
