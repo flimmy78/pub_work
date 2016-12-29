@@ -2,7 +2,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#if (0)
+#define W_SIZE 40
+
+#if (1)
 #include <unistd.h>
 
 ssize_t write(int fd, const void *buf, size_t count);
@@ -14,7 +16,7 @@ int main(void)
     int ret1 = -1, ret2 = -1;
 
     if((ret1 = write(1,"Here has some data\n",19)) != 18)
-        ret2 = write(2,"A write err has occurred \n ",50);
+        ret2 = write(2,"A write err has occurred \n ",W_SIZE);
 
     printf("ret1 = %d\tret2 = %d\n",ret1,ret2);
 

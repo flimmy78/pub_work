@@ -1,0 +1,14 @@
+  These are sample CGI scripts and webpages for tinyhttpd.  They can
+be redistributed under the terms of the GPL.
+
+  The most impressive demonstration I gave of tinyhttpd to my
+professor and my classmates was to load color.cgi with a value of
+"chartreuse." :)  It's actually a very simple script, guys.
+
+jdb
+
+====================================================================
+在 htdocs 文件下，有 cgi 的程序和 html 代码，cgi 是用 perl 写的，但文
+件中声明的 perl 执行程序位置在我这是错的，我这里 perl 脚本位于 /usr/bin 
+中（用 which perl 可以查看），所以把  cgi 文件中的第一行改为：
+#!/usr/bin/perl -Tw

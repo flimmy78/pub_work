@@ -27,12 +27,12 @@ struct termios {
 #include <termios.h>
 #include <unistd.h>
 
-int tcgetattr(int fd, struct termios *termios_p);
-
+int tcgetattr(int fd, struct termios *termios_p);   //获取串口参数
+    
 int tcsetattr(int fd, int optional_actions,
-        const struct termios *termios_p);
+        const struct termios *termios_p);           //设置串口参数
 
-int tcsendbreak(int fd, int duration);
+int tcsendbreak(int fd, int duration);              //
 
 int tcdrain(int fd);
 
