@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     
         if(isatty(com_fd))
         {
-            printf("is a tty .\n");
+            printf("is a tty , com_fd = %d .\n",com_fd);
             //printf("ttyname %s .\n",ttyname(com_fd));
         }
         else
@@ -71,7 +71,8 @@ int main(int argc, char **argv)
         get_com_attr(com_fd);
     }
 
-    if((write(com_fd, "\n\t\tWrite some data to com\n\n", 27)) != 27)
+    char Wchar[] = "------------------------------Write some data to com-------------------------------------";
+    if((write(com_fd, Wchar, sizeof(Wchar))) < 0)
     {
         perror("write");
         return -1;
