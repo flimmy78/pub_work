@@ -1,0 +1,4 @@
+
+
+clean:
+	$(RM) a.out

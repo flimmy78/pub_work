@@ -33,6 +33,17 @@ int BigOrLittle_endian(void)
 	}
 }
 
+int BigOrLittle_endian_(void)
+{
+    union ENDIAN
+    {
+        int word = 0x12345678;
+        char byte ;
+    }ENDIAN_;
+
+    byte = 
+}
+
 #ifdef DEBUG
 int main(void)
 {
