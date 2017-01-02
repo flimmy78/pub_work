@@ -35,13 +35,18 @@ int BigOrLittle_endian(void)
 
 int BigOrLittle_endian_(void)
 {
-    union ENDIAN
+    union UN
     {
-        int word = 0x12345678;
-        char byte ;
-    }ENDIAN_;
+        unsigned int word;
+        unsigned char byte ;
+    };
 
-    byte = 
+    union UN A;
+    A.word = 0x12345678;
+    if(A.byte == 0x78)
+        return LITTLE_ENDIAN;
+    else
+        return BIG_ENDIAN;
 }
 
 #ifdef DEBUG
