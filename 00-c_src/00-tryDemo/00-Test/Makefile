@@ -12,7 +12,10 @@ CFLAGS= -g -Wall -O0
 #-O3： 表示编译时使用最高级优化。
 #-Os：相当于-O2.5优化，但又不所见代码尺寸
 
-AllObj	:=hello bool ForceChange strlen sizeof strncpy t0 bitLen float define static BitCalculate t1 t2 t3 continue break switch goto _fun1 _fun2 _fun3 _fun4 _GlobalVariables0 _GlobalVariables1 _GlobalVariables2 _funPoint _pointFun _define0 _define1 _define2 _define3 _define4 _funPointArr itoa void0 void1 _ArrInit0 _ArrInit1 _ArrInit2 _ArrUse0 _define5 _define6 t4 sizeofDataType getmac pragma
+AllObj	:=hello bool ForceChange strlen sizeof strncpy t0 bitLen float define static BitCalculate t1 t2 t3 continue break switch goto _fun1 _fun2 _fun3 _fun4 _GlobalVariables0 _GlobalVariables1 _GlobalVariables2 _funPoint _pointFun _define0 _define1 _define2 _define3 _define4 _funPointArr itoa void0 void1 _ArrInit0 _ArrInit1 _ArrInit2 _ArrUse0 _define5 _define6 t4 sizeofDataType getmac pragma 
+APP_TEST	:=endian fahr IntArg
+
+ALL:$(AllObj) $(APP_TEST)
 
 #1
 hello:hello.c
@@ -200,8 +203,18 @@ getmac:getmac.c
 #47
 pragma:pragma.c
 
+#48--------(2017/01/03--22:00)
+endian:
+	$(CC) -o endian 01-endian.c $(CFLAGS)
 
-ALL:$(AllObj)
+#49--------
+fahr:
+	$(CC) -o fahr 02-fahr.c $(CFLAGS)
+
+#50
+IntArg:
+	$(CC) -o IntArg 03-IntArg.c $(CFLAGS)
+
 
 LIB:
 	make -C ./library/dynamicLib main
@@ -216,7 +229,7 @@ list:
 
 # 删除所有新生成的文件，并进入特定目录下执行MakeFile的clean目标
 clean:
-	$(RM) a.out  $(AllObj) t4.map *.o 
+	$(RM) a.out  $(AllObj) t4.map *.o $(APP_TEST)
 	make -C ./library/dynamicLib clean
 	make -C ./library/staticLib clean
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-main()
+int  main()
 {
 	double y;
 	int x, m;
@@ -20,4 +20,6 @@ main()
 			printf(" ");			
 		printf("*\n");				/* 圆的右侧 */
 	}
+
+    return 0;
 }

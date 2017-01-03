@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	int i, j, k;
+	int i, j;
 
 	puts("九九乘法表：");
 	for(i = 1; i <= 9; i++)		/* 行循环 */	

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-main()
+int main()
 {
 	double y;
 	int x, m, n, yy;
@@ -25,4 +25,6 @@ main()
 		}
 		printf("\n");
 	}
+
+    return 0;
 }
