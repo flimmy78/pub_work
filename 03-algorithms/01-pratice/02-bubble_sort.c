@@ -13,10 +13,10 @@ void printf_arr(int a[], int n);
 int main(void)
 {
 	int a[N] = {99, 55, 12, 45, 23, 11, 77, 88};
-	int i;
 
 	puts("排序前");
 #if (0)
+    int i;
 	for(i = 0; i < N; i++)
 	{
 		printf("%d  ",a[i]);
@@ -42,7 +42,7 @@ int main(void)
 /* 冒泡排序法 */
 void bubble_sort(int a[], int n)
 {
-	int i, j;
+	static int i, j;
 
 	for(i = 0; i< n-1; i++)	//进行n-1轮比较
 	{
