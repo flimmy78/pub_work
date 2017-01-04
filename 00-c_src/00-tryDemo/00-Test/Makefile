@@ -13,7 +13,7 @@ CFLAGS= -g -Wall -O0
 #-Os：相当于-O2.5优化，但又不所见代码尺寸
 
 AllObj	:=hello bool ForceChange strlen sizeof strncpy t0 bitLen float define static BitCalculate t1 t2 t3 continue break switch goto _fun1 _fun2 _fun3 _fun4 _GlobalVariables0 _GlobalVariables1 _GlobalVariables2 _funPoint _pointFun _define0 _define1 _define2 _define3 _define4 _funPointArr itoa void0 void1 _ArrInit0 _ArrInit1 _ArrInit2 _ArrUse0 _define5 _define6 t4 sizeofDataType getmac pragma 
-APP_TEST	:=endian fahr IntArg
+APP_TEST	:=endian fahr IntArg byteTbin
 
 ALL:$(AllObj) $(APP_TEST)
 
@@ -214,6 +214,10 @@ fahr:
 #50
 IntArg:
 	$(CC) -o IntArg 03-IntArg.c $(CFLAGS)
+
+#51
+byteTbin:
+	$(CC) -o byteTbin 04-byteTbin.c $(CFLAGS)
 
 
 LIB:
