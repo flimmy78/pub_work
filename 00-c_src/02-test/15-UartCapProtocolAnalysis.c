@@ -12,33 +12,40 @@ int main(void)
     return 0;
 }
 
-int UartCapProtocolAnalysis(char *data, int datalen)
+void* UartCap_ServicePthread(void *arg)
 {
-    char* addroffset = NULL;
-    int datanum = 0;
-    char checksum = 0,checksum_tmp = 0;
-    char datatype = 0;
+    int real_read_size = 0;
+    int real_write_size = 0;
 
-    DATA_STR datastr;
+    real_read_size = gk_read_com_port(uart_fd, UartBuffer+UartBufferIndex,UART_BUFFER_MAX_SIZE);
+    if(real_read_size < 0)
+    {
+        Printf("Read Uart Port Fail\n");
+        continue;
+    }
 
     int i = 0;
-
-    if(data == NULL)
+    for(i = 0; i<real_read_size; i++)
     {
-        return (-1);
+        printf("%c",UartBuffer[UartBufferIndex + i]);
     }
+    printf("\n");
+    UartBUfferIndex += real_read_size;
 
-    addroffset = strstr(data,UART_CAP_PROTOCOL_HEAD);
-    if(addroffset == NULL)
+    if(UartBufferIndex >= UART_BUFFER_MAX_SIZE)
     {
-        printf("Don`t fine head from uart data");
-        return UART_CAP_DATA_BUF_NULL;
+        Printf("UartBuffer OverLow\n");
+        UartBufferIndex = 0;
+        continue;
     }
-
-    addroffset += strlen(UART_CAP_PROTOCOL_HEAD);
-    datanum = addroffset[0];
-    if(strlen(UART_CAP_PROTOCOL_HEAD) + 1 + datanum +1 > datalen)
+    
+    if(UartBuffer[UartBufferIndex - 1] == UART_CAP_PROTOCOL_TAIL)
     {
-        printf("data num error\n");  
+        ret = UartCapProtocolAnalysis(UartBuffer, UartBufferIndex);
+        switch(ret)
+        {
+            case UART_CAP_SEND_PHOTO_REQ:
+
+        }
     }
 }
