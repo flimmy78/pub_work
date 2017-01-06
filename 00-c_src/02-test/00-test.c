@@ -30,6 +30,9 @@ int main(void)
 
     printf("SIZE : %d , SIZE_ : %d , SIZE__ : %d , SIZE___ : %d\n",SIZE,SIZE_,SIZE__,SIZE___);
     printf("BUFSIZ : %d\n",BUFSIZ);
+    
+    int val = 0;
+    printf("\n\tvalsize = %d\n\n",sizeof val);
 
     return 0;
 }
