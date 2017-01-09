@@ -14,9 +14,9 @@ int main(void)
     int *hoge_p;
 
     /* 输出每个变量的地址 */
-    printf("&hoge....%p\n",&hoge);
-    printf("&piyo....%p\n",&piyo);
-    printf("&hoge_p....%p\n",&hoge_p);
+    printf("&hoge......%p...%ld\n",&hoge,(long)&hoge);
+    printf("&piyo......%p...%ld\n",&piyo,(long)&piyo);
+    printf("&hoge_p....%p...%ld\n",&hoge_p,(long)&hoge_p);
 
     /* 将hoge的地址赋予给指针hoge_p */
     hoge_p = &hoge;

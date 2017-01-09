@@ -1,7 +1,7 @@
 
 CFLAGS= -g -Wall
 
-APP:=test_0 test cos_01 cos circle score submultiple lastdigits MulTable
+APP:=test_0 test cos_01 cos circle score submultiple lastdigits MulTable ZeroTotal
 
 ALL:$(APP)
 
@@ -40,6 +40,10 @@ lastdigits:
 #09
 MulTable:
 	$(CC) $(CFLAGS) 06-MulTable.c -o MulTable
+
+#10
+ZeroTotal:
+	$(CC) $(CFLAGS) 07-ZeroTotal.c -o ZeroTotal
 
 clean:
 	$(RM) a.out $(APP)
