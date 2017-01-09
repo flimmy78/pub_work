@@ -1,8 +1,13 @@
+/*-------------------------------------------------------------------------
+ *1.2017/01/09 测试：去掉写线程
+ */
+
 //#include "app_misc.h"
+#define DEBUG_TEST
 
 #include "app_uartcap.h"
 
-
+int g_main_run = 1;
 
 char	UartBuffer[UART_BUFFER_MAX_SIZE];
 int UartBufferIndex = 0;
@@ -24,16 +29,17 @@ int GK_SetPthreadStackSize(pthread_attr_t *attr, int stacksize)
 {
     int pret = -1;
 
-    if((pthread_attr_init(attr)) != 0)
+    if((pret = pthread_attr_init(attr)) != 0)
         return (-1);
-    if((pthread_attr_setstacksize(attr, stacksize)) != 0)
+    if((pret = pthread_attr_setstacksize(attr, stacksize)) != 0)
         return (-1);
     return 0;
 }
 
+#if 0
 int UartCapProtocolAnalysis(char* data,int datalen)
 {
-    char*addroffset = NULL;
+    char* addroffset = NULL;
     int datanum = 0;
     char checksum = 0,checksum_tmp = 0;
     char datatype = 0;
@@ -157,18 +163,19 @@ int UartCapProtocolCheckSumCalc(void* data)
 
     return 0;
 }
+#endif
 
-#define	debug
+//#define	debug
 void* UartCap_ServicePthread(void* arg)
 {
-    int ret = 0;
-    char datastr[32];
+    //int ret = 0;
+    //char datastr[32];
 
-    g_main_run=1;
+    //g_main_run=1;
     while(g_main_run)
     {
         int real_read_size = 0;
-        int real_write_size = 0;
+        //int real_write_size = 0;
 
         /*从串口读取数据*/
         real_read_size = gk_read_com_port(uart_fd,UartBuffer+UartBufferIndex,UART_BUFFER_MAX_SIZE);
@@ -184,7 +191,7 @@ void* UartCap_ServicePthread(void* arg)
         }
         printf("\n");
         UartBufferIndex += real_read_size;
-#ifdef debug
+#ifdef debug		
         if(UartBufferIndex >3)
         {
             if(strcmp(UartBuffer + UartBufferIndex -4,"hello") == 0)
@@ -201,7 +208,7 @@ void* UartCap_ServicePthread(void* arg)
                     continue;
                 }
                 UartDataBufindex = UartCapProtocolDataReady(UartDataBuf,UART_DATA_BUFFER_MAX_SIZE,
-                                   &UartCapBuffer);
+                        &UartCapBuffer);
                 if(UartDataBufindex < 0)
                 {
                     Printf("Ready uart write data fail \n");
@@ -226,84 +233,85 @@ void* UartCap_ServicePthread(void* arg)
             continue;
         }
 
+#ifndef DEBUG_TEST
         if(UartBuffer[UartBufferIndex -1] == UART_CAP_PROTOCOL_TAIL)
         {
             ret = UartCapProtocolAnalysis(UartBuffer,UartBufferIndex);
             switch(ret)
             {
-            case UART_CAP_SEND_PHOTO_REQ:
-            {
-                UartCapBuffer.databytes = 8;
-                UartCapBuffer.datatype = 'H';
-                snprintf(datastr,32,"%d%c",30720,'\0');
-                UartCapBuffer.datastring.datastr = datastr;
-                UartCapBuffer.datastring.datastrlen = strlen(datastr);
-                if(UartCapProtocolCheckSumCalc(&UartCapBuffer) < 0)
-                {
-                    Printf("Uart cap check sum fail \n");
-                    UartBufferIndex = 0;
-                    continue;
-                }
-                UartDataBufindex = UartCapProtocolDataReady(UartDataBuf,UART_DATA_BUFFER_MAX_SIZE,
-                                   &UartCapBuffer);
-                if(UartDataBufindex < 0)
-                {
-                    Printf("Ready uart write data fail \n");
-                    UartBufferIndex = 0;
-                    continue;
-                }
-                UartWriteBufPointer.rewritetimes = 0;
-                while(UartWriteBufPointer.rewriteover == 0)
-                {
-                    usleep(100*1000);
-                }
-                UartWriteBufPointer.wrbuf = UartDataBuf;
-                UartWriteBufPointer.wrbufsize = &UartDataBufindex;
-                UartWriteBufPointer.rewritetimes = 3;
-                break;
-            }
-            case UART_CAP_READY_TO_RECV:
-            {
-                UartWriteBufPointer.rewritetimes = 0;
-                while(UartWriteBufPointer.rewriteover == 0)
-                {
-                    usleep(100*1000);
-                }
-                int photo_fd = open("/debug.jpg",O_RDONLY);
-                if(photo_fd < 0)
-                {
-                    Printf("open photo fail \n");
-                    memset(UartWriteBuffer,'a',UART_WR_BUFFER_MAX_SIZE);
-                }
-                else
-                {
-                    UartWriteBufindex = read(photo_fd,UartWriteBuffer,UART_WR_BUFFER_MAX_SIZE);
-                    if(UartWriteBufindex < 0)
+                case UART_CAP_SEND_PHOTO_REQ:
                     {
-                        Printf("read photo fail \n");
-                        memset(UartWriteBuffer,'a',UART_WR_BUFFER_MAX_SIZE);
+                        UartCapBuffer.databytes = 8;
+                        UartCapBuffer.datatype = 'H';
+                        snprintf(datastr,32,"%d%c",30720,'\0');
+                        UartCapBuffer.datastring.datastr = datastr;
+                        UartCapBuffer.datastring.datastrlen = strlen(datastr);
+                        if(UartCapProtocolCheckSumCalc(&UartCapBuffer) < 0)
+                        {
+                            Printf("Uart cap check sum fail \n");
+                            UartBufferIndex = 0;
+                            continue;
+                        }
+                        UartDataBufindex = UartCapProtocolDataReady(UartDataBuf,UART_DATA_BUFFER_MAX_SIZE,
+                                &UartCapBuffer);
+                        if(UartDataBufindex < 0)
+                        {
+                            Printf("Ready uart write data fail \n");
+                            UartBufferIndex = 0;
+                            continue;
+                        }
+                        UartWriteBufPointer.rewritetimes = 0;
+                        while(UartWriteBufPointer.rewriteover == 0)
+                        {
+                            usleep(100*1000);
+                        }
+                        UartWriteBufPointer.wrbuf = UartDataBuf;
+                        UartWriteBufPointer.wrbufsize = &UartDataBufindex;
+                        UartWriteBufPointer.rewritetimes = 3;
+                        break;
                     }
-                }
+                case UART_CAP_READY_TO_RECV:
+                    {
+                        UartWriteBufPointer.rewritetimes = 0;
+                        while(UartWriteBufPointer.rewriteover == 0)
+                        {
+                            usleep(100*1000);
+                        }
+                        int photo_fd = open("/debug.jpg",O_RDONLY);
+                        if(photo_fd < 0)
+                        {
+                            Printf("open photo fail \n");
+                            memset(UartWriteBuffer,'a',UART_WR_BUFFER_MAX_SIZE);
+                        }
+                        else
+                        {
+                            UartWriteBufindex = read(photo_fd,UartWriteBuffer,UART_WR_BUFFER_MAX_SIZE);
+                            if(UartWriteBufindex < 0)
+                            {
+                                Printf("read photo fail \n");
+                                memset(UartWriteBuffer,'a',UART_WR_BUFFER_MAX_SIZE);
+                            }
+                        }
 
-                UartWriteBufPointer.wrbuf = UartWriteBuffer;
-                UartWriteBufPointer.wrbufsize = &UartWriteBufindex;
-                UartWriteBufPointer.rewritetimes = 3;
-                break;
-            }
-            case UART_CAP_NOT_READY_TO_RECV:
-            {
-                UartWriteBufPointer.rewritetimes = 0;
-                while(UartWriteBufPointer.rewriteover == 0)
-                {
-                    usleep(100*1000);
-                }
-                UartWriteBufPointer.wrbuf = UartDataBuf;
-                UartWriteBufPointer.wrbufsize = &UartDataBufindex;
-                UartWriteBufPointer.rewritetimes = 3;
-                break;
-            }
-            default:
-                break;
+                        UartWriteBufPointer.wrbuf = UartWriteBuffer;
+                        UartWriteBufPointer.wrbufsize = &UartWriteBufindex;
+                        UartWriteBufPointer.rewritetimes = 3;
+                        break;
+                    }
+                case UART_CAP_NOT_READY_TO_RECV:
+                    {
+                        UartWriteBufPointer.rewritetimes = 0;
+                        while(UartWriteBufPointer.rewriteover == 0)
+                        {
+                            usleep(100*1000);
+                        }
+                        UartWriteBufPointer.wrbuf = UartDataBuf;
+                        UartWriteBufPointer.wrbufsize = &UartDataBufindex;
+                        UartWriteBufPointer.rewritetimes = 3;
+                        break;
+                    }
+                default:
+                    break;
             }
             UartBufferIndex = 0;
         }
@@ -311,12 +319,14 @@ void* UartCap_ServicePthread(void* arg)
         {
             continue;
         }
+#endif
 
     }
 
     gk_close_com_port(uart_fd);
 }
 
+#ifndef DEBUG_TEST
 void* UartCap_writePthread(void* arg)
 {
     int real_write_size = 0;
@@ -336,19 +346,19 @@ void* UartCap_writePthread(void* arg)
             {
                 UartCapBuffer.datastring.datastrlen = strlen(UART_CAP_PROTOCOL_UP);
                 memcpy(UartCapBuffer.datastring.datastr,UART_CAP_PROTOCOL_UP,
-                       UartCapBuffer.datastring.datastrlen);
+                        UartCapBuffer.datastring.datastrlen);
             }
             else
             {
                 UartCapBuffer.datastring.datastrlen = strlen(UART_CAP_PROTOCOL_DOWN);
                 memcpy(UartCapBuffer.datastring.datastr,UART_CAP_PROTOCOL_DOWN,
-                       UartCapBuffer.datastring.datastrlen);
+                        UartCapBuffer.datastring.datastrlen);
             }
 
             UartCapBuffer.databytes = 1 + UartCapBuffer.datastring.datastrlen + 1;
             UartCapProtocolCheckSumCalc(&UartCapBuffer);
             UartDataBufindex = UartCapProtocolDataReady(UartDataBuf,UART_WR_BUFFER_MAX_SIZE,
-                               &UartCapBuffer);
+                    &UartCapBuffer);
             if(UartWriteBufindex < 0)
             {
                 Printf("get ready data to write fail \n");
@@ -387,16 +397,18 @@ void* UartCap_writePthread(void* arg)
         sleep(1);
     }
 }
+#endif
 
 int uartcap_startservice(void)
 {
-    pthread_t pid,pidwr;
+    //pthread_t pid,pidwr;
+	pthread_t pid;
     pthread_attr_t attr;
     int ret;
     UART_CONFIG uart_cfg =
     {
         .UartID = UART_2,
-        .BaundRate = 115200,
+        .BaudRate = 115200,
         .DataBite = 8,
         .Parity = 'N',
         .StopBite = 1
@@ -423,7 +435,7 @@ int uartcap_startservice(void)
         Printf("UartCap_ServicePthread err!\n");
         return -1;
     }
-#if 1
+#if 0
     ret = pthread_create(&pidwr, &attr, UartCap_writePthread, NULL);
     if (ret < 0)
     {

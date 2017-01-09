@@ -27,6 +27,12 @@
 #define	NOT_READY_TO_RECIEVE	0
 #define	READY_TO_RECIEVE		1
 
+#define Printf(string...)   \
+    do{\
+        printf("%s (%d) [%s]",__FILE__, __LINE__, __func__);\
+        printf(string);\
+    }while(0)
+
 #pragma pack(push)
 #pragma pack(1)
 
