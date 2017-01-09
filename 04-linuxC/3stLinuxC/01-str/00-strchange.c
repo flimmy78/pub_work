@@ -40,6 +40,7 @@ int main(int argc,char *argv[])
 {
 	char func[][NAMELENGTH] = {"atof","atoi","atol","gcvt",\
 		"strtod","strtol","strtoul","toascii","tolower","toupper"};	/*定义功能名称*/
+    printf("funcsize = %d\n",sizeof func);
 
 	enum FUNC{
 		ATOF,
