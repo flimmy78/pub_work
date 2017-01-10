@@ -1,8 +1,9 @@
 #include "app_uart.h"
+#include "open_sd_file.h"
 
 int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_bits)
 {
-    printf("The fd is %d The baud_rate is %d data_bits is %d, parity is %c, stop_bits is %d\n",\
+    printf("The fd is %d, baud_rate is %d, data_bits is %d, parity is %c, stop_bits is %d\n",\
            fd, baud_rate, data_bits, parity, stop_bits);
     struct termios new_cfg, old_cfg;
     int speed;
@@ -16,6 +17,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     cfmakeraw(&new_cfg);
     new_cfg.c_cflag &= ~CSIZE;
 
+    /* 1.设置波特率 */
     switch(baud_rate)
     {
     case 2400:
@@ -63,11 +65,13 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     cfsetospeed(&new_cfg, speed);
     printf("speed = %d\n", speed);
 
+    /* 2.设置数据位 */
     switch(data_bits)
     {
     case 7:
     {
         new_cfg.c_cflag |= CS7;
+        printf("data_bits 8\n");
     }
     break;
     case  8:
@@ -82,14 +86,15 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
         break;
     }
 
+    /* 3. 设置奇偶校验位 */
     switch(parity)
     {
     case 'n':
     case 'N':
     {
-        printf("parity: No\n");
         new_cfg.c_cflag &= ~PARENB;
         new_cfg.c_iflag &= ~INPCK;
+        printf("parity: No\n");
     }
     break;
     case 'o':
@@ -97,6 +102,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     {
         new_cfg.c_cflag |= (PARODD | PARENB);
         new_cfg.c_iflag |= INPCK;
+        printf("parity: Odd\n");
     }
     break;
 
@@ -106,6 +112,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
         new_cfg.c_cflag |= PARENB;
         new_cfg.c_cflag &= ~PARODD;
         new_cfg.c_iflag |= INPCK;
+        printf("parity: Even\n");
     }
     break;
     case 's':
@@ -113,6 +120,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     {
         new_cfg.c_cflag &= ~PARENB;
         new_cfg.c_cflag &= ~CSTOPB;
+        printf("parity: Space\n");
     }
     break;
     default:
@@ -120,17 +128,20 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
         new_cfg.c_iflag &= ~INPCK;
         break;
     }
+
+    /* 4.设置停止位 */
     switch(stop_bits)
     {
     case 1:
     {
-        printf("stop_bits 1\n");
         new_cfg.c_cflag &= ~CSTOPB;
+        printf("stop_bits 1\n");
     }
     break;
     case 2:
     {
         new_cfg.c_cflag |= CSTOPB;
+        printf("stop_bits 2\n");
     }
     default:
         new_cfg.c_cflag &= ~CSTOPB;
@@ -221,7 +232,7 @@ signed int gk_read_com_port(signed int fd,char *read_buf,int read_size)
 
     rd_fds = fds;
     //wr_fds = fds;
-    tv.tv_sec = 10;
+    tv.tv_sec = Wtime;
     tv.tv_usec = 0;
     ret = select(fd+1,&rd_fds,NULL,NULL,&tv);
 
@@ -261,7 +272,7 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size)
 
     //rd_fds = fds;
     wr_fds = fds;
-    tv.tv_sec = 10;
+    tv.tv_sec = Wtime;
     tv.tv_usec = 0;
     ret = select(fd+1,NULL,&wr_fds,NULL,&tv);
 
@@ -289,3 +300,88 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size)
     }
 
 }
+
+
+
+#ifdef DEBUG_TEST
+int main(int argc, char* argv[])
+{
+    /* 1.打开配置串口，返回设备文件描述符 */
+    int uart_fd;
+    UART_CONFIG uart_cfg = {
+        .UartID = UART_2,
+        .BaudRate = 115200,
+        .DataBite = 8,
+        .Parity = 'N',
+        .StopBite = 1
+    };  //初始化参数
+
+    uart_fd = gk_open_com_port(uart_cfg);   //打开配置设备
+    if(uart_fd < 0)
+    {
+        printf("gk_open_com_port err\n");
+        return(-1);
+    }
+    else
+    {
+        printf("gk_open_com_port OK\n");
+    }
+
+    /* 2.新建文件，返回文件描述符  */
+    int sd_fd;
+    sd_fd = open_sd_file(SD_DATA_FILE);
+
+    /* 3.向串口写数据 */
+    int ret = gk_write_com_port(uart_fd,"<1234567890ABCD~!@#$%^&*()_+WXYZ>\n", 34);
+    if(ret != 34)
+    {
+        printf("Write err\n");
+    }
+    else
+    {
+        printf("write data ok\n");
+    }
+
+    /* 4.从串口中读数据，并存储*/
+    int count = 0;
+    while(1)
+    {
+        char RBUF[BUFSIZ];
+
+        memset(RBUF,0,BUFSIZ);
+        int real_read_size = 0;
+        real_read_size = gk_read_com_port(uart_fd, RBUF,BUFSIZ);
+        if(real_read_size < 0)
+        {
+            printf("%s (%d) [%s] read uart port err\n",__FILE__,__LINE__,__func__);
+        }
+        else if(real_read_size != 0)
+        {
+            count++;
+            printf("----------Receive data %d\n",count);
+        }
+#if (0)
+        int i = 0;
+        for(i = 0; i < real_read_size; i++)
+        {
+            printf("%c",RBUF[i]);
+        }
+#endif
+        ret = write(sd_fd,RBUF,real_read_size);
+        if(ret != real_read_size)
+        {
+            perror("write RBUF to stdout err");
+        }
+
+        fsync(sd_fd);
+        fflush(NULL);
+        //printf("\n");
+    }
+
+    gk_close_com_port(uart_fd); //关闭设备
+    close(sd_fd);
+    
+    
+    return 0;
+}
+#endif
