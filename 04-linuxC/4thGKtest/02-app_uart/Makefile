@@ -1,6 +1,8 @@
 
 CC=arm-goke-linux-gnueabi-gcc
 
+CFLAGS= -g -Wall
+
 
 app_uart:
 	$(CC) $(CFLAGS) -c app_uart.c -o app_uart.o

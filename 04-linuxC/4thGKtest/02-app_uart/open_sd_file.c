@@ -36,6 +36,7 @@ int open_sd_file(const char *pathname)
             perror("mkdir SD_DATA_DIR err");
             return (-1);
         }
+        printf("mkdir SD_DATA_DIR succeed\n");
     }
     printf("%s is OK\n",SD_DATA_DIR);
 

@@ -343,7 +343,7 @@ int main(int argc, char* argv[])
     }
 
     /* 4.从串口中读数据，并存储*/
-    int count = 0;
+    int count_read = 0,count_write = 0;
     while(1)
     {
         char RBUF[BUFSIZ];
@@ -355,10 +355,10 @@ int main(int argc, char* argv[])
         {
             printf("%s (%d) [%s] read uart port err\n",__FILE__,__LINE__,__func__);
         }
-        else if(real_read_size != 0)
+        else if(real_read_size > 0)
         {
-            count++;
-            printf("----------Receive data %d\n",count);
+            count_read++;
+            printf("----------Receive UART_data %d\n",count_read);
         }
 #if (0)
         int i = 0;
@@ -371,6 +371,11 @@ int main(int argc, char* argv[])
         if(ret != real_read_size)
         {
             perror("write RBUF to stdout err");
+        }
+        else if(ret > 0)
+        {
+            count_write++;
+            printf("----------Write to SD_FILE  %d\n",count_write);    
         }
 
         fsync(sd_fd);
