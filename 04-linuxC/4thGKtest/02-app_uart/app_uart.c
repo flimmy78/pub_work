@@ -329,7 +329,7 @@ int main(int argc, char* argv[])
 
     /* 2.新建文件，返回文件描述符  */
     int sd_fd;
-    sd_fd = open_sd_file(SD_DATA_FILE);
+    sd_fd = open_sd_file(SD_DATA_DEFAULT_FILE);
 
     /* 3.向串口写数据 */
     int ret = gk_write_com_port(uart_fd,"<1234567890ABCD~!@#$%^&*()_+WXYZ>\n", 34);
@@ -358,14 +358,15 @@ int main(int argc, char* argv[])
         else if(real_read_size > 0)
         {
             count_read++;
-            printf("----------Receive UART_data %d\n",count_read);
+            printf("\n----------Receive UART_data %d\n",count_read);
         }
-#if (0)
+#ifdef PRINTF_UART
         int i = 0;
         for(i = 0; i < real_read_size; i++)
         {
-            printf("%c",RBUF[i]);
+            printf(" 0x%02X",RBUF[i]);
         }
+        printf("\n");
 #endif
         ret = write(sd_fd,RBUF,real_read_size);
         if(ret != real_read_size)
@@ -375,7 +376,7 @@ int main(int argc, char* argv[])
         else if(ret > 0)
         {
             count_write++;
-            printf("----------Write to SD_FILE  %d\n",count_write);    
+            printf("++++++++++Write to SD_FILE  %d\n",count_write);    
         }
 
         fsync(sd_fd);

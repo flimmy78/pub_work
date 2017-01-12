@@ -17,5 +17,8 @@ int main(void)
     printf("%d\n",~CSIZE);
     //printf("%s\n",CSIZE);//
     //warning: format ‘%s’ expects argument of type ‘char *’, but argument 2 has type ‘int’ [-Wformat=]
+    printf("[%d-%d]\n",0xEE,0xBB);
+    printf("[%c-%c]\n",0xEE,0xBB);
+
     return 0;
 }

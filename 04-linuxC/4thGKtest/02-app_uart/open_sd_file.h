@@ -10,8 +10,8 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
-#define SD_DATA_DIR     "/mnt/sd01/DVR/DATA/"
-#define SD_DATA_FILE    "/mnt/sd01/DVR/DATA/OBD"
+#define SD_DATA_DEFAULT_DIR     "/mnt/sd01/DVR/DATA/"
+#define SD_DATA_DEFAULT_FILE    "/mnt/sd01/DVR/DATA/OBD"
 
 int gettimestr(char* tm_str, int len);
 int open_sd_file(const char *pathname);

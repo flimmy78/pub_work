@@ -21,10 +21,11 @@
 #define COM_TYPE        1
 
 #define Wtime           5
-#define SD_DATA_DIR     "/mnt/sd01/DVR/DATA/"
-#define SD_DATA_FILE    "/mnt/sd01/DVR/DATA/OBD"
+#define SD_DATA_DEFAULT_DIR     "/mnt/sd01/DVR/DATA/"
+#define SD_DATA_DEFAULT_FILE    "/mnt/sd01/DVR/DATA/OBD"
 
 #define DEBUG_TEST  //定义则编译
+#define PRINTF_UART //打印串口
 
 typedef enum{
     UART_0  =   0,  //串口0

@@ -28,22 +28,22 @@ int open_sd_file(const char *pathname)
     int sd_fd;
     //FILE* sd_fp;
     /* 1.文件夹是否存在 */
-    if((fret = access(SD_DATA_DIR, F_OK)) != 0)
+    if((fret = access(SD_DATA_DEFAULT_DIR, F_OK)) != 0)
     {
-        fret = mkdir(SD_DATA_DIR, 0777);
+        fret = mkdir(SD_DATA_DEFAULT_DIR, 0777);
         if(fret != 0)
         {
-            perror("mkdir SD_DATA_DIR err");
+            perror("mkdir SD_DATA_DEFAULT_DIR err");
             return (-1);
         }
-        printf("mkdir SD_DATA_DIR succeed\n");
+        printf("mkdir SD_DATA_DEFAULT_DIR succeed\n");
     }
-    printf("%s is OK\n",SD_DATA_DIR);
+    printf("%s is OK\n",SD_DATA_DEFAULT_DIR);
 
     /* 2.创建文件 */
     if(pathname == NULL)
     {
-        pathname = SD_DATA_FILE;
+        pathname = SD_DATA_DEFAULT_FILE;
     }
     sd_fd = open(pathname,O_WRONLY|O_CREAT|O_TRUNC, 0777);
     if(sd_fd < 0)
@@ -59,7 +59,7 @@ int open_sd_file(const char *pathname)
 int main(int argc, char* argv[])
 {
     int fd;
-    fd = open_sd_file(SD_DATA_FILE);
+    fd = open_sd_file(SD_DATA_DEFAULT_FILE);
     //write(fd,"ASDF",4);
     close(fd);
 
