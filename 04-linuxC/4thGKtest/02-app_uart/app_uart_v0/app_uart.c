@@ -370,6 +370,7 @@ int main(int argc, char* argv[])
         {
             printf(" 0x%02X",RBUF[i]);
         }
+        printf("\n");
 #endif
         ret = write(sd_fd,RBUF,real_read_size);
         if(ret != real_read_size)
@@ -379,7 +380,7 @@ int main(int argc, char* argv[])
         else if(ret > 0)
         {
             count_write++;
-            printf("\n++++++++++Write to SD_FILE  %d\n",count_write);
+            printf("++++++++++Write to SD_FILE  %d\n",count_write);
             while(count_write == UINT_MAX)
             {
                 count_write = 0;

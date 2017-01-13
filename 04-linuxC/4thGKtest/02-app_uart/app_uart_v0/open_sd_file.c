@@ -7,44 +7,19 @@ int gettimestr(char* tm_str, int len)
     time_t tm;
     struct tm* ptm;
 
-    if(len < 20)
-    {
-        printf("[%s] BufLen is less than 20 bytes\n", __func__);
-        return (-1);
-    }
-
     time(&tm);
     ptm = gmtime(&tm);
-    snprintf(tm_str,len,"%04d-%02d-%02d_%02d:%02d:%02d",
+    snprintf(tm_str,19,"%04d-%02d-%02d_%02d:%02d:%02d\n",
             ptm->tm_year +1900,
             ptm->tm_mon + 1,
             ptm->tm_mday,
-            ptm->tm_hour ,  //系统实现细节不同，通用加8（时区）
+            ptm->tm_hour,
             ptm->tm_min,
             ptm->tm_sec);
+    tm_str[19] = '\0';
+    printf("[%s] %s\n",__func__,tm_str);
+
     return 0;
-}
-
-char* get_file_name(char *filename, int len)
-{
-    int ret;
-    if(len < 24)
-    {
-        printf("[%s] NameLen is less than 24 bytes\n",__func__);
-        return (-1);
-    }
-    
-    char timestr[24]; 
-    ret = gettimestr(timestr,len);
-    if(ret < 0)
-    {
-        printf("[%s] Gettimestr err\n",__func__);
-        return NULL;
-    }
-
-    strncat(filename, timestr, 24);
-    
-    return filename;
 }
 
 int open_sd_file(const char *pathname)

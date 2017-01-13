@@ -28,14 +28,14 @@ int gettimestr(char* tm_str, int len)
 
     time(&tm);
     ptm = gmtime(&tm);
-    snprintf(tm_str,19,"%04d-%02d-%02d_%02d:%02d:%02d\n",
+    snprintf(tm_str,len,"%04d-%02d-%02d_%02d:%02d:%02d",
             ptm->tm_year +1900,
             ptm->tm_mon + 1,
             ptm->tm_mday,
             ptm->tm_hour,
             ptm->tm_min,
             ptm->tm_sec);
-    tm_str[19] = '\0';
+    //tm_str[19] = '\0';
     printf("[%s] %s\n",__func__,tm_str);
 
     return 0;
@@ -45,7 +45,7 @@ int gettimestr(char* tm_str, int len)
 int main(void)
 {
     char string[20];
-    gettimestr(string,20);
+    gettimestr(string,11);
     printf("[%s] %s\n",__func__,string);
 
     //return (gettimestr());
