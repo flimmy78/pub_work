@@ -1,7 +1,8 @@
 
 CFLAGS= -g -Wall
 
-APP:=test_0 test cos_01 cos circle score submultiple lastdigits MulTable ZeroTotal
+APP:=test_0 test cos_01 cos circle score submultiple lastdigits MulTable ZeroTotal\
+
 
 ALL:$(APP)
 
