@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <string.h>
 
 #define SD_DATA_DEFAULT_DIR     "/mnt/sd01/DVR/DATA/"
 #define SD_DATA_DEFAULT_FILE    "/mnt/sd01/DVR/DATA/OBD"

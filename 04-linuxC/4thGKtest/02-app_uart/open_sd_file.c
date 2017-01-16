@@ -31,7 +31,7 @@ char* get_file_name(char *filename, int len)
     if(len < 24)
     {
         printf("[%s] NameLen is less than 24 bytes\n",__func__);
-        return (-1);
+        return NULL;
     }
     
     char timestr[24]; 

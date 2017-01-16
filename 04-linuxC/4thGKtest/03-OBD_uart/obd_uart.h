@@ -5,14 +5,14 @@
 
 #define OBD_PROCOTOL_HEAD  0xBB    /*帧头*/
 #define OBD_PROCOTOL_TAIL  0xEE    /*帧尾*/
-#define OBD_PROCOTOL_ESC	0xAA	/*转义*/
+#define OBD_PROCOTOL_ESC	0xAA	/*转义,帧中：AA 0A代表AA；AA 0B代表BB；AA 0E代表EE*/
 
 #define OBD_PROCOTOL_COMMAND_TIME  	0x01    /*【OBD模块】向【主控】申请实时时间*/
 #define OBD_PROCOTOL_COMMAND_KEY   	0x02    /*【OBD模块】通过【主控】向【服务器】申请身份验证*/
 #define OBD_PROCOTOL_COMMAND_UPD	0x07	/*手机APP对终端进行在线升级*/
 #define OBD_PROCOTOL_COMMAND_SET   	0x10    /*【主控】设置【OBD模块】工作参数*/
 #define OBD_PROCOTOL_COMMAND_ROOT	0x11	/*【主控】向【obd终端】申请高级控制权*/
-	/*【主控】读取,存储，清除【OBD模块】识别信息*/
+
 #define OBD_PROCOTOL_COMMAND_MID	0x13	/*读取12字节MCU ID(机器ID)*/
 #define OBD_PROCOTOL_COMMAND_VIN	0x14	/*读取车辆底盘号(VIN)*/
 #define OBD_PROCOTOL_COMMAND_PTY	0x15	/*读取OBD协议类型及油耗算法*/
@@ -27,6 +27,7 @@
 #define OBD_PROCOTOL_COMMAND_REAF	0x42	/*【主控】启动【OBD终端】自动上传车辆运行参数*/
 #define OBD_PROCOTOL_COMMAND_FAED	0x43	/*【主控】终止【OBD模块】自动上传车辆运行参数*/
 #define OBD_PROCOTOL_COMMAND_RERR	0x50	/*【主控】读取车辆故障码*/
+
 
 #define OBD_PROCOTOL_VIN_STATUS_KNIL	0X00		/*00:OBD未链接；*/
 #define OBD_PROCOTOL_VIN_STATUS_DAER	0X01		/* 01：读不到VIN; */
