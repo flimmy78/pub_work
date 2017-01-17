@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+/*============================================================================================*/
 #define OBD_PROCOTOL_HEAD  0xBB    /*帧头*/
 #define OBD_PROCOTOL_TAIL  0xEE    /*帧尾*/
 #define OBD_PROCOTOL_ESC	0xAA	/*转义,帧中：AA 0A代表AA；AA 0B代表BB；AA 0E代表EE*/
@@ -81,7 +82,7 @@
 #define OBD_PROCOTOL_TID_TI         0x11	/*急加油*/
 #define OBD_PROTOCOL_TID_TJ         0x12	/*快速变道*/
 #define OBD_PROCOTOL_TID_TK         0x13	/*弯道加速*/
-#define	OBD_PROCOTOL_TID_TL         0x14	/*碰撞*/
+#define	OBD_PROCOTOL_TID_TL         0x14	/*`碰撞*/
 #define OBD_PROCOTOL_TID_TM         0x15	/*频繁变道*/
 #define OBD_PROCOTOL_TID_TN         0x16	/*乱路高速行驶*/
 #define OBD_PROCOTOL_TID_TO         0x17	/*急转弯*/
@@ -95,7 +96,7 @@
 #define OBD_PROCOTOL_TID_TW         0x33	/*电平电压报警*/
 #define OBD_PROCOTOL_TID_TX         0x34	/*故障报警*/
 
-		/*标示要执行的动作编号*/
+		/*--------标示要执行的动作编号--------*/
 #define OBD_PROCOTOL_CID_CA			0X0001	/*1：启动发动机*/
 #define OBD_PROCOTOL_CID_CB			0x0002	/*2：车门锁*/
 #define OBD_PROCOTOL_CID_CC			0x0004	/*4：尾箱锁*/
@@ -105,6 +106,20 @@
 #define OBD_PROCOTOL_CID_CG			0x0040	/*64：后左车窗*/
 #define OBD_PROCOTOL_CID_CH			0x0080	/*128：双闪灯*/
 #define OBD_PROCOTOL_CID_CI			0x0100	/*256：鸣笛*/
+/*============================================================================================*/
+
+typedef struct _FILE_FD
+{
+    int uart_fd;    /*串口设备文件描述符*/
+    int sd_fd;      /*SD卡文件描述符*/
+    int other_fd;
+}FILE_FD;
+
+
+int GK_SetPthreadStackSize(pthread_attr_t* attr, int stacksize);
+void* Uart_ReadPthread(void* arg);  /*读线程执行函数*/
+void* Uart_WritePthread(void* arg); /*写线程执行函数*/
+int Uart_StartService(void);        /*串口服务函数*/
 
 
 #endif

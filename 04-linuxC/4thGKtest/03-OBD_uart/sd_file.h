@@ -21,6 +21,8 @@
 #define FILE_NAME_SIZE      (sizeof FILE_FORMAT)    /*22*/
 #define SD_NAMEPATH_SIZE    (sizeof(SD_DATA_DEFAULT_DIR)+FILE_NAME_SIZE)    /*42*/
 
+#define 
+
 char* gettimestr(char* tm_str, int len);    /*获取时间文件名*/
 char* get_file_path(char* pathname, int len);/*获取文件路径*/
 int open_sd_file(const char *pathname);     /*打开文件*/

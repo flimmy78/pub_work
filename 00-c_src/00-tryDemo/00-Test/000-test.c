@@ -11,5 +11,6 @@ int main(void)
 {
     int i;
     i = 1000;printf("i = %d\n",i);
+    printf("%d\n",BUFSIZ);
     return 0;
 }

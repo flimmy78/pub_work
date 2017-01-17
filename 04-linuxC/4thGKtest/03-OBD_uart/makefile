@@ -8,7 +8,7 @@ OBJ= *.o
 OBJ_APP=APP_UART_1
 OBJ_DIR=/opt/goke/rootfs_glibc/my_modules/
 
-APP:DVR_UART SD_FILE
+APP:DVR_UART SD_FILE OBD_UAR
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJ_APP)
 
 DVR_UART:
@@ -16,6 +16,10 @@ DVR_UART:
 
 SD_FILE:
 	$(CC) $(CFLAGS) sd_file.c -c -o sd_file.o
+
+OBD_UART:
+	$(CC) $(CFLAGS) obd_uart.c -c -o obd_uart.o
+
 
 install:
 	cp -f $(OBJ_APP) $(OBJ_DIR)

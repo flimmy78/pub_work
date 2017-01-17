@@ -1,5 +1,7 @@
 #include "dvr_uart.h"
-#include "sd_file.h"
+//#include "sd_file.h"
+//#define DEBUG_TEST  //定义则编译
+//#define PRINTF_UART //打印串口
 
 int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_bits)
 {
@@ -15,8 +17,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     cfmakeraw(&new_cfg);
     new_cfg.c_cflag &= ~CSIZE;
 
-    /* 1.设置波特率 */
-    switch(baud_rate)
+    switch(baud_rate)   /* 1.设置波特率 */
     {
     case 2400:
     {
@@ -50,15 +51,14 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     }
     break;
     default:
-        speed = B115200;
+        speed = B115200;printf("default baud_rate 115200 %d\n",speed);
         break;
     }
     cfsetispeed(&new_cfg, speed);
     cfsetospeed(&new_cfg, speed);
     printf("speed = %d\n", speed);
 
-    /* 2.设置数据位 */
-    switch(data_bits)
+    switch(data_bits)   /* 2.设置数据位 */
     {
     case 7:
     {
@@ -72,12 +72,11 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     break;
 
     default:
-        new_cfg.c_cflag |= CS8;
+        new_cfg.c_cflag |= CS8;printf("default data_bits 8\n");
         break;
     }
 
-    /* 3. 设置奇偶校验位 */
-    switch(parity)
+    switch(parity)  /* 3.设置奇偶校验位 */
     {
     case 'n':
     case 'N':
@@ -111,12 +110,11 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
     break;
     default:
         new_cfg.c_cflag &= ~PARENB;
-        new_cfg.c_iflag &= ~INPCK;
+        new_cfg.c_iflag &= ~INPCK;printf("default parity: None\n");
         break;
     }
 
-    /* 4.设置停止位 */
-    switch(stop_bits)
+    switch(stop_bits)   /* 4.设置停止位 */
     {
     case 1:
     {
@@ -128,7 +126,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
         new_cfg.c_cflag |= CSTOPB;printf("stop_bits 2\n");
     }
     default:
-        new_cfg.c_cflag &= ~CSTOPB;
+        new_cfg.c_cflag &= ~CSTOPB;printf("default stop_bits 1\n");
         break;
     }
 
@@ -156,13 +154,13 @@ int open_port(int com_port)
     {
         return (-1);
     }
-    fd = open(dev[com_port -1], O_RDWR|O_NOCTTY|O_NDELAY);
-    printf("Open the %s fd is %d\n", dev[com_port - 1], fd);
-    if(fd < 0)
+
+    if((fd = open(dev[com_port -1], O_RDWR|O_NOCTTY|O_NDELAY)) < 0)
     {
         perror("Open serial port");
-        return (-1);
+        return fd;
     }
+    printf("Open the %s fd is %d\n", dev[com_port - 1], fd);
 
     if(fcntl(fd, F_SETFL, 0) < 0)
     {

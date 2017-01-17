@@ -1,6 +1,6 @@
 #include "sd_file.h"
 
-//#define DEBUG_TEST
+//#define DEBUG_SD_FILE
 
 char* gettimestr(char* tm_str, int len)
 {
@@ -79,21 +79,21 @@ int open_sd_file(const char *pathname)
         printf("open %s err : %s\n",pathname,strerror(errno));
         return (-1);
     }
+    printf("Open %s success\n",pathname);
 
     return sd_fd;
 }
 
 int close_sd_file(int fd)
 {
-    int ret;
-    ret = close(fd);
-    if(ret < 0)
+    if((close(fd)) != 0)
     {
-        printf("Close fd %d err : %s\n",fd,strerror(errno));
+        perror("Close sd_file err ");
+        return (-1);
     }
-    return ret;
+    return 0;
 }
-#ifdef DEBUG_TEST
+#ifdef DEBUG_SD_FILE
 int main(int argc, char* argv[])
 {
     char pathname[SD_NAMEPATH_SIZE];
