@@ -10,7 +10,7 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
 
     if(tcgetattr(fd, &old_cfg) != 0)
     {
-        perror("tcgetattr");
+        perror("tcgetattr ");
         return (-1);
     }
     new_cfg = old_cfg;

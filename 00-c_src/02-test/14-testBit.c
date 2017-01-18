@@ -22,7 +22,7 @@ int main(void)
         printf("Entry char is : %c\n",value);
 #else
         value = fgetc(stdin);
-        printf("%c\n",value);
+        printf("Get a char %c\n",value);
 #endif
     }
 

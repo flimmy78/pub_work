@@ -1,24 +1,30 @@
-/*******************************************************************
- *   > File Name: 04-test.c
- *   > Author: fly
- *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon 02 Jan 2017 04:14:49 PM CST
- ******************************************************************/
-
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 int main(void)
 {
-    char a[] = {'a', 'b', 'c'};
-    char b[] = {'d', 'e', 'f'};
+    int fd;
 
-    a[3] = '\0';
-    b[3] = '\0';
-    printf("strlen(a) = %d, strlen(b) = %d\n",strlen(a),strlen(b));
-    printf("a = %s, b = %s\n",a,b);
-    printf("sizeof(a) = %d,sizeof(b) = %d\n",sizeof(a),sizeof(b));
+    fd = open("test.txt",O_RDONLY);
+    if(fd < 0)
+    {
+        perror("[perror] open");
+        printf("[printf] open test.txt err : %s\n",(char*)strerror(errno));
+        fprintf(stderr,"[fprintf] open test.txt err : %s\n",(char*)strerror(errno));
+        //return (-1);
+    }
     
+    int ret;
+    ret = close(fd);
+    if(ret != 0)
+    {
+        perror("close");
+        printf("ret = %d\n",ret);
+    }
+
     return 0;
 }
