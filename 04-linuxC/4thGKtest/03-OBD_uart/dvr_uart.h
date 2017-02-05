@@ -15,8 +15,8 @@
 #define     UART_ERR_CONFIG_FAIL    -2	//设备配置失败
 
 #define BUFFER_SIZE     128		//BUF大小
-#define HOST_COM_PORT   2
-#define MAX_COM_NUM     3		
+#define HOST_COM_PORT   2       //主com口
+#define MAX_COM_NUM     3		//最大com数
 #define GENERAL         1
 #define USBTTY          0
 #define COM_TYPE        1

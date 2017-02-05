@@ -19,40 +19,40 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
 
     switch(baud_rate)   /* 1.设置波特率 */
     {
-    case 2400:
-    {
-        speed = B2400;printf("baud_rate 2400 %d\n", speed);
-    }
-    break;
+        case 2400:
+            {
+                speed = B2400;printf("baud_rate 2400 %d\n", speed);
+            }
+            break;
 
-    case 4800:
-    {
-        speed = B4800;printf("baud_rate 4800 %d\n", speed);
-    }
-    break;
-    case 9600:
-    {
-        speed = B9600;printf("baud_rate 9600 %d\n", speed);
-    }
-    break;
-    case 19200:
-    {
-        speed = B19200;printf("baud_rate 19200 %d\n", speed);
-    }
-    break;
-    case 38400:
-    {
-        speed = B38400;printf("baud_rate 38400 %d\n", speed);
-    }
-    break;
-    case 115200:
-    {
-        speed = B115200;printf("baud_rate 115200 %d\n", speed);
-    }
-    break;
-    default:
-        speed = B115200;printf("default baud_rate 115200 %d\n",speed);
-        break;
+        case 4800:
+            {
+                speed = B4800;printf("baud_rate 4800 %d\n", speed);
+            }
+            break;
+        case 9600:
+            {
+                speed = B9600;printf("baud_rate 9600 %d\n", speed);
+            }
+            break;
+        case 19200:
+            {
+                speed = B19200;printf("baud_rate 19200 %d\n", speed);
+            }
+            break;
+        case 38400:
+            {
+                speed = B38400;printf("baud_rate 38400 %d\n", speed);
+            }
+            break;
+        case 115200:
+            {
+                speed = B115200;printf("baud_rate 115200 %d\n", speed);
+            }
+            break;
+        default:
+            speed = B115200;printf("default baud_rate 115200 %d\n",speed);
+            break;
     }
     cfsetispeed(&new_cfg, speed);
     cfsetospeed(&new_cfg, speed);
@@ -60,74 +60,74 @@ int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_b
 
     switch(data_bits)   /* 2.设置数据位 */
     {
-    case 7:
-    {
-        new_cfg.c_cflag |= CS7;printf("data_bits 7\n");
-    }
-    break;
-    case  8:
-    {
-        new_cfg.c_cflag |= CS8;printf("data_bits 8\n");
-    }
-    break;
+        case 7:
+            {
+                new_cfg.c_cflag |= CS7;printf("data_bits 7\n");
+            }
+            break;
+        case  8:
+            {
+                new_cfg.c_cflag |= CS8;printf("data_bits 8\n");
+            }
+            break;
 
-    default:
-        new_cfg.c_cflag |= CS8;printf("default data_bits 8\n");
-        break;
+        default:
+            new_cfg.c_cflag |= CS8;printf("default data_bits 8\n");
+            break;
     }
 
     switch(parity)  /* 3.设置奇偶校验位 */
     {
-    case 'n':
-    case 'N':
-    {
-        new_cfg.c_cflag &= ~PARENB;
-        new_cfg.c_iflag &= ~INPCK;printf("parity: No\n");
-    }
-    break;
-    case 'o':
-    case 'O':
-    {
-        new_cfg.c_cflag |= (PARODD | PARENB);
-        new_cfg.c_iflag |= INPCK;printf("parity: Odd\n");
-    }
-    break;
+        case 'n':
+        case 'N':
+            {
+                new_cfg.c_cflag &= ~PARENB;
+                new_cfg.c_iflag &= ~INPCK;printf("parity: No\n");
+            }
+            break;
+        case 'o':
+        case 'O':
+            {
+                new_cfg.c_cflag |= (PARODD | PARENB);
+                new_cfg.c_iflag |= INPCK;printf("parity: Odd\n");
+            }
+            break;
 
-    case 'e':
-    case 'E':
-    {
-        new_cfg.c_cflag |= PARENB;
-        new_cfg.c_cflag &= ~PARODD;
-        new_cfg.c_iflag |= INPCK;printf("parity: Even\n");
-    }
-    break;
-    case 's':
-    case 'S':
-    {
-        new_cfg.c_cflag &= ~PARENB;
-        new_cfg.c_cflag &= ~CSTOPB;printf("parity: Space\n");
-    }
-    break;
-    default:
-        new_cfg.c_cflag &= ~PARENB;
-        new_cfg.c_iflag &= ~INPCK;printf("default parity: None\n");
-        break;
+        case 'e':
+        case 'E':
+            {
+                new_cfg.c_cflag |= PARENB;
+                new_cfg.c_cflag &= ~PARODD;
+                new_cfg.c_iflag |= INPCK;printf("parity: Even\n");
+            }
+            break;
+        case 's':
+        case 'S':
+            {
+                new_cfg.c_cflag &= ~PARENB;
+                new_cfg.c_cflag &= ~CSTOPB;printf("parity: Space\n");
+            }
+            break;
+        default:
+            new_cfg.c_cflag &= ~PARENB;
+            new_cfg.c_iflag &= ~INPCK;printf("default parity: None\n");
+            break;
     }
 
     switch(stop_bits)   /* 4.设置停止位 */
     {
-    case 1:
-    {
-        new_cfg.c_cflag &= ~CSTOPB;printf("stop_bits 1\n");
-    }
-    break;
-    case 2:
-    {
-        new_cfg.c_cflag |= CSTOPB;printf("stop_bits 2\n");
-    }
-    default:
-        new_cfg.c_cflag &= ~CSTOPB;printf("default stop_bits 1\n");
-        break;
+        case 1:
+            {
+                new_cfg.c_cflag &= ~CSTOPB;printf("stop_bits 1\n");
+            }
+            break;
+        case 2:
+            {
+                new_cfg.c_cflag |= CSTOPB;printf("stop_bits 2\n");
+            }
+        default:
+            new_cfg.c_cflag &= ~CSTOPB;printf("default stop_bits 1\n");
+            break;
     }
 
     new_cfg.c_cc[VTIME] = 0;
@@ -377,8 +377,8 @@ int main(int argc, char* argv[])
 
     gk_close_com_port(uart_fd); //关闭设备
     close(sd_fd);
-    
-    
+
+
     return 0;
 }
 #endif

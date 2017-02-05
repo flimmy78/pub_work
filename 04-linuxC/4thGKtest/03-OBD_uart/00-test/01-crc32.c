@@ -33,5 +33,16 @@ unsigned int SoftwareCRC32(unsigned int data[], unsigned int size)
 
 int main(int argc, char* argv[])
 {
+    int a[] = {1,2,3,4,5,6,7,8,9,1};
+    int b[] = {0,2,3,4,5,6,7,8,9,255};
+    int c[] = {1,2,3,4,5,6,7,8,9,0};
+    //printf("size = %d\n",sizeof a);
+    int size = (sizeof a)/sizeof(int);
+    //printf("size = %d\n",size);
+    int ret;
+    ret = SoftwareCRC32(a,size);
+    int ret1 = SoftwareCRC32(b,size);
+    int ret2 = SoftwareCRC32(c,size);
+    printf("ret = %d\tret1 = %d\tret2 = %d\n",ret,ret1,ret2);
     return 0;
 }
