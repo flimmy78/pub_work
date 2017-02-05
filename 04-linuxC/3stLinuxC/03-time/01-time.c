@@ -6,8 +6,8 @@ int main(void)
 	time_t tm;
 	
 	//time(&tm);
-	printf("%d\n",time(&tm));
-	printf("%d\n",tm);
+	printf("%ld\n",time(&tm));
+	printf("%ld\n",tm);
 
 	return 0;
 }
