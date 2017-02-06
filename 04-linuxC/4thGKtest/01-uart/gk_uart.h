@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <sys/select.h>
 #include <sys/time.h>
+#include <pthread.h>
 
 #define UART_ERR_OPEN_FAIL      -1
 #define UART_ERR_CONFIG_FAIL    -2
@@ -22,9 +23,9 @@
 /* 串口编号 */
 typedef enum uart_id_
 {
-    UART_0 = 0, //串口0
-    UART_1,     //串口1
-    UART_2,     //串口2
+    UART_0 = 0, //串口0,ttySGK0
+    UART_1,     //串口1,ttySGK1
+    UART_2,     //串口2,ttySGK2
     UART_NUM
 }UART_ID;
 
@@ -51,6 +52,9 @@ int gk_close_com_port(int fd);
 signed int gk_read_com_port(signed int fd, char* read_buf, int read_size);
     /* 往串口中写数据 */
 signed int gk_write_com_port(signed int fd,char* write_buf, int write_size);
+
+/*初始化一个线程属性，并设置线程栈的大小*/
+int SetPthreadStackSize(pthread_attr_t attr, size_t stacksize);
 
 
 #endif

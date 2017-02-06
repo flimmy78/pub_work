@@ -1,3 +1,4 @@
+#if 0
 //函数名: gcvt
 //功 能: 把浮点数转换成字符串
 //用 法: char *gcvt(double value, int ndigit, char *buf);
@@ -35,3 +36,21 @@ int main(void)
 //括一个小数点以及可能包含符号和指数信息。不提供上溢出。gcvt试图
 //以十进制格式产生digits数字,如果不可能,它以指数格式产生digits数字,
 //在转换时可能截除尾部的0。
+#else
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(void)
+{
+    double a = 12.45781;
+    double b = -12.56789;
+    char ptr[20];
+    //int decpt,sign;
+    printf("a = %f\tb = %f\n",a,b);
+
+    gcvt(a,5,ptr);
+    printf("a value = %s\n",ptr);
+    gcvt(b,6,ptr);
+    printf("b value = %s\n",ptr);
+}
+#endif

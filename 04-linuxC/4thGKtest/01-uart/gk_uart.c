@@ -1,5 +1,7 @@
 #include "gk_uart.h"
 
+#define __GK_UART_DEBUG__   /*定义则编译*/
+
 /*---------------------------------------------------------------------------------
  *@func:配置串口参数，
  *@param(int fd):打开设备，生成的文件描述符；
@@ -197,10 +199,14 @@ int open_port(int com_port)
     }
 
     /* 打开相应的串口设备 */
-    if((fd = open(dev[com_port], O_RDWR | O_NOCTTY | O_NDELAY)) < 0)
+    if((fd = open(dev[com_port - 1], O_RDWR | O_NOCTTY | O_NDELAY)) < 0)
     {
-        perror("open");
+        perror("open uart_dev error");
         return (-1);
+    }
+    else
+    {
+        printf("open %s the fd is %d\n ok\n",dev[com_port - 1],fd);
     }
 
     /* 改变打开文件的性质 */
@@ -344,5 +350,63 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size)
     }
 
 }
+
+int SetPthreadStackSize(pthread_attr_t attr, size_t stacksize)
+{
+    int pret = -1;
+    pret = pthread_attr_init(&attr);
+    if(pret != 0)
+    {
+        perror("pthread_attr_init error");
+        return (-1);
+    }
+
+    pret = pthread_attr_setstacksize(&attr, stacksize);
+    if(pret != 0)
+    {
+        perror("pthread_attr_setstacksize error");
+        return (-1);
+    }
+    return 0;
+}
+
+#ifdef __GK_UART_DEBUG__
+int main(void)
+{
+    printf("\t<%s> [%s] (%d) Start run ----\n",__FILE__,__func__,__LINE__);
+    UART_CONFIG uart_cfg = 
+    {
+        .UartID = UART_2,
+        .BaudRate = 115200,
+        .DataBite = 8,
+        .Parity = 'N',
+        .StopBite = 1,
+    };
+
+    int uart_fd = gk_open_com_port(uart_cfg);
+    if(uart_fd > 0)
+    {
+        printf("Open uart port successful fd = %d\n",uart_fd);
+    }
+    else
+    {
+        printf("Open uart port failed fd = %d\n",uart_fd);
+        return (-1);
+    }
+    
+    int real_write_size, real_read_size;
+    char Wstr[] = "DVR write some date to other device by uart\n";
+    real_write_size = gk_write_com_port(uart_fd, Wstr, sizeof(Wstr));
+    if(real_write_size != (sizeof(Wstr)))
+    {
+        printf("write data error\n");
+    }
+    
+    
+    gk_close_com_port(uart_fd);
+    printf("\t<%s> [%s] (%d) Stop run ----\n",__FILE__,__func__,__LINE__);
+    return 0;
+}
+#endif
 
 
