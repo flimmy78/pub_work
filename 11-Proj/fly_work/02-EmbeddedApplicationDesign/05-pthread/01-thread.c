@@ -16,7 +16,7 @@
     /* 线程函数例程 */
 void* thrd_func(void* arg)
 {
-    int thrd_num = (int)arg;
+    int thrd_num = (int)arg;    
     int delay_time = 0;
     int count = 0;
     printf("Thread %d is starting\n",thrd_num);

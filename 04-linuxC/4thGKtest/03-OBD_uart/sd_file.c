@@ -1,6 +1,5 @@
 #include "sd_file.h"
 
-#define DEBUG_SD_FILE
 
     char *
 gettimestr (char *tm_str, int len)
@@ -8,7 +7,8 @@ gettimestr (char *tm_str, int len)
     time_t tm;
     struct tm *ptm;
     int gret = -1;
-
+    
+    /*检查Buf的大小*/
     if (len < FILE_NAME_SIZE)
     {
         printf ("[%s] BufLen is less than %d bytes\n",
@@ -16,8 +16,8 @@ gettimestr (char *tm_str, int len)
         return NULL;
     }
 
-    time (&tm);
-    ptm = gmtime (&tm);
+    time (&tm);/*获取当前时间：s*/
+    ptm = gmtime (&tm);/*将内存tm处的时间转化成日常时间，存储在ptm中*/
     gret = snprintf (tm_str, len, "%04d-%02d-%02d_%02d%02d%02d", 
             ptm->tm_year + 1900, 
             ptm->tm_mon + 1, 
@@ -27,11 +27,11 @@ gettimestr (char *tm_str, int len)
             ptm->tm_sec);
     if (gret < 0)
     {
-        printf ("Spnprintf %d bytes err : %s\n", len, strerror (errno));
+        printf ("Snprintf %d bytes err : %s\n", len, strerror (errno));
         return NULL;
     }
-    strncat (tm_str, FILE_SUFFIX, sizeof FILE_SUFFIX);	/*根据时间，生成一个文件名 */
-    return tm_str;
+    strncat (tm_str, FILE_SUFFIX, sizeof FILE_SUFFIX);	/*加上文件头*/
+    return tm_str;  /*返回文件名*/
 }
 
 
@@ -44,10 +44,11 @@ get_file_path (char *pathname, int len)
                 __func__, SD_NAMEPATH_SIZE);
         return NULL;
     }
-
+    
+    /*连接默认文件夹路径与文件名*/
     strncpy (pathname, SD_DATA_DEFAULT_DIR, sizeof (SD_DATA_DEFAULT_DIR));
     if (gettimestr (pathname + DIR_SIZE - 1, FILE_NAME_SIZE) != NULL)
-        return pathname;
+        return pathname;/*返回文件路径名*/
     else
         return NULL;
 }
@@ -65,9 +66,15 @@ open_sd_file (const char *pathname)
             perror ("mkdir SD_DATA_DEFAULT_DIR err");
             return (-1);
         }
-        printf ("mkdir SD_DATA_DEFAULT_DIR succeed\n");
+        else
+        {
+            printf ("mkdir %s succeed\n",SD_DATA_DEFAULT_DIR);
+        }
     }
-    printf ("%s is OK\n", SD_DATA_DEFAULT_DIR);
+    else
+    {
+        printf ("%s is OK\n", SD_DATA_DEFAULT_DIR);
+    }
 
     /* 2.创建文件 */
     if (pathname == NULL)
@@ -96,19 +103,3 @@ close_sd_file (int fd)
     return 0;
 }
 
-#ifdef DEBUG_SD_FILE
-    int
-main (int argc, char *argv[])
-{
-    char pathname[SD_NAMEPATH_SIZE];
-    int fd;
-
-    printf ("%s\n", get_file_path (pathname, SD_NAMEPATH_SIZE));
-    fd = open_sd_file (pathname);
-    write (fd, "1234567890", 10);
-    close (fd);
-
-
-    return 0;
-}
-#endif

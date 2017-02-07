@@ -1,7 +1,4 @@
 #include "dvr_uart.h"
-//#include "sd_file.h"
-//#define DEBUG_TEST  //定义则编译
-//#define PRINTF_UART //打印串口
 
 int set_com_config(int fd, int baud_rate, int data_bits, char parity, int stop_bits)
 {
@@ -183,7 +180,11 @@ signed int gk_open_com_port(UART_CONFIG uart_config)
         return UART_ERR_OPEN_FAIL;
     }
 
-    if(set_com_config(fd,uart_config.BaudRate,uart_config.DataBite,uart_config.Parity,uart_config.StopBite) == -1)
+    if(set_com_config(fd,
+                uart_config.BaudRate,
+                uart_config.DataBite,
+                uart_config.Parity,
+                uart_config.StopBite) == -1)
     {
         return UART_ERR_CONFIG_FAIL;
     }
