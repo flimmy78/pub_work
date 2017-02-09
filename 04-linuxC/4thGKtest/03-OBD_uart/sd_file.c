@@ -71,10 +71,7 @@ open_sd_file (const char *pathname)
             printf ("mkdir %s succeed\n",SD_DATA_DEFAULT_DIR);
         }
     }
-    else
-    {
-        printf ("%s is OK\n", SD_DATA_DEFAULT_DIR);
-    }
+    
 
     /* 2.创建文件 */
     if (pathname == NULL)
@@ -101,5 +98,28 @@ close_sd_file (int fd)
         return (-1);
     }
     return 0;
+}
+
+int create_sd_file(void)
+{
+    char filepathname[SD_NAMEPATH_SIZE];
+    if(get_file_path(filepathname, SD_NAMEPATH_SIZE) == NULL)
+    {
+        printf("get_file_path err\n");
+        return (-1);
+    }
+
+    int file_fd;
+    file_fd = open_sd_file(filepathname);
+    if(file_fd < 0)
+    {
+        printf("open_sd_file %s err\n",filepathname);
+        return (-1);
+    }
+    else
+    {
+        printf("open_sd_file %s ok fd is %d\n",filepathname,file_fd);
+        return (file_fd);
+    }
 }
 

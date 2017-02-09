@@ -49,4 +49,6 @@ signed int gk_close_com_port(int fd);   /*关闭设备*/
 signed int gk_read_com_port(signed int fd,char *read_buf,int read_size);    /*读设备*/
 signed int gk_write_com_port(signed int fd,char* write_buf,int write_size); /*写设备*/
 
+int uart_fd_init(void);/*配置并打开串口ttySGK1，返回fd*/
+
 #endif

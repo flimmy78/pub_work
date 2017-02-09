@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 /*============================================================================================*/
+/*---参照《obd终端与后视镜通讯协议》--V3.32（更新至2015.04.17）---*/
 #define OBD_PROCOTOL_HEAD  0xBB    /*帧头*/
 #define OBD_PROCOTOL_TAIL  0xEE    /*帧尾*/
 #define OBD_PROCOTOL_ESC	0xAA	/*转义,帧中：AA 0A代表AA；AA 0B代表BB；AA 0E代表EE*/
@@ -111,12 +112,12 @@
 #define OBD_PROCOTOL_CID_CI			0x0100	/*256：鸣笛*/
 /*============================================================================================*/
 
-typedef struct FILE_FD
+typedef struct _FDS
 {
     int FD_0;   /*串口设备文件描述符*/
     int FD_1;   /*SD卡文件描述符*/
     int FD_2;
-}FD,* P_FD;
+}FDS,* P_FDS;
 
 
 int GK_SetPthreadStackSize(pthread_attr_t* attr, int stacksize);

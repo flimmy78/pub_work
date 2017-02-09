@@ -283,12 +283,8 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size)
 
 }
 
-
-
-#ifdef DEBUG_TEST
-int main(int argc, char* argv[])
+int uart_fd_init(void)
 {
-    /* 1.打开配置串口，返回设备文件描述符 */
     int uart_fd;
     UART_CONFIG uart_cfg = {
         .UartID = UART_2,
@@ -296,90 +292,16 @@ int main(int argc, char* argv[])
         .DataBite = 8,
         .Parity = 'N',
         .StopBite = 1
-    };  //初始化参数
-
-    uart_fd = gk_open_com_port(uart_cfg);   //打开配置设备
+    };
+    
+    uart_fd = gk_open_com_port(uart_cfg);
     if(uart_fd < 0)
     {
-        printf("gk_open_com_port err\n");
-        return(-1);
+        printf("gk_open_port err");
+        return (-1);
     }
     else
     {
-        printf("gk_open_com_port OK\n");
+        return (uart_fd);
     }
-
-    /* 2.新建文件，返回文件描述符  */
-    char path_str[49];
-    int sd_fd;
-    //sd_fd = open_sd_file(SD_DATA_DEFAULT_FILE);
-    get_file_path(path_str,49);
-    sd_fd = open_sd_file(path_str);
-
-    /* 3.向串口写数据 */
-    int ret = gk_write_com_port(uart_fd,"<1234567890ABCD~!@#$%^&*()_+WXYZ>\n", 34);
-    if(ret != 34)
-    {
-        printf("Write err\n");
-    }
-    else
-    {
-        printf("write data ok\n");
-    }
-
-    /* 4.从串口中读数据，并存储*/
-    unsigned int count_read = 0,count_write = 0;
-    while(1)
-    {
-        char RBUF[BUFSIZ];
-
-        memset(RBUF,0,BUFSIZ);
-        int real_read_size = 0;
-        real_read_size = gk_read_com_port(uart_fd, RBUF,BUFSIZ);
-        if(real_read_size < 0)
-        {
-            printf("%s (%d) [%s] read uart port err\n",__FILE__,__LINE__,__func__);
-        }
-        else if(real_read_size > 0)
-        {
-            count_read++;
-            printf("\n----------Receive UART_data %d\n",count_read);
-            while(count_read == UINT_MAX)
-            {
-                count_read = 0;
-            }
-        }
-#ifdef PRINTF_UART
-        int i = 0;
-        for(i = 0; i < real_read_size; i++)
-        {
-            printf(" 0x%02X",RBUF[i]);
-        }
-#endif
-        ret = write(sd_fd,RBUF,real_read_size);
-        if(ret != real_read_size)
-        {
-            perror("write RBUF to stdout err");
-        }
-        else if(ret > 0)
-        {
-            count_write++;
-            printf("\n++++++++++Write to SD_FILE  %d\n",count_write);
-            while(count_write == UINT_MAX)
-            {
-                count_write = 0;
-            }    
-        }
-
-        fsync(sd_fd);
-        fflush(NULL);
-        //printf("\n");
-    }
-
-    gk_close_com_port(uart_fd); //关闭设备
-    close(sd_fd);
-
-
-    return 0;
 }
-#endif

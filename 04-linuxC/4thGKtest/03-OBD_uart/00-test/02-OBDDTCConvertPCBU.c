@@ -25,14 +25,26 @@ void OBDDTCConvertPCBU(unsigned short dtc, char* out_buf)
             out_buf[0] = 'U';
             break;
     }
+#if 0
     out_buf[1] = HalfByte2HexChar((dtc >> 12) & 0x02);
     out_buf[2] = HalfByte2HexChar((dtc >> 8) & 0x0F);
     out_buf[3] = HalfByte2HexChar((dtc >> 4) & 0x0F);
     out_buf[4] = HalfByte2HexChar((dtc >> 0) & 0x0F);
+#endif
     out_buf[5] = 0;
+    printf("%s\n",out_buf);
 }
 
 int main(int argc, char* argv[])
 {
+    unsigned short a1 = 0;
+    unsigned short a2 = 1;
+    unsigned short a3 = 2;
+    char buf[10];
+
+    OBDDTCConvertPCBU(a1,buf);
+    OBDDTCConvertPCBU(a2,buf);
+    OBDDTCConvertPCBU(a3,buf);
+
     return 0;
 }

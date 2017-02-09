@@ -28,10 +28,6 @@ int main(int argc, char* argv[])
         printf("get_file_path err\n");
         return (-1);
     }
-    else
-    {
-        printf("filenamepath :%s\n",filepathname);
-    }
     
     /*打开文件*/
     int ret, file_fd;

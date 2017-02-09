@@ -26,4 +26,5 @@ char* gettimestr(char* tm_str, int len);    /*获取时间文件名*/
 char* get_file_path(char* pathname, int len);/*获取文件路径*/
 int open_sd_file(const char *pathname);     /*打开文件*/
 int close_sd_file(int fd);      /*关闭文件*/
+int create_sd_file(void);   /*创建SD新文件，返回fd*/
 #endif
