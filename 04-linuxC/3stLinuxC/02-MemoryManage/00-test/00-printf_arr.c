@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-void printf_arr_int(int a[], int n);
-void printf_arr_ch(char ch[], int n);
-void printf_arr_str(char ch[][], int n);
+void print_arr_int(int a[], int n);
+void print_arr_ch(char ch[], int n);
+//void print_arr_str(char ch[][], int n);
 
 int main(void)
 {
@@ -10,12 +10,12 @@ int main(void)
 
 	int ch_length = sizeof(ch);
 	printf("%d\n",ch_length);
-	printf_arr_ch(ch,8);
+	print_arr_ch(ch,8);
 
 	return 0;
 }
 
-void printf_arr_int(int a[], int n)
+void print_arr_int(int a[], int n)
 {
 	int i;
 	for(i = 0; i<n; i++)
@@ -25,7 +25,7 @@ void printf_arr_int(int a[], int n)
 	puts("");
 }
 
-void printf_arr_ch(char ch[], int n)
+void print_arr_ch(char ch[], int n)
 {
 	int i;
 	for(i = 0; i<n; i++)
