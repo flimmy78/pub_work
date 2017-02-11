@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     stm = gmtime(&tm);
     printf("秒数    ：%d\n",stm->tm_sec);
     printf("分钟    ：%d\n",stm->tm_min);
-    printf("小时    ：%d\n",stm->tm_hour);
+    printf("小时    ：%d\n",stm->tm_hour+8);
     printf("月之几天：%d\n",stm->tm_mday);
     printf("月      ：%d\n",stm->tm_mon);
     printf("年      ：%d\n",stm->tm_year+1900);
