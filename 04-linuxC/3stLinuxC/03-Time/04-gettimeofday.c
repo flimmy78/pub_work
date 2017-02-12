@@ -1,68 +1,46 @@
+/*******************************************************************
+ *   > File Name: 04-gettimeofday.c
+ *   > Author: fly
+ *   > Mail: XXXXXXXXXX@icode.com
+ *   > Create Time: Sun 12 Feb 2017 08:57:00 PM CST
+ ******************************************************************/
+
 #include <stdio.h>
 #include <sys/time.h>
-#include <stdlib.h>
 
-#define DEBUG_TEST
+#if (0)
+int gettimeofday(struct timeval *tv, struct timezone *tz);/*取得目前时间*/
 
-#if 0
- long long   getcurrenttime(void)
-{
-	struct timeval tv;
-	struct timezone tz;
-	long long  total_usec = -1;
+/*timeval结构体*/
+struct timeval {
+    time_t      tv_sec;     /* seconds */
+    suseconds_t tv_usec;    /* microseconds */
+};
+/*timezone结构体*/
+struct timezone {
+    int tz_minuteswest;     /* minutes west of Greenwich */
+    int tz_dsttime;         /* type of DST correction */
+};
+//@return:成功返回零，失败返回-1，错误代码存在errno
 
-	if(gettimeofday(&tv, &tz) != 0)
-	{
-		perror("gettimeofday error ");
-		return -1;
-	}
-
-#if (1)
-	printf("Seconds : %ld\n",tv.tv_sec);
-	printf("Microseconds : %ld\n",tv.tv_usec);
-	printf("Minutes west of Greewich : %d\n",tz.tz_minuteswest);
-	printf("Type of DST correction : %d\n",tz.tz_dsttime);
 #endif
 
-	total_usec = tv.tv_sec * 1000 + tv.tv_usec;
+int main(int argc, char* argv[])
+{   
+    struct timeval tv;
+    struct timezone tz;
 
-	printf("%s,%lld\n",__func__,total_usec);
+    int ret = gettimeofday(&tv,&tz);
+    if(ret == -1)
+    {
+        perror("gettimeofday err");
+        return (-1);
+    }
 
-	return total_usec;
+    printf("秒： %ld\n",tv.tv_sec);
+    printf("微秒:%ld\n",tv.tv_usec);
+    printf("和格林尼治时间差：%d\n",tz.tz_minuteswest);
+    printf("日光节状态：%d\n",tz.tz_dsttime);
+
+    return 0;
 }
-#endif
-
-int getcurrenttime(void)
-{
-	struct timeval tv;
-	struct timezone tz;
-
-	if(gettimeofday(&tv, &tz) != 0)
-	{
-		perror("gettimeofday error");
-		return (-1);
-	}
-
-	printf("Seconds : %ld\n",tv.tv_sec);
-	printf("Microseconds : %ld\n",tv.tv_usec);
-	printf("Minutes west of Greewich : %d\n",tz.tz_minuteswest);
-	printf("Type of DST correction : %d\n",tz.tz_dsttime);
-
-	return 0;
-}
-
-#ifdef DEBUG_TEST
-int main(int ac, char **av)
-{
-	long long  time;
-
-	if((time = getcurrenttime()) < 0)
-	{
-		printf("getcurrenttime error \n");
-		exit(EXIT_FAILURE);
-	}
-	printf("time = %lld\n",time);
-
-	exit(EXIT_SUCCESS);
-}
-#endif
