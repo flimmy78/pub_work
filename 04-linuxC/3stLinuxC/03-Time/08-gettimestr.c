@@ -1,53 +1,41 @@
 #include <stdio.h>
 #include <time.h>
 
-#if 0
-int gettimestr(void)
-{
-    //char tm_str[20];
-    time_t tm;
-    struct tm* ptm;
+#define T_STR_FORMAT "xxxx-xx-xx_xx:xx:xx"
 
-    time(&tm);
-    ptm = gmtime(&tm);
-    fprintf(stdout,"%04d-%02d-%02d_%02d:%02d:%02d\n",
-            ptm->tm_year +1900,
-            ptm->tm_mon + 1,
-            ptm->tm_mday,
-            ptm->tm_hour,
-            ptm->tm_min,
-            ptm->tm_sec);
-
-    return 0;
-}
-#else
-int gettimestr(char* tm_str, int len)
+char* gettimestr(char* tm_str, int len)
 {
     time_t tm;
     struct tm* ptm;
+
+    if(len < 20)
+    {
+        printf("Buf len is less than %d\n",sizeof T_STR_FORMAT);
+        return NULL;
+    }
 
     time(&tm);
     ptm = gmtime(&tm);
     snprintf(tm_str,len,"%04d-%02d-%02d_%02d:%02d:%02d",
-            ptm->tm_year +1900,
+            ptm->tm_year + 1900,
             ptm->tm_mon + 1,
             ptm->tm_mday,
-            ptm->tm_hour,
+            ptm->tm_hour + 8,
             ptm->tm_min,
             ptm->tm_sec);
-    //tm_str[19] = '\0';
-    printf("[%s] %s\n",__func__,tm_str);
+    //printf("[%s] %s\n",__func__,tm_str);
 
-    return 0;
+    return tm_str;
 }
-#endif
 
 int main(void)
 {
     char string[20];
-    gettimestr(string,11);
+
+    printf("sizeof T_STR_FORMAT :%d\n",sizeof T_STR_FORMAT);
+
+    printf("gettimestr: %s\n",gettimestr(string,20));
     printf("[%s] %s\n",__func__,string);
 
-    //return (gettimestr());
     return 0;
 }
