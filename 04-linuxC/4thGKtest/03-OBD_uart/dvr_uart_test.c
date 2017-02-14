@@ -60,6 +60,8 @@ int main(int argc, char* argv[])
             printf(" 0x%02X",RBUF[i]);
         }
 #endif
+        /*写入之前检查文件是否有错误*/
+        if(ferror(fdopen(file_fd,"r+")))
         /*6.将读到的数据写入SD卡*/
         ret = write(file_fd, RBUF, real_read_size);
         if(ret != real_read_size)
