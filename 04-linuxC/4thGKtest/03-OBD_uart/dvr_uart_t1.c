@@ -9,27 +9,73 @@
 #include "sd_file.h"
 #include "obd_uart.h"
 
+int SetPthreadStackSize(pthread_attr_t attr, size_t stacksize)
+{
+    if(pthread_attr_init(&attr) != 0)
+    {
+        perror("pthread_attr_init");
+        return (-1);
+    }
+    
+    if(pthread_attr_setstacksize(&attr, stacksize) != 0)
+    {
+        perror("pthread_attr_setstacksize");
+        return (-1);
+    }
+
+    return 0;
+}
+
+static void *uart_readservice(void *param)
+{
+    if(pthread_detach(pthread_self()) != 0)
+    {
+        return NULL;
+    }
+
+    /*获得文件描述符*/
+    //static int uart_fd = (P_FDS)param->FD_0;
+    //static int file_fd = (P_FDS)param->FD_1;
+    //
+    return NULL;
+}
+
+static void *uart_writeservice(void *param)
+{
+    if(pthread_detach(pthread_self()) != 0)
+    {
+        return NULL;
+    }
+
+    /*获得文件描述符*/
+    //static int uart_fd = (P_FDS)param->FD_0;
+    //static int file_fd = (P_FDS)param->FD_1;
+    return NULL;
+}
+
 int main(int argc, char* argv[])
 {
     /*1.配置打开串口*/
-    int ret,uart_fd;
+    int ret;
+    int uart_fd;
     uart_fd = uart_fd_init();
 
     /*2.新建文件*/
     int file_fd;
     file_fd = create_sd_file();
 
-    //FDS fds;
-    //P_FDS pfds = &fds;
-    //fds.FD_0 = uart_fd;
-    //fds.FD_1 = file_fd;
+    FDS fds;
+    P_FDS pfds = &fds;
+    fds.FD_0 = uart_fd;
+    fds.FD_1 = file_fd;
 
     //printf("fds.FD_0 = %d\tfds.FD_1 = %d\n",pfds->FD_0, pfds->FD_1);
 
     /*3.向串口写数据*/
+
     char Wstr[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n";
     int real_write_size;
-    real_write_size = gk_write_com_port(uart_fd,Wstr,27);
+    real_write_size = gk_write_com_port(pfds->FD_0,Wstr,27);
     if(real_write_size != 27)
     {
         printf("Write data err\n");
@@ -47,7 +93,7 @@ int main(int argc, char* argv[])
         int real_read_size = 0;
 
         memset(RBUF, 0, BUFSIZ);
-        real_read_size = gk_read_com_port(uart_fd, RBUF, BUFSIZ);
+        real_read_size = gk_read_com_port(pfds->FD_0, RBUF, BUFSIZ);
         if(real_read_size < 0)
         {
             printf("read uart com port err\n");
@@ -71,7 +117,7 @@ int main(int argc, char* argv[])
         /*写入之前检查文件是否有错误*/
         //if(ferror(fdopen(file_fd,"r+")))/*运行一段时间后，报：Segmentation fault*/
         /*6.将读到的数据写入SD卡*/
-        ret = write(file_fd, RBUF, real_read_size);
+        ret = write(pfds->FD_1, RBUF, real_read_size);
         if(ret != real_read_size)
         {
             perror("write RBUF to SD_FILE err");
@@ -92,7 +138,7 @@ int main(int argc, char* argv[])
         int r_ret;
         char READ_BUF[BUFSIZ];
         memset(READ_BUF,0,BUFSIZ);
-        if(read(0,READ_BUF,BUFSIZ - 1) > 0)
+        if(read(1,READ_BUF,BUFSIZ - 1) > 0)
         {
             r_ret = write(uart_fd,READ_BUF,sizeof(READ_BUF));
             if(r_ret != sizeof(READ_BUF) )

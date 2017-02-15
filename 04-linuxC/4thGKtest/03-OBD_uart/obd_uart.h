@@ -8,33 +8,47 @@
 
 /*============================================================================================*/
 /*---参照《obd终端与后视镜通讯协议》--V3.32（更新至2015.04.17）---*/
+// 1.终端向后视镜申请实时时间
+// 2.终端通过后视镜向服务器申请身份验证
+// 3.后视镜设置终端工作参数
+// 4.后视镜向OBD终端申请高级控制权
+// 5.后视镜读取、存取、清除OBD终端识别信息
+// 6.终端向后视镜上传事件
+// 7.后视镜通过终端控制车辆
+// 8.后视镜读取行程内的统计参数
+// 9.后视镜读取一项车辆运行参数
+//10.后视镜读取多项车辆运行参数
+//11.后视镜启动终端自动上传车辆运行参数
+//12.后视镜终止终端自动上传车辆运行参数
+//13.后视镜读取车辆故障码
+//14.手机APP对终端进行在线升级
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-#define OBD_PROCOTOL_HEAD  0xBB    /*帧头*/
-#define OBD_PROCOTOL_TAIL  0xEE    /*帧尾*/
+#define OBD_PROCOTOL_HEAD   0xBB    /*帧头*/
+#define OBD_PROCOTOL_TAIL   0xEE    /*帧尾*/
 #define OBD_PROCOTOL_ESC	0xAA	/*转义,帧中：AA 0A代表AA；AA 0B代表BB；AA 0E代表EE*/
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-#define OBD_PROCOTOL_COMMAND_TIME  	0x01    /*【OBD模块】向【主控】申请实时时间*/
-#define OBD_PROCOTOL_COMMAND_KEY   	0x02    /*【OBD模块】通过【主控】向【服务器】申请身份验证*/
-#define OBD_PROCOTOL_COMMAND_UPD	0x07	/*手机APP对终端进行在线升级*/
-#define OBD_PROCOTOL_COMMAND_SET   	0x10    /*【主控】设置【OBD模块】工作参数*/
-#define OBD_PROCOTOL_COMMAND_ROOT	0x11	/*【主控】向【obd终端】申请高级控制权*/
-
-#define OBD_PROCOTOL_COMMAND_MID	0x13	/*读取12字节MCU ID(机器ID)*/
-#define OBD_PROCOTOL_COMMAND_VIN	0x14	/*读取车辆底盘号(VIN)*/
-#define OBD_PROCOTOL_COMMAND_PTY	0x15	/*读取OBD协议类型及油耗算法*/
-#define	OBD_PROCOTOL_COMMAND_NIV	0x16	/*清除【OBD模块】存储的车辆底盘号(VIN)*/
-#define OBD_PROCOTOL_COMMAND_INV	0x17	/*发送车辆底盘号(VIN)给【OBD模块】*/
-#define OBD_PROCOTOL_COMMAND_VER	0x18	/*读取【终端】版本号*/
-
-#define OBD_PROCOTOL_COMMAND_SEND	0x20	/*【OBD模块】向【主控】上传事件*/
-#define OBD_PROCOTOL_COMMAND_CONT	0x21	/*【主控】通过终端控制车辆*/
-#define OBD_PROCOTOL_COMMAND_READ	0x30	/*【主控】读取行程内统计参数*/
-#define OBD_PROCOTOL_COMMAND_REAE	0x41	/*【主控】读取车辆运行参数*/
-#define OBD_PROCOTOL_COMMAND_REAF	0x42	/*【主控】启动【OBD终端】自动上传车辆运行参数*/
-#define OBD_PROCOTOL_COMMAND_FAED	0x43	/*【主控】终止【OBD模块】自动上传车辆运行参数*/
-#define OBD_PROCOTOL_COMMAND_RERR	0x50	/*【主控】读取车辆故障码*/
+#define OBD_PROCOTOL_CMD_TIME  	0x01    /*01.【OBD模块】向【主控】申请实时时间*/
+#define OBD_PROCOTOL_CMD_KEY   	0x02    /*02.【OBD模块】通过【主控】向【服务器】申请身份验证*/
+#define OBD_PROCOTOL_CMD_UPD	0x07	/*03.手机APP对终端进行在线升级*/
+#define OBD_PROCOTOL_CMD_SET   	0x10    /*04.【主控】设置【OBD模块】工作参数*/
+#define OBD_PROCOTOL_CMD_ROOT	0x11	/*05.【主控】向【obd终端】申请高级控制权*/
+                      
+#define OBD_PROCOTOL_CMD_MID	0x13	/*06.读取12字节MCU ID(机器ID)*/
+#define OBD_PROCOTOL_CMD_VIN	0x14	/*07.读取车辆底盘号(VIN)*/
+#define OBD_PROCOTOL_CMD_PTY	0x15	/*08.读取OBD协议类型及油耗算法*/
+#define	OBD_PROCOTOL_CMD_NIV	0x16	/*09.清除【OBD模块】存储的车辆底盘号(VIN)*/
+#define OBD_PROCOTOL_CMD_INV	0x17	/*10.发送车辆底盘号(VIN)给【OBD模块】*/
+#define OBD_PROCOTOL_CMD_VER	0x18	/*11.读取【终端】版本号*/
+                      
+#define OBD_PROCOTOL_CMD_SEND	0x20	/*12.【OBD模块】向【主控】上传事件*/
+#define OBD_PROCOTOL_CMD_CONT	0x21	/*13.【主控】通过终端控制车辆*/
+#define OBD_PROCOTOL_CMD_READ	0x30	/*14.【主控】读取行程内统计参数*/
+#define OBD_PROCOTOL_CMD_REAE	0x41	/*15.【主控】读取车辆运行参数*/
+#define OBD_PROCOTOL_CMD_REAF	0x42	/*16.【主控】启动【OBD终端】自动上传车辆运行参数*/
+#define OBD_PROCOTOL_CMD_FAED	0x43	/*17.【主控】终止【OBD模块】自动上传车辆运行参数*/
+#define OBD_PROCOTOL_CMD_RERR	0x50	/*18.【主控】读取车辆故障码*/
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 #define OBD_PROCOTOL_VIN_STATUS_KNIL	0X00		/*00:OBD未链接；*/
@@ -119,8 +133,16 @@ typedef struct _FDS
 {
     int FD_0;   /*串口设备文件描述符*/
     int FD_1;   /*SD卡文件描述符*/
-    int FD_2;
+    int FD_2;   /*保留*/
 }FDS,* P_FDS;
+
+typedef struct geographic_location
+{
+    double locationx;/*经度：-180~180*/
+    double locationy;/*维度：-90~90*/
+    int eventtype;
+    int eventstatus;
+}LCT, *P_LCT;
 
 
 int GK_SetPthreadStackSize(pthread_attr_t* attr, int stacksize);
