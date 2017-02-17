@@ -11,12 +11,9 @@
 
 int main(int argc, char* argv[])
 {
-    /*1.配置打开串口*/
-    int ret,uart_fd;
+    /*1.初始化串口及文件*/
+    int ret, uart_fd, file_fd;
     uart_fd = uart_fd_init();
-
-    /*2.新建文件*/
-    int file_fd;
     file_fd = create_sd_file();
 
     //FDS fds;
@@ -65,7 +62,7 @@ int main(int argc, char* argv[])
         int i = 0;
         for(i = 0; i < real_read_size; i++)
         {
-            printf(" 0x%02X",RBUF[i]);
+            printf(" %02X",RBUF[i]);
         }
 #endif
         /*写入之前检查文件是否有错误*/
@@ -87,7 +84,7 @@ int main(int argc, char* argv[])
         }
         //fflush(NULL);
 
-#if (1)
+#if (0)
         /*从键盘上接收数据，将数据写入串口*/
         int r_ret;
         char READ_BUF[BUFSIZ];

@@ -16,7 +16,8 @@ void thread_1(void)
     {  
         printf("This is a pthread_1.\n");  
         if(i==2)  
-            pthread_exit(0);                      //用pthread_exit()来调用线程的返回值，用来退出线程，但是退出线程所占用的资源不会随着线程的终止而得到释放  
+            pthread_exit(0);                      //用pthread_exit()来调用线程的返回值，用来退出线程，
+                                                //但是退出线程所占用的资源不会随着线程的终止而得到释放  
         sleep(1);  
     }  
 }  
@@ -27,7 +28,8 @@ void thread_2(void)
     int i;  
     for(i=0;i<3;i++)  
         printf("This is a pthread_2.\n");           
-    pthread_exit(0);                              //用pthread_exit()来调用线程的返回值，用来退出线程，但是退出线程所占用的资源不会随着线程的终止而得到释放  
+    pthread_exit(0);                              //用pthread_exit()来调用线程的返回值，用来退出线程，
+                                                //但是退出线程所占用的资源不会随着线程的终止而得到释放  
 }  
 
 int main(int argc, char* argv[])

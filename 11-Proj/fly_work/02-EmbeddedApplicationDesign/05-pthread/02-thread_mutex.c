@@ -15,7 +15,7 @@
 #define REPEAT_NUM  3   /*每个线程循环的次数*/
 #define DELAY_TIME_LEVELS   6.0 /*循环之间的最大时间间隔*/
 
-pthread_mutex_t mutex;
+static pthread_mutex_t mutex;
 
 void* thrd_func(void* arg)
 {

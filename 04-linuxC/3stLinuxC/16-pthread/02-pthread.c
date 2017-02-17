@@ -6,6 +6,8 @@
  ******************************************************************/
 
 #include <stdio.h>
+#include <pthread.h>
+#include <time.h>
 
 int pthread_setstacksize(pthread_attr_t *attr, int stacksize)
 {
@@ -23,17 +25,19 @@ int pthread_setstacksize(pthread_attr_t *attr, int stacksize)
 
 void *pthread_func(void *arg)
 {
+#if (0)
     if(pthread_detach(pthread_self()) != 0)
     {
         printf("%s : pthread_detach err\n",__func__);
     }
+#endif
 
     int i = 0;
     time_t tm;
     while(1)
     {
         time(&tm);
-        sprintf(stdout,"%d : %s\n",i,ctime(&tm));
+        fprintf(stdout,"%d : %s\n",i,ctime(&tm));
         i++;
     }
 

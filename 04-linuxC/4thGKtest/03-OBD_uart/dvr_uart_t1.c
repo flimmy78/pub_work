@@ -28,14 +28,14 @@ static void *uart_readPthread(void *param)
 {
     if(pthread_detach(pthread_self()) != 0)/*设置线程的分离属性*/
     {
-        printf("uart_readPthread ","pthread_detach err\n");
+        printf("uart_readPthread  : pthread_detach err\n");
         return NULL;
     }
 
     /*获得文件描述符*/
-    static int uart_fd, file_fd;
+    static int uart_fd = 0, file_fd = 0;
     uart_fd = ((P_FDS)param)->FD_0, file_fd = ((P_FDS)param)->FD_1;
-    printf("%s start run uart_fd = %d\tfile_fd = %d\n",__func__,uart_fd,file_fd);
+    printf("%s :start run uart_fd = %d\tfile_fd = %d\n",__func__,uart_fd,file_fd);
     
     unsigned int count_read = 0,count_write = 0;
     while(1)
@@ -125,13 +125,13 @@ void uart_writeService(void *param)
 int main(int argc, char* argv[])
 {
     /*1.初始化串口及文件*/
-    int uart_fd, file_fd;
-    uart_fd = uart_fd_init();
-    file_fd = create_sd_file();
+    int u_fd, f_fd;
+    u_fd = uart_fd_init();
+    f_fd = create_sd_file();
 
     FDS fds;
     P_FDS pfds = &fds;
-    fds.FD_0 = uart_fd ,fds.FD_1 = file_fd;
+    fds.FD_0 = u_fd ,fds.FD_1 = f_fd;
 
     printf("uart_fd = %d\tfile_fd = %d\n",pfds->FD_0,pfds->FD_1);
 
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
     uart_readService((void*)pfds);
 
     /*5.关闭文件*/
-    gk_close_com_port(uart_fd);
-    close_sd_file(file_fd);
+    gk_close_com_port(u_fd);
+    close_sd_file(f_fd);
     return 0;
 }
