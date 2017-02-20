@@ -283,8 +283,7 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size)
 
 }
 
-int uart_fd_init(void)
-{
+int uart_fd_init(void){
     int uart_fd;
     UART_CONFIG uart_cfg = {
         .UartID = UART_2,
@@ -304,4 +303,14 @@ int uart_fd_init(void)
     {
         return (uart_fd);
     }
+}
+
+int SetPthreadStackSize(pthread_attr_t *attr, size_t stacksize){
+    if((pthread_attr_init(attr)) != 0){
+        printf("pthread_attr_init");return (-1);
+    }
+    if((pthread_attr_setstacksize(attr,stacksize)) != 0){
+        printf("pthread_attr_setstacksize");return (-2);
+    }
+    return 0;
 }

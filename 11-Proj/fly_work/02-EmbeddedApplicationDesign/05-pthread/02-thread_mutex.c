@@ -4,17 +4,18 @@
  *   > Mail: XXXXXXXX@icode.com
  *   > Create Time: Sun 15 Jan 2017 05:56:27 PM CST
  ******************************************************************/
-
+/*头文件*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
-
+/*宏定义*/
 #define THREAD_NUM  3   /*线程数*/
 #define REPEAT_NUM  3   /*每个线程循环的次数*/
 #define DELAY_TIME_LEVELS   6.0 /*循环之间的最大时间间隔*/
 
+/*函数声明*/
 static pthread_mutex_t mutex;
 
 void* thrd_func(void* arg)

@@ -9,6 +9,7 @@ int pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize);
 int pthread_attr_init(pthread_attr_t *attr);
 int pthread_detach(pthread_t thread);
 int pthread_join(pthread_t thread, void **retval);
+//线程执行函数内，使用分离属性，线程回收不正常
 #endif
 
 #include <stdio.h>
@@ -42,7 +43,7 @@ int main(int argc, char* argv[])
         perror("pthread_create pid_FUNC err");
     }
 
-    if(pthread_join(pid_function,NULL) != 0)
+    if(pthread_join(pid_FUNC,NULL) != 0)
     {
         perror("pthread_join pid_function err");
     }else
@@ -50,12 +51,12 @@ int main(int argc, char* argv[])
         printf("pthrad_join pid_function OK\n");
     }
 
-    if(pthread_join(pid_FUNC, NULL) != 0)
+    if(pthread_join(pid_function, NULL) != 0)
     {
         perror("pthread_join pid_FUNC err");
     }else
     {
-        perror("pthread_join pid_FUNC OK\n");
+        printf("pthread_join pid_FUNC OK\n");
     }
 
     return 0;
@@ -86,7 +87,7 @@ void *pthread_function(void *arg){
         static int j = 0;
         for(j = 0; j< 3; j++)
         {
-            printf("------------------%s [%s] (%d)----%d In child pthread\n",__FILE__,__func__,__LINE__,j);
+            printf("\t%s [%s] (%d)----%d In child pthread\n",__FILE__,__func__,__LINE__,j);
             sleep(2);
         }
     
@@ -103,10 +104,10 @@ void *pthread_FUNC(void *arg){
     }
 #endif
 
-    while(1)
+    //while(0)
     {
         static int i = 0;
-        for(i = 0; i< 5; i++)
+        for(i = 0; i< 8; i++)
         {
             printf("%s [%s] (%d)----%d In child pthread\n",__FILE__,__func__,__LINE__,i);
             sleep(1);

@@ -52,15 +52,15 @@ void *thread_function(void *arg) {
         printf("pthread_detach error\n");
     }
 #endif
-    printf("thread_function is running. Argument was %s\n", (char *)arg);
+    printf("thread_function is running. Argument was %s\n", (char *)arg);/*获取参数*/
     sleep(2);
 	
 	static int i = 0;
 	for (i = 0; i < 5; i++)
 	{
-		printf("%d :Thread process !\n",i);
+		printf("\t%d :Thread process !\n",i);
 		sleep(1);
 	}
-    strcpy(message, "Bye!");
+    strcpy(message, "Bye!");/*修改全局变量*/
     pthread_exit("Thank you for the CPU time");
 }

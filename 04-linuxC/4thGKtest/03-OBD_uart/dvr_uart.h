@@ -10,6 +10,7 @@
 #include <sys/select.h>
 #include <string.h>
 #include <limits.h>
+#include <pthread.h>
 
 #define     UART_ERR_OPEN_FAIL      -1	//设备打开失败
 #define     UART_ERR_CONFIG_FAIL    -2	//设备配置失败
@@ -50,5 +51,7 @@ signed int gk_read_com_port(signed int fd,char *read_buf,int read_size);    /*�
 signed int gk_write_com_port(signed int fd,char* write_buf,int write_size); /*写设备*/
 
 int uart_fd_init(void);/*配置并打开串口ttySGK1，返回fd*/
+
+int SetPthreadStackSize(pthread_attr_t *attr, size_t stacksize);/*初始化一个线程属性，并设置栈的大小*/
 
 #endif

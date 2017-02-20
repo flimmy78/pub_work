@@ -9,43 +9,29 @@
 #include "sd_file.h"
 #include "obd_uart.h"
 
-int SetPthreadStackSize(pthread_attr_t *attr, size_t stacksize)
-{
-    if(pthread_attr_init(attr) != 0)/*初始化线程属性*/
-    {
-        perror("pthread_attr_init");return (-1);
-    }
-    
-    if(pthread_attr_setstacksize(attr, stacksize) != 0)/*设置线程栈的大小*/
-    {
-        perror("pthread_attr_setstacksize");return (-1);
-    }
-
-    return 0;
-}
-
 static void *uart_readPthread(void *param)
 {
+#if (0)
     if(pthread_detach(pthread_self()) != 0)/*设置线程的分离属性*/
     {
         printf("uart_readPthread  : pthread_detach err\n");
         return NULL;
     }
+#endif
 
     /*获得文件描述符*/
     static int uart_fd = 0, file_fd = 0;
     uart_fd = ((P_FDS)param)->FD_0, file_fd = ((P_FDS)param)->FD_1;
-    printf("%s :start run uart_fd = %d\tfile_fd = %d\n",__func__,uart_fd,file_fd);
+    //printf("%s :start run uart_fd = %d\tfile_fd = %d\n",__func__,uart_fd,file_fd);
     
     unsigned int count_read = 0,count_write = 0;
     while(1)
     {
         char RBUF[BUFSIZ];
-        int real_read_size = 0,real_write_size = 0;
+        static int real_read_size = 0,real_write_size = 0;
 
         memset(RBUF, 0 , BUFSIZ);/*RBUF空间清零*/
         real_read_size = gk_read_com_port(uart_fd, RBUF, BUFSIZ);/*从串口获取数据*/
-        printf("***********************************************************\n");
         if(real_read_size < 0)
         {
             printf("read uart com port err\n");
@@ -98,42 +84,85 @@ void uart_readService(void *param)
     {
         perror("pthread_create : uart_readPthread");
     }
+
+    if((pthread_join(urs_pid, NULL)) != 0)
+    {
+        perror("pthread_join urs_pid err");
+    }
 }
 
+#if (0)
 static void *uart_writePthread(void *param)
 {
+#if (0)
     if(pthread_detach(pthread_self()) != 0)
     {
         return NULL;
     }
+#endif
     
     /*获得文件描述符*/
-    static int uart_fd ,file_fd;
-    uart_fd = ((P_FDS)param)->FD_0, file_fd = ((P_FDS)param)->FD_1;
+    static int uart_fd ;
+    uart_fd = ((P_FDS)param)->FD_0;
     int input_fd = 0;/*标准输入*/
 
+    while(1){
+        char WBUF[BUFSIZ];
+        static int real_read_size = 0, real_write_size = 0;
+
+        memset(Wbuf, 0 , BUFSIZ);
+        while(real_read_size = read(0,Wbuf,BUFSIZ) > 0)
+        {
+#if (1)
+            static int j;
+            for(j = 0; j< real_read_size ; j++)
+            {
+                printf("%c",Wbuf[j]);
+            }
+            puts("");
+#endif
+            if((real_write_size = write(uart_fd, Wbuf, real_read_size)) != real_read_size){
+                fprintf(stdout,"Line:%d write err :%s\n",__LINE__,strerror(errno));
+            }
+        }
+    }
 
     
     return NULL;
 }
 
-void uart_writeService(void *param)
-{
-    
+void uart_writeService(void *param){
+    pthread_t uws_pid;
+    pthread_attr_t uws_attr;
+
+    if((SetPthreadStackSize(&uws_attr, 250000)) != 0){
+        perror("SetPthreadStackSize");
+    }
+
+    if((pthread_create(&uws_pid, &uws_attr, uart_writePthread,param )) != 0){
+        perror("pthread_create uart_writePthread err");
+    }
+
+    if((pthread_join(uws_pid, NULL)) != 0){
+        perror("pthread_join uws_pid err");
+    }
+
 }
+
+#endif
 
 int main(int argc, char* argv[])
 {
     /*1.初始化串口及文件*/
     int u_fd, f_fd;
-    u_fd = uart_fd_init();
-    f_fd = create_sd_file();
+    u_fd = uart_fd_init();/*串口*/
+    f_fd = create_sd_file();/*文件*/
 
     FDS fds;
     P_FDS pfds = &fds;
     fds.FD_0 = u_fd ,fds.FD_1 = f_fd;
 
-    printf("uart_fd = %d\tfile_fd = %d\n",pfds->FD_0,pfds->FD_1);
+    printf("In main: uart_fd = %d\tfile_fd = %d\n",pfds->FD_0,pfds->FD_1);
 
 
     /*3.向串口写数据*/

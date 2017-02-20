@@ -1,9 +1,11 @@
 #include   <stdio.h> 
 #include   <sys/ioctl.h> 
-#include   <sys/sock_fdet.h> 
+#include   <sys/socket.h> 
 #include   <netinet/in.h> 
 #include   <net/if.h> 
 #include   <string.h> 
+
+
 
 int   main(int   argc,   char   *argv[]) 
 { 
@@ -14,18 +16,18 @@ int   main(int   argc,   char   *argv[])
 	if(argc!=2) 
 	{ 
 		printf( "Usage   :   ethname\n "); 
-		return   1; 
+		return   -1; 
 	} 
 	if((sock_fd=socket(AF_INET,SOCK_STREAM,0)) <0) 
 	{ 
 		perror( "socket "); 
-		return   2; 
+		return   -2; 
 	} 
 	strcpy(ifreq.ifr_name,argv[1]); 
 	if(ioctl(sock_fd,SIOCGIFHWADDR,&ifreq) <0) 
 	{ 
 		perror( "ioctl "); 
-		return   3; 
+		return   -3; 
 	} 
 	printf( "%02x:%02x:%02x:%02x:%02x:%02x\n ", 
 			(unsigned   char)ifreq.ifr_hwaddr.sa_data[0], 
