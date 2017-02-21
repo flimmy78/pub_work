@@ -96,7 +96,7 @@ int ProcotolAnlysis(char *data,int datalen)
     {
         return UART_CAP_SEND_PHOTO_REQ;
     }
-    else if(datatype == UART_CAP_PROTOCOL_TYPE2)
+   else if(datatype == UART_CAP_PROTOCOL_TYPE2)
     {
         datastr.datastr = addroffset[2];
         datastr.datastrlen = datanum - 2;

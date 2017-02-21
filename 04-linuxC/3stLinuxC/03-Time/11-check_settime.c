@@ -5,8 +5,7 @@
 
 #define DEBUG_TEST
 
-int check_settime(char *time_str)
-{
+int check_settime(char *time_str){
 	time_t set_sec,sys_sec;	/*定义系统和设定时间*/
 	char t_str[19];
 	char *simple = "xxxx-xx-xx_xx:xx:xx";	/*年-月-日_小时：分钟：秒*/
@@ -29,14 +28,11 @@ int check_settime(char *time_str)
 	set_sec = mktime(&tm_t);			/*设定时间*/
 	sys_sec = time((time_t *)NULL);		/*系统时间*/
 	absVal = abs(set_sec - sys_sec);
-	printf("set_sec[%ld] sys_sec[%ld]\ntime_diff[%d]\n",set_sec,sys_sec,absVal);
+	printf("set_sec[%ld] sys_sec[%ld]\ttime_diff[%d]\n",set_sec,sys_sec,absVal);
 
-	if(absVal < 10)
-	{
+	if(absVal < 10){
 		return 1;	/*差值小于10s,使用系统时间*/
-	}
-	else
-	{
+	}else{
 		return 0;	/*差值不小于10s，更新系统时间*/
 	}
 }
@@ -61,8 +57,11 @@ int main(int argc,char **argv)
 		printf("Usage :%s XXXX-XX-XX_XX:XX:XX\n",argv[0]);
 		exit(EXIT_FAILURE);
 	}
-
-	check_settime(argv[1]);
+    
+    int res;
+	if((res = check_settime(argv[1])) != 1){
+        printf("Time will be changed\n");
+    }
 	return 0;
 }
 #endif

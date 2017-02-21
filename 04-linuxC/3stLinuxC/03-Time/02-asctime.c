@@ -9,6 +9,7 @@
 #include <time.h>
 
 #if (0)
+/*将时间结构体数据转化成日常时间字符*/
 char *asctime(const struct tm *tm);/*将时间和日期以字符串格式表示*/
 struct tm *gmtime(const time_t *timep);/*取得目前的时间和日期*/
 
