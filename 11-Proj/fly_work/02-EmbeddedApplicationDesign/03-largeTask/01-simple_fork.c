@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     {
         for(i = 0;i < 3; i++)
         {
-            printf("In child process ! ret is %d, My PID is %d\n",ret,getpid());
+            printf("\tIn child process ! ret is %d, My PID is %d\n",ret,getpid());
             sleep(1);
         }
     }

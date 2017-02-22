@@ -22,7 +22,7 @@ int main(void)
     r.s.i = 1;  //1
     r.s.j = 2;  //10
     r.s.m = 3;  //011
-    printf("0x%x\n",r.c);
+    printf("%d\t0x%x\n",r.c,r.c);
 
     return 0;
 }

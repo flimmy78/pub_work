@@ -10,7 +10,7 @@
 #include "sd_file.h"
 #include "obd_uart.h"
 
-
+static pthread_mutex_t mutex;
 
 static void *uart_readPthread(void *param){
 #if (0)
@@ -19,10 +19,11 @@ static void *uart_readPthread(void *param){
     }
 #endif
 
+    printf("%s (%s) [%d] uart_readPthread\n",__FILE__,__func__,__LINE__);
+
     /*获得文件描述符*/
     static int uart_fd = 0, file_fd = 0;
     uart_fd = ((P_FDS)param)->FD_0, file_fd = ((P_FDS)param)->FD_1;
-    //printf("%s :start run uart_fd = %d\tfile_fd = %d\n",__func__,uart_fd,file_fd);
     
     unsigned int count_read = 0,count_write = 0;
     while(1){
@@ -30,6 +31,11 @@ static void *uart_readPthread(void *param){
         static int real_read_size = 0,real_write_size = 0;
 
         memset(RBUF, 0 , BUFSIZ);/*RBUF空间清零*/
+
+        /*读串口时，加锁*/
+        /*if(pthread_mutex_lock(&mutex)){
+            printf("read com pthread mutex lock err\n");
+        }*/
         real_read_size = gk_read_com_port(uart_fd, RBUF, BUFSIZ);/*从串口获取数据*/
         if(real_read_size < 0){
             printf("read uart com port err\n");
@@ -41,6 +47,7 @@ static void *uart_readPthread(void *param){
                 count_read = 0;
             }
         }
+        //pthread_mutex_unlock(&mutex);/*读完解锁*/
 #if (1)/*打印接收到的字符*/
         int i = 0;
         for(i = 0; i < real_read_size; i++){
@@ -142,6 +149,8 @@ int main(int argc, char* argv[])
     u_fd = uart_fd_init();/*串口*/
     f_fd = create_sd_file();/*文件*/
 
+   // pthread_mutex_init(&mutex, NULL);
+
     FDS fds;
     P_FDS pfds = &fds;
     fds.FD_0 = u_fd ,fds.FD_1 = f_fd;
@@ -154,10 +163,11 @@ int main(int argc, char* argv[])
 
 
     /*4.从串口读数据*/
-    uart_readService((void*)pfds);
+    //uart_readService((void*)pfds);
 
     /*5.关闭文件*/
     gk_close_com_port(u_fd);
     close_sd_file(f_fd);
+   // pthread_mutex_destroy(&mutex);
     return 0;
 }

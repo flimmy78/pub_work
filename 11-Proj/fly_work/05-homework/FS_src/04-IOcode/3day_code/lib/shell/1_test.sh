@@ -1,0 +1,3 @@
+ls
+pwd
+touch abcde

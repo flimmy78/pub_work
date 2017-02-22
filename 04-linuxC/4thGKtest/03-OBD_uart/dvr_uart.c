@@ -202,12 +202,12 @@ signed int gk_read_com_port(signed int fd,char *read_buf,int read_size){
     tv.tv_usec = 0;
     ret = select(fd+1,&rd_fds,NULL,NULL,&tv);
 
-    if(ret == 0) return 0;
-    else if(ret < 0){
+    if(ret == 0) return 0;/*超时*/
+    else if(ret < 0){/*出错*/
         perror("select err\n");
         return -1;
-    }else{
-        if(FD_ISSET(fd,&rd_fds)){
+    }else{/*可读*/
+        if(FD_ISSET(fd,&rd_fds)){/*找出可读文件*/
             read_real_size = read(fd,read_buf,read_size);
             if(read_real_size < 0){
                 return -1;
@@ -234,19 +234,19 @@ signed int gk_write_com_port(signed int fd,char* write_buf,int write_size){
     tv.tv_usec = 0;
     ret = select(fd+1,NULL,&wr_fds,NULL,&tv);
 
-    if(ret == 0) return 0;
-    else if(ret < 0){
+    if(ret == 0) return 0;/*超时*/
+    else if(ret < 0){/*出错*/
         perror("select err\n");
         return -1;
-    }else{
-        if(FD_ISSET(fd,&wr_fds)){
+    }else{/*可写*/
+        if(FD_ISSET(fd,&wr_fds)){/*找出可写文件*/
             write_real_size = write(fd,write_buf,write_size);
             if(write_real_size < 0){
-                return -1;
+                return -1;/*出错返回-1*/
             }
-            return write_real_size;
+            return write_real_size;/*返回写入的字节数*/
         }else{
-            return 0;
+            return 0;/*未读到数据，返回0*/
         }
     }
 
@@ -272,10 +272,10 @@ int uart_fd_init(void){
 }
 
 int SetPthreadStackSize(pthread_attr_t *attr, size_t stacksize){
-    if((pthread_attr_init(attr)) != 0){
+    if((pthread_attr_init(attr)) != 0){/*初始化属性*/
         printf("pthread_attr_init");return (-1);
     }
-    if((pthread_attr_setstacksize(attr,stacksize)) != 0){
+    if((pthread_attr_setstacksize(attr,stacksize)) != 0){/*设置栈的大小*/
         printf("pthread_attr_setstacksize");return (-2);
     }
     return 0;

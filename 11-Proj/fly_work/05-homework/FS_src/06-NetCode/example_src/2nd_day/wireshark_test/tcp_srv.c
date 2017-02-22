@@ -1,0 +1,61 @@
+#include <sys/types.h>          /* See NOTES */
+#include <sys/socket.h>
+#include <strings.h>
+#include <string.h>
+#include <errno.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+void err_sys(char *err_str)
+{
+	perror(err_str);
+	exit(1);
+}
+
+int main(int argc, char *argv[])
+{
+	int srv_fd = -1;
+	int new_fd = -1;
+	int ret = -1;
+	char recv_buf[32];
+	struct sockaddr_in self;
+
+	srv_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if(srv_fd < 0)
+		err_sys("socket");	
+	
+ 	bzero(&self, sizeof(self));
+ 	self.sin_family = PF_INET;
+ 	self.sin_port = htons(22222);
+	self.sin_addr.s_addr = inet_addr("192.168.7.5");
+	ret = bind(srv_fd, (struct sockaddr *)&self, sizeof(self));
+	if(ret < 0)
+		err_sys("bind");	
+
+	listen(srv_fd, 10);
+	
+	new_fd = accept(srv_fd, NULL, NULL);
+	
+	if(new_fd < 0)
+		err_sys("accept");
+
+	while(1)
+	{
+		ret = read(new_fd, recv_buf, 32);
+		if(ret < 0)
+			err_sys("read");
+
+		recv_buf[ret] = '\0';
+		printf("from peer: %s\n", recv_buf);
+		if(ret == 0)
+			break;
+	}
+
+	close(new_fd);
+	close(srv_fd);
+	
+	return 0;
+}

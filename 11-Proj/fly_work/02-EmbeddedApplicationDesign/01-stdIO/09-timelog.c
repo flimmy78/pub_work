@@ -28,7 +28,8 @@ int main(int argc, char* argv[])
     if(argc < 2)
     {
         printf("Usage : %s <flie> \n",argv[0]);
-        return (-1);
+        argv[1] = "timelog";
+        puts("default output file is timelog");
     }
 
     if((fp = fopen(argv[1],"w")) == NULL)
@@ -42,7 +43,8 @@ int main(int argc, char* argv[])
     {
         i++;
         time(&t);   //获取系统时间
-        fprintf(fp,"%d : %s\n",i,ctime(&t));
+        fprintf(fp,"%d : %s",i,ctime(&t));
+        printf("%d\n",i);
         fflush(fp);
         sleep(1);
     }
