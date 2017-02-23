@@ -34,11 +34,17 @@ int main(void)
 	close(fd[1]);
 	while(1){
 	    bzero(buf,BUFSIZ);
-	    read(fd[0],buf,BUFSIZ);
+	    if(read(fd[0],buf,BUFSIZ) > 0)
+        {
+            printf("%d:%s",getpid(),buf);
+            if(strncmp(buf,"quit",4) == 0)
+                break;
+        }
+#if (0)
 	    if(strncmp(buf,"quit",4) == 0)
 		break;
 	    printf("%d:%s",getpid(),buf);
-
+#endif
 	}
 	exit(0);
     }

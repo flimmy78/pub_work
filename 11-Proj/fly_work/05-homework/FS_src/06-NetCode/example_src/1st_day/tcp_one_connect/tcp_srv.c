@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 	#ifdef NONBLOCK_TEST		
 		flags = fcntl(new_fd, F_GETFL, 0);
-		if(flag < 0)
+		if(flags < 0)
 		{
 			perror("fcntl");
 			exit(1);

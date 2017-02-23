@@ -11,16 +11,14 @@ int main(int argc, char *argv[])
     int count = 5;
     char *content = "hello server, come on baby";
 
-    if(argc < 2)
-    {
+    if(argc < 2){
 	printf("usage :  ./client  serverip\n");
 	exit(1);
     }
 
 
     int fd = socket(AF_INET, SOCK_STREAM, 0);
-    if(fd < 0)
-    {
+    if(fd < 0){
 	perror("socket");
 	exit(1);
     }
