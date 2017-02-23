@@ -19,10 +19,8 @@ int main(int argc, char* argv[])
     int fd;
 
     /*首先打开文件*/
-    if((fd = open("hello", O_RDWR)) < 0)
-    {
-        perror("fail to open");
-        return (-1);
+    if((fd = open("hello", O_RDWR)) < 0){
+        perror("fail to open");return (-1);
     }
 
     /*给文件上锁*/

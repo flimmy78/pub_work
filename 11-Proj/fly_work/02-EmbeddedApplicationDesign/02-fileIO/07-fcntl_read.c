@@ -17,10 +17,8 @@ int main(int argc, char* argv[])
 {
     int fd;
     fd = open("hello", O_RDWR| O_CREAT, 0644);
-    if(fd < 0)
-    {
-        printf("Open file error\n");
-        exit(1);
+    if(fd < 0){
+        printf("Open file error\n");exit(1);
     }
 
     /*给文件上锁*/

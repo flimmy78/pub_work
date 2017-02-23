@@ -4,6 +4,15 @@
  *   > Mail: XXXXXXXXXX@icode.com
  *   > Create Time: Sat 14 Jan 2017 11:43:06 AM CST
  ******************************************************************/
+#if (0)
+/*行输入函数语法要点*/
+char *fgets(char *s, int size, FILE *stream);
+char *gets(char *s);
+/*行输出函数语法要点*/
+int puts(const char *s);
+int fputs(const char *s, FILE *stream);
+
+#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -53,16 +62,12 @@ int file_line_count(const char *path)
     char buf[128];
     FILE* fp;
 
-    if(path == NULL)
-    {
-        printf("%s\n",strerror(6));
-        return (-1);
+    if(path == NULL){
+        printf("%s\n",strerror(6));return (-1);
     }
 
-    if((fp = fopen(path,"r")) == NULL)
-    {
-        perror("Fail to fopen");
-        return (-1);
+    if((fp = fopen(path,"r")) == NULL){
+        perror("Fail to fopen");return (-1);
     }
 
     while(fgets(buf,128,fp) != NULL)

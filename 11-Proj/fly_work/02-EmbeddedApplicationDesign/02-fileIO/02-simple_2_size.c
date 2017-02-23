@@ -19,15 +19,12 @@ int filesize(const char *pathname)
     char buf[N];
 
     /*打开文件*/
-    if((fd = open(pathname,O_RDONLY)) < 0)
-    {
-        perror("fail to open");
-        return (-1);
+    if((fd = open(pathname,O_RDONLY)) < 0){
+        perror("fail to open");return (-1);
     }
     
     /*读取文件，将读到的字节数累加*/
-    while((nbyte = read(fd, buf, N)) > 0)
-    {
+    while((nbyte = read(fd, buf, N)) > 0){
         sum += nbyte;
     }
     
@@ -37,10 +34,8 @@ int filesize(const char *pathname)
 
 int main(int argc, char* argv[])
 {
-    if(argc < 2)
-    {
-        printf("Usage : %s filepathname\n",argv[0]);
-        return (-1);
+    if(argc < 2){
+        printf("Usage : %s filepathname\n",argv[0]);return (-1);
     }
 
     int file_size;

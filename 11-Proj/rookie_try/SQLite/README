@@ -79,3 +79,7 @@ gcc -o test test.c -static -lsqlite3 -lpthread -ldl #指定链接动态库
 ./lib//libsqlite3.a(sqlite3.o)：在函数‘unixDlOpen’中： 
 /home/andy/code/sqlite/sqlite-autoconf-3110000/sqlite3.c:33361: 警告： Using ‘dlopen’ in statically linked applications requires at runtime the shared libraries from the glibc version used for linking 
 提示编译环境和运行环境的libc版本必须一直。
+
+
+[zzx@localhost sqlite-autoconf-3140100]$ ./configure --prefix=/home/zzx/fl2440/3rdparty/sqlite-arm-linux/sqlite-autoconf-3140100/install --host=arm-linux CC=/opt/buildroot-2012.08/arm920t/usr/bin/arm-linux-gcc
+注：CC赋值为嵌入式开发环境所使用的交叉编译工具，后面接自己交叉编译器的路径 ，    --host指定软件运行环境为arm-linux，   --prefix指定源码交叉编译后生成文件的路径，我们指向了刚才新建的install文件夹

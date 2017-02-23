@@ -6,6 +6,9 @@
  ******************************************************************/
 
 #include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+
 
 int lock_set(int fd, int type)
 {
@@ -63,7 +66,9 @@ int lock_set(int fd, int type)
     return 0;
 }
 
+#if (0)
 int main(int argc, char* argv[])
 {
     return 0;
 }
+#endif

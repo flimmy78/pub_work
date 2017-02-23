@@ -19,15 +19,14 @@
 int main(int argc, char* argv[])
 {
     /*获取文件路径*/
-    char *pathname;/*申请大小，使用才OK*/
-    if(argc < 2)
-    {
+    char *pathname;/*申请大小，使用才OK,此问题待深究*/
+    if(argc < 2){
         printf("MoreUsage :%s filepathname\n",argv[0]);
-        pathname = (char*)malloc(sizeof "test.txt");
+        //pathname = (char*)malloc(sizeof "test.txt");
         pathname = "test.txt";
     }else
     {
-        pathname = (char*)malloc(sizeof argv[1]);
+        //pathname = (char*)malloc(sizeof argv[1]);
         pathname = argv[1];
     }
     printf("pathname :%s\n",pathname);
@@ -35,10 +34,8 @@ int main(int argc, char* argv[])
     /*打开文件*/
     int fd;
     fd = open(pathname, FILE_FLAGS, FILE_MODE);
-    if(fd < 0)
-    {
-        perror("fail to open ");
-        return (-1);
+    if(fd < 0){
+        perror("fail to open ");return (-1);
     }
 
     /*关闭文件*/

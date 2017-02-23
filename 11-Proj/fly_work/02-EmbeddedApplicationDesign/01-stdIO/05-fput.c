@@ -4,6 +4,16 @@
  *   > Mail: XXXXXXXXXX@icode.com
  *   > Create Time: Sat 14 Jan 2017 10:54:40 AM CST
  ******************************************************************/
+#if (0)
+/*字符输入函数语法要点*/
+int fgetc(FILE *stream);
+int getc(FILE *stream);
+int getchar(void);
+/*字符输出函数语法要点*/
+int fputc(int c, FILE *stream);
+int putc(int c, FILE *stream);
+int putchar(int c);
+#endif
 
 #include <stdio.h>
 

@@ -4,6 +4,9 @@
  *   > Mail: XXXXXXXXXX@icode.com
  *   > Create Time: Fri 13 Jan 2017 11:16:51 PM CST
  ******************************************************************/
+#if (0)
+char *strerror(int errnum);
+#endif
 
 #include <stdio.h>
 #include <string.h>
