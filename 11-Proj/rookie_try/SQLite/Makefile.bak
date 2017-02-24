@@ -1,0 +1,68 @@
+.PHONY:$(AllOBJ)
+
+AllOBJ	:= BIN INC LIB MAN
+TOPDIR= .
+OBJBINDIR	:=/usr/local/bin
+OBJINCDIR	:=/usr/local/include
+OBJLIBDIR	:=/usr/local/lib
+OBJMANDIR	:=/usr/local/share/man/man1
+
+LIBCONFPATH	:=/etc/ld.so.conf.d
+
+BIN:
+	@echo "will install the bin of sqlite3"
+	cp -rf $(TOPDIR)/bin/sqlite3 $(OBJBINDIR)
+
+INC:
+	@echo "will install the include of sqlite3"
+	mkdir $(OBJINCDIR)/sqlite3
+	cp -rf $(TOPDIR)/include/* $(OBJINCDIR)/sqlite3/
+	echo ""
+	echo "               $(OBJINCDIR)/sqlite3/"
+	echo ""
+
+
+LIB:
+	@echo "will config the path of sqlite3 lib"
+	mkdir $(OBJLIBDIR)/sqlite3
+	cp -rf $(TOPDIR)/lib/* $(OBJLIBDIR)/sqlite3/
+	cd $(LIBCONFPATH)	&& touch libsqlite3.conf && echo "$(OBJLIBDIR)/sqlite3" > libsqlite3.conf
+
+MAN:
+	@echo "will config the path of sqlite3 share"
+	cd $(TOPDIR)/share/man/man1 && cp -rf * $(OBJMANDIR)
+
+
+install:$(AllOBJ)
+
+uninstall:
+	@echo "will clean the sqlite3 config of bin, include, lib, share"
+	#删除文件
+	rm -rf $(OBJBINDIR)/sqlite3
+	rm -rf $(OBJINCDIR)/sqlite3/
+	rm -rf $(OBJLIBDIR)/sqlite3/
+	rm -rf $(OBJMANDIR)/sqlite3.1
+	#清除配置文件
+	rm -rf $(LIBCONFPATH)/libsqlite3.conf
+#.
+#├── bin
+#│   └── sqlite3
+#├── include
+#│   ├── sqlite3ext.h
+#│   └── sqlite3.h
+#├── lib
+#│   ├── libsqlite3.a
+#│   ├── libsqlite3.la
+#│   ├── libsqlite3.so -> libsqlite3.so.0.8.6
+#│   ├── libsqlite3.so.0 -> libsqlite3.so.0.8.6
+#│   ├── libsqlite3.so.0.8.6
+#│   └── pkgconfig
+#│       └── sqlite3.pc
+#├── Makefile
+#└── share
+#    └── man
+#        └── man1
+#            └── sqlite3.1
+#
+#7 directories, 11 files
+#/opt/sqlite3
