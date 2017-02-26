@@ -11,10 +11,11 @@ int pthread_detach(pthread_t thread);
 int pthread_join(pthread_t thread, void **retval);
 //线程执行函数内，使用分离属性，线程回收不正常
 #endif
-
+/*头文件*/
 #include <stdio.h>
 #include <pthread.h>
 
+/*函数声明*/
 int pthread_setstacksize(pthread_attr_t *attr, size_t stacksize);
 void *pthread_function(void *arg);
 void *pthread_FUNC(void *arg);

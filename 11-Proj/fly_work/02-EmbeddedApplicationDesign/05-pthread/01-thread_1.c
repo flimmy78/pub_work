@@ -16,17 +16,19 @@ void *thread_func(void *arg);
 
 int main(int argc, char* argv[])
 {
-    int res;
-    pthread_t pid;
-    void *thread_result;
+    int res;/*定义一个整型变量，用于获得函数返回值*/
+    pthread_t pid;/*定义一个线程ID*/
+    void *thread_result;/*定义一个void指针，指向线程退出返回的值*/
 
+    /*创建线程*/
     if((res = pthread_create(&pid, NULL, thread_func,(char*)massage)) != 0)
     {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     }
     printf("Waiting thread finish...\n");
-
+    
+    /*回收线程*/
     if((res = pthread_join(pid, &thread_result)) != 0)
     {
         perror("pthread_join");
@@ -38,11 +40,12 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+/*线程执行函数*/
 void *thread_func(void *arg)
 {
-    printf("Thread runing , the arg :%s\n",(char*)arg);
+    printf("Thread runing , the arg :%s\n",(char*)arg);/*打印获得的参数*/
     sleep(2);
     strcpy(massage, "thread used");
     printf("Thread finishing ...\n");
-    pthread_exit("thread_stop");
+    pthread_exit("thread_stop");/*退出线程*/
 }
