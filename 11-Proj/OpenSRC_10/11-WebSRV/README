@@ -1,0 +1,130 @@
+Boa服务器移植
+
+Boa是一种非常小巧的Web服务器，其可执行代码只有大约60KB左右。作为一种单任务Web服务器，Boa只能依次完成用户的请求，而不会fork出新的进程来处理并发连接请求。但Boa支持CGI，能够为CGI程序fork出一个进程来执行。Boa的设计目标是速度和安全。
+下面给大家介绍一下Boa服务器移植的具体操作步骤，希望能够有帮助。
+环境
+       主机：ubuntu8.10
+              交叉工具链：gcc-3.4.5-glibc-2.3.6
+                     目标：s3c2410开发板
+                     结合网上一些文档，整理了一个比较完整的文档。
+                     1．下载Boa源码
+                     下载地址: http://www.boa.org/
+                     最新发行版本： 0.94.13
+                     下载 boa-0.94.13.tar.gz
+                     解压：# tar xzf boa-0.94.13.tar.gz
+                     2.安装需要工具bison，flex
+                     sudo apt-get install bison flex
+                     否则会出现如下错误
+                     make: yacc：命令未找到
+                            make: *** [y.tab.c] 错误 127
+                            make: lex：命令未找到
+                                   make: *** [lex.yy.c] 错误 127
+                                   3.修改文件
+                                   (1)修改 src/compat.h
+                                   找到
+#define TIMEZONE_OFFSET(foo) foo##->tm_gmtoff
+                                   修改成
+#define TIMEZONE_OFFSET(foo) (foo)->tm_gmtoff
+                                   否则会出现错误：
+                                   util.c:100:1: error: pasting "t" and "->" does not give a valid preprocessing token make: *** [util.o] 错误 1
+                                   (2)修改 src/log.c
+                                   注释掉
+                                   if (dup2(error_log, STDERR_FILENO) == -1) {
+                                                                DIE("unable to dup2 the error log");
+                                                                                   }
+为：
+/*if (dup2(error_log, STDERR_FILENO) == -1) {
+                           DIE("unable to dup2 the error log");
+                                              }*/
+否则会出现错误：
+log.c:73 unable to dup2 the error log:bad file descriptor
+(3)修改src/boa.c
+注释掉下面两句话：
+if (passwdbuf == NULL) {
+            DIE(”getpwuid”);
+                    }
+        if (initgroups(passwdbuf->pw_name, passwdbuf->pw_gid) == -1) {
+                    DIE(”initgroups”);
+                            }
+为
+#if 0
+        if (passwdbuf == NULL) {
+                    DIE(”getpwuid”);
+                            }
+        if (initgroups(passwdbuf->pw_name, passwdbuf->pw_gid) == -1) {
+                    DIE(”initgroups”);
+                            }
+        #endif
+否则会出现错误：boa.c:211 - getpwuid: No such file or directory
+注释掉下面语句：
+if (setuid(0) != -1) {
+                            DIE(”icky Linux kernel bug!”);
+                                    }
+为
+#if 0
+         if (setuid(0) != -1) {
+                                     DIE(”icky Linux kernel bug!”);
+                                                     }
+#endif
+否则会出现问题：boa.c:228 - icky Linux kernel bug!: No such file or directory
+4、生成Makefile文件
+执行：
+#cd boa-0.94.13/src
+         #./configure
+5、修改Makefile
+cd src
+         vim Makefile
+         修改CC ＝ gcc 为 CC ＝ arm-softfloat-linux-gnu-gcc
+         修改CPP ＝ gcc -E 为 CC ＝ arm-softfloat-linux-gnu-gcc -E
+         6、编译
+         make
+                  ls -l boa
+                           -rwxr-xr-x 1 david david 189223 2009-05-31 13:44 boa
+                           然后为生成的二进制文件boa瘦身
+                           arm-softfloat-linux-gnu-strip boa
+                                    ls -l boa
+                                             -rwxr-xr-x 1 david david 61052 2009-05-31 13:51 boa
+                                             可以发现boa的大小前后差距很大这为我们节省了很大的空间
+                                             7、Boa的配置
+                                             这一步的工作也在电脑主机上完成。
+                                             在boa-0.94.13目录下已有一个示例boa.conf，可以在其基础上进行修改。如下：
+#vi boa.conf
+                                             (1)Group的修改
+                                             修改 Group nogroup
+                                             为 Group 0
+                                             (2)user的修改
+                                             修改 User nobody
+                                             为 User 0
+                                             (3)ScriptAlias的修改
+                                             修改ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+                                             为 ScriptAlias /cgi-bin/ /www/cgi-bin/
+                                             (5)DoucmentRoot的修改
+                                             修改DoucmentRoot /var/www
+                                             为DoucmentRoot /www
+                                             (6)ServerName的设置
+                                             修改#ServerName www.your.org.here
+                                             为 ServerName www.your.org.here
+                                             否则会出现错误“gethostbyname::No such file or directory”
+                                             (7)AccessLog修改
+                                             修改AccessLog /var/log/boa/access_log
+                                             为#AccessLog /var/log/boa/access_log
+                                             否则会出现错误提示：“unable to dup2 the error log: Bad file descriptor”
+                                             (8)以下配置和boa.conf的配置有关，都是在ARM根文件系统中创建
+                                             以下步骤在开发板上进行：
+                                             创建目录/etc/boa并且把boa 和 boa.conf拷贝到这个目录下
+                                             mkdir /etc/boa
+                                             创建HTML文档的主目录/www
+                                             mkdir /www
+                                             创建CGI脚本所在录 /www/cgi-bin
+                                             mkdir /www/cgi-bin
+                                             以下步骤在ubuntu下进行：
+                                             将boa.conf拷贝到开发板根文件系统的/etc/boa下
+#cp boa.conf /source/rootfs/etc/boa
+                                             将boa拷贝到开发板根文件系统的/etc/boa下
+#cp src/boa /source/rootfs/etc/boa
+                                             将ubuntu下/etc/mime.types拷贝到开发板根文件系统的/etc下
+#cp /etc/mime.types /source/rootfs/etc
+                                             将你的主页index.html拷贝到www目录下
+                                             8、测试
+                                             打开一个浏览器输入开发板ip看看效果
+                                             OK

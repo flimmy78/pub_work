@@ -8,13 +8,13 @@
 #include <strings.h>
 #include <string.h>
 
-#if 0
+#if (0)
 #include <stdlib.h>
-	double atof(const char *nptr);		/*将字符串转换成浮点型数*/
-	int atoi(const char *nptr);			/*将字符串转换成整型数*/
-	long atol(const char *nptr);		/*将字符串转换成长整型数*/
-	long long atoll(const char *nptr);	/**/
-	long long atoq(const char *nptr);	/**/
+	double atof(const char *nptr);		                    /*将字符串转换成浮点型数*/
+	int atoi(const char *nptr);			                    /*将字符串转换成整型数*/
+	long atol(const char *nptr);		                    /*将字符串转换成长整型数*/
+	long long atoll(const char *nptr);	                    /**/
+	long long atoq(const char *nptr);	                    /**/
 	char *gcvt(double number, size_t ndigit, char *buf);	/*将浮点型数转换为字符串，取四舍五入*/
 	double strtod(const char *nptr, char **endptr);			/*将字符串转换成浮点数*/
 	float strtof(const char *nptr, char **endptr);			/**/

@@ -23,10 +23,21 @@ intmax_t imaxabs(intmax_t j);
 
 int main(int argc, char* argv[])
 {
-    int answer;
+    int answer,res;
+#if (0)
     answer = -100;
 
     printf("|%d| = %d\n",answer,abs(answer));
+#else
+    int count = 10;
+    while(count--){
+        printf("%d :Please input a integer :\n",count);
+        if((res = scanf("%d",&answer)) != 1){
+            puts("input error");break;
+        }
+        printf("|%d| = %d\n",answer,abs(answer));
+    }
+#endif
 
     return 0;
 }

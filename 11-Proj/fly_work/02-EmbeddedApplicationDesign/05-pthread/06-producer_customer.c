@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <semaphore.h>
 #include <sys/ipc.h>
+#include <string.h>
 /*宏定义*/
 #define MYFIFO      "myfifo"    /*缓冲区有名管道的名字*/
 #define BUFFER_SIZE 3           /*缓冲区的单元数*/
