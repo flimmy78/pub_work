@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 
 #define BUF_SIZE 1024
 
@@ -18,6 +19,12 @@ int copy_file(const char *src_file, const char *dst_file)
     int fds,fdd;
     unsigned char buf[BUF_SIZE];
     int read_len;
+    struct timeval start_time, end_time;
+
+    /*开始运行*/
+    if((gettimeofday(&start_time, NULL)) != 0){
+        perror("gettimeofday start_time err");
+    }
 
     /*以只读的方式打开源文件*/
     if((fds = open(src_file, O_RDONLY)) < 0){
@@ -36,6 +43,16 @@ int copy_file(const char *src_file, const char *dst_file)
 
     /*关闭文件*/
     close(fds),close(fdd);
+    
+    /*结束运行*/
+    if((gettimeofday(&end_time, NULL)) != 0){
+        perror("gettimeofday end_time err");
+    }
+
+    printf("RUN_TIME: %lds:%ldms\n",\
+            (end_time.tv_sec - start_time.tv_sec),\
+            (end_time.tv_usec - start_time.tv_usec));
+
     return 0;
 }
 

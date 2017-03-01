@@ -21,8 +21,7 @@ int main(int argc, char* argv[])
 
     stream = fopen("DUMMY.FIL", MODE);
     (void)getc(stream);
-    if(ferror(stream))
-    {
+    if(ferror(stream)){
         printf("Error reading from DUMMY.FIL\n");
         clearerr(stream);
     }

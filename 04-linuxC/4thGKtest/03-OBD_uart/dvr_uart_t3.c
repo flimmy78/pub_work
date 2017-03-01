@@ -41,7 +41,7 @@ static void *uart_servicePthread(void *param){
                     perror("read uart com port err\n");
                 }else if(real_read_size > 0){
                     count_read++;
-                    printf("\n----Receive UART_data %d OK\n",count_read);
+                    printf("\n----Receive %d bytes UART_data  %d OK\n",real_read_size, count_read);
                     if(count_read == (UINT_MAX - 1)){
                         count_read = 0;
                     }
@@ -64,7 +64,7 @@ static void *uart_servicePthread(void *param){
                     perror("write RBUF to SD_file err");
                 }else if(real_write_size > 0){
                     count_write_sd ++;
-                    printf("\n----Write to SD_file %d OK\n",count_write_sd);
+                    printf("\n----Write %d bytes to SD_file %d OK\n",real_write_size, count_write_sd);
                     if(count_write_sd == (UINT_MAX - 1)){
                         count_write_sd = 0;
                     }
