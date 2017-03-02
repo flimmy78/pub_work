@@ -17,8 +17,8 @@ ssize_t read(int fd, void *buf, size_t count);
 
 int main(int argc, char* argv[])
 {
-    char BUF[BUFSIZE];
-    int nread;
+    char BUF[BUFSIZE];/*缓冲buf*/
+    int nread;/*读到的字节*/
     
     /*将stdin缓冲区的数据写入到BUF*/
     if((nread = read(STDIN_FILENO, BUF, BUFSIZE)) == -1){
