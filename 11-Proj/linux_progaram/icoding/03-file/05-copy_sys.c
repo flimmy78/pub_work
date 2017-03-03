@@ -12,8 +12,8 @@
 #include <unistd.h>
 #include <errno.h>
 
-#define BLOCKSIZE 1024*10
-
+//#define BLOCKSIZE 1024*10
+#define BLOCKSIZE 1
 int main(int argc, char* argv[])
 {
     char c[BLOCKSIZE];
