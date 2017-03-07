@@ -16,12 +16,18 @@ char *rindex(const char *s, int c);
 
 int main(int argc, char* argv[])
 {
-    char *STR = "ABCDE6789012345";
-    char *p;
+    char *STR = "ABCDE6789012345EDCBA";
+    char *Fp, *Lp;
     printf("STR :%s\t STR--%p\n",STR,STR);
+    
+    /*找到字符串STR第一次出现字符'E'的地方*/
+    Fp = index(STR, 'E');
+    printf("index Fp :%s\t Fp----%p\n",Fp,Fp);
 
-    p = index(STR, 'E');
-    printf("index p :%s\t p----%p\n",p,p);
+    /*找到字符串STR最后出现字符'E'的地方*/
+    Lp = rindex(STR, 'E');
+    printf("rindex Lp :%s\t Lp----%p\n",Lp,Lp);
+
 
     return 0;
 }

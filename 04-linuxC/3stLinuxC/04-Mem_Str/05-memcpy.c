@@ -29,16 +29,14 @@ int main(int argc, char* argv[])
     int i;
     strcpy(a,b);
     printf("strcpy():");
-    for(i = 0; i<30; i++)
-    {
+    for(i = 0; i<30; i++){
         printf("%c",a[i]);
     }
     puts("");
 
     memcpy(a,b,sizeof b);
     printf("memcpy():");
-    for(i = 0; i< 30; i++)
-    {
+    for(i = 0; i< 30; i++){
         printf("%c",a[i]);
     }
     puts("");

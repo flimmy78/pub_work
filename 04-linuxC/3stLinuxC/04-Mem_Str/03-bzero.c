@@ -21,13 +21,14 @@ int main(int argc, char* argv[])
 
     char STR[10] = "ABCDEFGHIJ";
     printf("%s\n",STR);
-    printf("sizeof STR %d\tsizeof STR[10] %d\n",sizeof STR,sizeof STR[10]);
+    printf("sizeof STR %d\tsizeof STR[10] %d\n",sizeof(STR),sizeof STR[10]);
+    printf("strlen STR %d\tbyte\n",strlen(STR));
+    /*将字符串STR处sizeof STR个字节置0*/
     bzero(STR,sizeof STR);
     printf("Bzero :%s\n",STR);
 
     int i;
-    for(i=0 ; i < 15; i++)
-    {
+    for(i=0 ; i < 15; i++){
         printf("%d--%d\n",i,STR[i]);
     }
 

@@ -18,14 +18,15 @@ int main(int argc, char* argv[])
     printf("str :%s\n",str);
     printf("HEAD :%s\n",HEAD);
 
+    /*在字符串str找到HEAD，返回位置指针*/
     addroffset = strstr(str,HEAD);
-    if(addroffset == NULL)
-    {
+    if(addroffset == NULL){
         printf("strstr err");
     }
 
     printf("addroffset :%s\n",addroffset);
-
+    
+    /*指针后移，跳过HEAD*/
     addroffset += strlen(HEAD);
     printf("addroffset :%s\n",addroffset);
 

@@ -21,23 +21,19 @@ int main(int argc, char* argv[])
 
     printf("str1 :%s\nstr2 :%s\n",str1,str2);
     n = 5;
+    /*比较字符串str1、str2前5个字节*/
     ret = bcmp((void*)str1,(void*)str2,n);
-    if(ret != 0)
-    {
-        printf("bcmp is error\n");
-        return (-1);
-    }
-    else
-    {
-        printf("%dbyte is same\n",n);
+    if(ret != 0){
+        printf("bcmp is error\n");return (-1);
+    }else{
+        printf("ret = %d %dbyte is same\n",ret,n);
     }
 
     n = 6;
+    /*比较字符串str1、str2的前6个字节*/
     ret = bcmp((void*)str1,(void*)str2,n);
-    if(ret != 0)
-    {
-        printf("bcmp is error\n");
-        return (-1);
+    if(ret != 0){
+        printf("ret = %d bcmp is error\n",ret);return (-1);
     }
 
     return 0;

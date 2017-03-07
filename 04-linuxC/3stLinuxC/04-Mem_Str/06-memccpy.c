@@ -18,8 +18,8 @@ void *memccpy(void *dest, const void *src, int c, size_t n);/*拷贝内存内容
 
 int main(int argc, char* argv[])
 {
-    char a[] = "STRING(a)";
-    char b[] = "string(b)";
+    char a[] = "STRINGR(a)";
+    char b[] = "stringr(b)";
     printf("a :%s\nb :%s\n",a,b);
 
     memccpy(a, b, 'r',sizeof b);

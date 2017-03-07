@@ -76,21 +76,17 @@ int main(int argc,char *argv[])
 #else
 	/*匹配功能名称*/
 	int i ,ReDim = -1, ret;
-	for(i = 0; i<char_num; i++)
-	{
-		if(ret =(!strncasecmp(func[i], argv[1],strlen(func[i]))))
-		{
+	for(i = 0; i<char_num; i++){
+		if(ret =(!strncasecmp(func[i], argv[1],strlen(func[i])))){
 			ReDim = i;
 			printf("Got an OK param : ReMin = %d\n",ReDim);
 		}
 	}
 
 	/*未匹配成功，退出*/
-	if(ReDim < 0 || ReDim >= char_num || ReDim == -1)
-	{
+	if(ReDim < 0 || ReDim >= char_num || ReDim == -1){
 		puts("funcname :");
-		for(i = 0; i < char_num; i++)
-		{
+		for(i = 0; i < char_num; i++){
 			printf("%d.%s  ",i,func[i]);
 		}
 		puts("");
@@ -98,8 +94,7 @@ int main(int argc,char *argv[])
 	}
 
 	func_name = ReDim;
-	switch(func_name)
-	{
+	switch(func_name){
 
 			/*double atof(const char *nptr);将字符串转换成双精度浮点型*/
 		case ATOF:
@@ -144,13 +139,10 @@ int main(int argc,char *argv[])
 				char ptr[20];	/*第三个参数要指定大小，以免出现段错误*/
 
 				/*通过命令行第三个参数设定存储的有效数字位数*/
-				if(argc == 3)
-				{
+				if(argc == 3){
 					sig = atoi(argv[2]);
 					printf("设定存储的有效数字位数为：%d\n",sig);
-				}
-				else
-				{
+				}else{
 					printf("默认存储的有效数字位数为：%d\n",sig);
 				}
 
@@ -220,13 +212,10 @@ int main(int argc,char *argv[])
 				int base = 0;
 				
 				/*通过命令行第三个参数，设定要转换的进制*/
-				if(argc == 3)
-				{
+				if(argc == 3){
 					base = atoi(argv[2]);
 					printf("设定要转换的进制为：%d\n",base);
-				}
-				else
-				{
+				}else{
 					printf("默认要转换的进制为：%d\n",base);
 				}
 				printf("str:%s\t-(%d)->  %ld\n",a,base,strtoul(a, &b, base));

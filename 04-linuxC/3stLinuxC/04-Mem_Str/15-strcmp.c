@@ -1,0 +1,38 @@
+/*******************************************************************
+ *   > File Name: 15-strcmp.c
+ *   > Author: fly
+ *   > Mail: XXXXXXXX@icode.com
+ *   > Create Time: Tue 07 Mar 2017 05:47:22 PM CST
+ ******************************************************************/
+#if (0)
+/*比较字符串*/
+int strcmp(const char *s1, const char *s2);
+/**/
+int strncmp(const char *s1, const char *s2, size_t n);
+#endif
+
+#include <stdio.h>
+/*INC for strcmp*/
+#include <string.h>
+
+int main(int argc, char* argv[])
+{
+#if (0)
+    char *a = "ABCDE";
+    char *b = "ABCDE";
+    char *c = "abcde";
+    char *d = "@AAAA";
+#else
+    char *a = "aBcDeF";
+    char *b = "AbCeEf";
+    char *c = "aacdef";
+    char *d = "aBcDeF";
+#endif
+
+    printf("a :%s\tb :%s\tc :%s\td :%s\n",a,b,c,d);
+    printf("strcmp(a,b) :%d\n",strcmp(a,b));
+    printf("strcmp(a,c) :%d\n",strcmp(a,c));
+    printf("strcmp(a,d) :%d\n",strcmp(a,d));
+
+    return 0;
+}
