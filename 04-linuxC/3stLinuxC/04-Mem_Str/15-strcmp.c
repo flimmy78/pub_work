@@ -30,8 +30,11 @@ int main(int argc, char* argv[])
 #endif
 
     printf("a :%s\tb :%s\tc :%s\td :%s\n",a,b,c,d);
+    /*s1中'a'大于s2中'A'，返回1*/
     printf("strcmp(a,b) :%d\n",strcmp(a,b));
+    /*s1中'A'小于s2中'a'，返回-1*/
     printf("strcmp(a,c) :%d\n",strcmp(a,c));
+    /*相同，返回0*/
     printf("strcmp(a,d) :%d\n",strcmp(a,d));
 
     return 0;
