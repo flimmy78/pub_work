@@ -52,7 +52,8 @@ int main (void)
     long free_pages;
     long long  mem;
     long long  free_mem;
-
+    
+    printf("(_SC_PAGE_SIZE)%ld\t\t%ld K\n",sysconf(_SC_PAGE_SIZE),sysconf(_SC_PAGE_SIZE) / 1024);
     num_procs = sysconf (_SC_NPROCESSORS_CONF);
     printf ("CPU 个数为: %ld 个\n", num_procs);
 
@@ -71,7 +72,10 @@ int main (void)
     free_mem = (long long)free_pages * (long long)page_size;
     free_mem /= ONE_MB;
 
-    printf ("总共有 %lld MB 的物理内存, 空闲的物理内存有: %lld MB\n", mem, free_mem);
+    printf ("总共有 %lld MB(%lld) 的物理内存, 空闲的物理内存有: %lld MB(%lld)\n", mem,\
+           (long long) ((long long)num_pages * (long long)page_size),\
+           free_mem,\
+           (long long)free_pages * (long long)page_size);
     return (0);
 }
 #endif

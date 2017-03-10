@@ -30,7 +30,7 @@ int main(void)
     if((fp = fopen(FILEPATH,"r")) == NULL)/*打开文件流*/{
         perror("Fail to open");
         printf("Errno %d\n",errno);
-        //return (-1);
+        return (-1);
     }else{
         printf("(%d) Open %s OK\n",__LINE__,FILEPATH);
         printf("FILE_POINTER is %p\n",fp);

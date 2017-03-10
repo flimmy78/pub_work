@@ -35,7 +35,11 @@ int munmap(void *addr,size_t length);
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 
+#if 0
 int main(int argc, char* argv[])
 {
     /*利用mmap()来读取/etc/passwd文件内容*/
@@ -54,3 +58,50 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+#else
+int main(int argc, char* argv[])
+{
+    int fd;
+    struct stat sb;
+    char *start;
+    size_t filesize;
+    
+    /*获取参数，文件名*/
+    if(argc < 2 || argc > 2){
+        printf("\n\t\tUsage : %s  <filename>\n\n",argv[0]);exit(-1);
+    }
+    
+    /*打开文件*/
+    if((fd = open(argv[1], O_RDONLY)) < 0){
+        perror("open file err");exit(errno);
+    }
+    
+    /*获取文件大小*/
+    if((fstat(fd , &sb)) != 0){
+        perror("fstat file err");exit(errno);
+    }
+    filesize = sb.st_size;
+    
+    /*映射文件到内存*/
+    if((start = (char*)mmap(NULL, filesize, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED){
+        perror("mmap file filesize err");exit(errno);
+    }
+    
+    //printf("strlen(start) :%d\tsizeof(start) :%d\n",strlen(start),sizeof(start));
+    //printf("filesize :%d\n",filesize);
+    printf("%s",start);
+    printf("[[[%s]]]",start + 1000);
+    
+    /*解除内存映射*/
+    if((munmap((void*)start, filesize)) != 0){
+        perror("munmap filesize err");exit(errno);
+    }
+    
+    /*关闭文件*/
+    close(fd);
+
+    exit(EXIT_SUCCESS);
+}
+
+
+#endif

@@ -42,7 +42,7 @@ int main()
     fseek(fp,43*sizeof(record),SEEK_SET);
     fwrite(&record,sizeof(record),1,fp);
     fclose(fp);
-
+#if (1)
 /*  We now map the records into memory
     and access the 43rd record in order to change the integer to 243
     (and update the record string), again using memory mapping.  */
@@ -57,6 +57,7 @@ int main()
     msync((void *)mapped, NRECORDS*sizeof(record), MS_ASYNC);
     munmap((void *)mapped, NRECORDS*sizeof(record));
     close(f);
+#endif
 
     exit(0);
 }
