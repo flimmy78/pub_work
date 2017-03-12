@@ -68,7 +68,7 @@ int main(void)
 
             /*打印空格*/
 #if (1)
-            for(k = (N - i- 1); k >= 0; k--){
+            for(k = (N - i- 1); k > 0; k--){
                 printf("    ");
             }
 #endif 
