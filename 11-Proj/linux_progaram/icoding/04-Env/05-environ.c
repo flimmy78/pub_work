@@ -28,7 +28,18 @@ int main(int argc, char* argv[])
     if(argc == 3){
         char *string;
         value = argv[2];
-        string = malloc
+        string = malloc(strlen(var) + strlen(value) + 2);
+        if(!string){
+            fprintf(stderr, "out of memory\n");exit(EXIT_FAILURE);
+        }
+        strcpy(string, var);
+        strcat(string, "=");
+        strcat(string, value);
+        printf("Calling  putenv with :%s\n",string);
+        if(putenv(string) != 0){
+            fprintf(stderr,"");
+        }
+
     }
 
 
