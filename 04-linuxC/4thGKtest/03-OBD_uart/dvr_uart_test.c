@@ -27,41 +27,32 @@ int main(int argc, char* argv[])
     char Wstr[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n";
     int real_write_size;
     real_write_size = gk_write_com_port(uart_fd,Wstr,27);
-    if(real_write_size != 27)
-    {
+    if(real_write_size != 27){
         printf("Write data err\n");
-    }
-    else
-    {
+    }else{
         printf("Write data ok\n");
     }
 
     /*4.从串口读数据*/
     unsigned int count_read = 0, count_write = 0;
-    while(1)
-    {
+    while(1){
         char RBUF[BUFSIZ];
         int real_read_size = 0;
 
         memset(RBUF, 0, BUFSIZ);
         real_read_size = gk_read_com_port(uart_fd, RBUF, BUFSIZ);
-        if(real_read_size < 0)
-        {
+        if(real_read_size < 0){
             printf("read uart com port err\n");
-        }
-        else if(real_read_size > 0)
-        {
+        }else if(real_read_size > 0){
             count_read ++;
             printf("\n------Receive UART_data %d\n",count_read);
-            if(count_read == (UINT_MAX - 1))
-            {
+            if(count_read == (UINT_MAX - 1)){
                 count_read = 0;
             }
         }
 #if (1)
         int i = 0;
-        for(i = 0; i < real_read_size; i++)
-        {
+        for(i = 0; i < real_read_size; i++){
             printf(" %02X",RBUF[i]);
         }
 #endif
@@ -69,16 +60,12 @@ int main(int argc, char* argv[])
         //if(ferror(fdopen(file_fd,"r+")))/*运行一段时间后，报：Segmentation fault*/
         /*6.将读到的数据写入SD卡*/
         ret = write(file_fd, RBUF, real_read_size);
-        if(ret != real_read_size)
-        {
+        if(ret != real_read_size){
             perror("write RBUF to SD_FILE err");
-        }
-        else if(ret > 0)
-        {
+        }else if(ret > 0){
             count_write ++;
             printf("\n++++++Write to SD_FILE %d\n",count_write);
-            if(count_write == (UINT_MAX - 1))
-            {
+            if(count_write == (UINT_MAX - 1)){
                 count_write = 0;
             }
         }
@@ -89,11 +76,9 @@ int main(int argc, char* argv[])
         int r_ret;
         char READ_BUF[BUFSIZ];
         memset(READ_BUF,0,BUFSIZ);
-        if(read(0,READ_BUF,BUFSIZ - 1) > 0)
-        {
+        if(read(0,READ_BUF,BUFSIZ - 1) > 0){
             r_ret = write(uart_fd,READ_BUF,sizeof(READ_BUF));
-            if(r_ret != sizeof(READ_BUF) )
-            {
+            if(r_ret != sizeof(READ_BUF) ){
                 printf("write stdin data to uart_fd err\n");
             }
         }

@@ -1,18 +1,18 @@
 /*******************************************************************
- *   > File Name: 00-putchar.c
+ *   > File Name: 15-gethosttid.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon 13 Mar 2017 09:20:44 AM CST
+ *   > Create Time: Wed 15 Mar 2017 03:36:04 PM CST
  ******************************************************************/
+#if (0)
+long gethostid(void);
+#endif
 
 #include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char* argv[])
 {
-    int ret;
-
-    ret = putchar((int)'A');
-    printf("ret = %d\n",ret);
-
+    printf("hostid :%ld\n",gethostid());
     return 0;
 }

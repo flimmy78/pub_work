@@ -49,7 +49,7 @@ static void *uart_servicePthread(void *param){
 #if (1)/*打印通过串口收到的数据*/
                 static int i;
                 for(i = 0; i < real_read_size; i++){
-#if (0)
+#if (1)
                     printf(" %02X",RBUF[i]);
 #else 
                     printf("%c",RBUF[i]);

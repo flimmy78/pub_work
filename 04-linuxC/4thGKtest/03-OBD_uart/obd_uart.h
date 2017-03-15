@@ -142,7 +142,7 @@ typedef struct geographic_location
     double locationy;/*维度：-90~90*/
     int eventtype;
     int eventstatus;
-}LCT, *P_LCT;
+}Glct, *P_Glct;
 
 
 int GK_SetPthreadStackSize(pthread_attr_t* attr, int stacksize);
