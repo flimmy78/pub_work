@@ -10,27 +10,15 @@
 
 #include <stdio.h>
 
-#if (0)
-void printb(int x , int n){
+void printb(int x, int n){
     if(n > 0){
-        putchar('0' + ((unsigned)(x & (1 << (n - 1)))) >> (n - 1));
-        printb(x, n-1);
+        putchar('0' + (x&(1 << (n - 1))) >> (n - 1));
+        printb(x, n - 1);
     }
+    if(n == 0)
+        puts("");
 }
 
-int main(int argc, char* argv[])
-{
-    int x;
-
-    printf("Input integer:");
-    scanf("%d",&x);
-    printf("number of decimal form:%d\n",x);
-    printb(x, sizeof(int) * 8);
-    putchar('\n');
-
-    return 0;
-}
-#endif
 
 void printb_r(int x){
     int i, j;
@@ -46,5 +34,6 @@ void printb_r(int x){
 
 int main(void)
 {
-    printb_r(0xFFFFFFF);
+    printb_r(-15);
+    printb(15,32);
 }
