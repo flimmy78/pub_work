@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Content-type:text/html"
+echo ""
+echo "&nbsp;&nbsp;&nbsp;Start Send Message......<br><br>"
+echo ""
+#检测文件是否存在
+FILE="/mnt/sd01/DVR/test.file"
+if [ -f ${FILE} ]
+then
+    echo "file is exist <br>"
+else
+    touch ${FILE}
+    chmod 0777 ${FILE}
+    echo "crete file......<br>"
+fi
+echo ""
+#向文件中写入数据
+TIME=`date +%s`
+CMD="_LOCK_CURR_VIDEO_"
+MSG=""$TIME""$CMD""
+echo $MSG > ${FILE}
+echo ""
+#sleep 0.5
+echo "Write Messge to FIFO OK<br> <br>"
+/bin/date
+echo ""

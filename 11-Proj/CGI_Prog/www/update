@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "update /va/www file to pub_work"
+cp -rf /var/www/* ./
+echo "update OK"
