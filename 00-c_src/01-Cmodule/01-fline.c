@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+    /* 获得一个文件的行数 */
 unsigned int fline(const char *filepathname){
     static unsigned int line = 0;
     static char buf[128];
@@ -24,9 +25,9 @@ unsigned int fline(const char *filepathname){
 
     while(fgets(buf, 128, fp) != NULL){
         if(buf[strlen(buf) - 1] == '\n')
-            line ++;
+            line ++;    /*累加行数*/
     }
-    return line;
+    return line;        /*返回行数*/
 }
 
 #define TEST_DEBUG

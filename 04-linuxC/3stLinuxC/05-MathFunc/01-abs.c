@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 #else
     int count = 10;
     while(count--){
-        printf("%d :Please input a integer :\n",count);
+        printf("(%d). Please input a integer :  ",count);
         if((res = scanf("%d",&answer)) != 1){
             puts("input error");break;
         }

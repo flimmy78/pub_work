@@ -17,6 +17,15 @@ int main(int argc, char* argv[])
 
     printf("out for i = %d\n",i);
     printf("out for i = %d\n",i);
+
+    int j;
+    for(j = 0; j < 5; ++j){
+        printf("j = %d\n",j);
+    }
+
+    printf("out for j = %d\n",j);
+    printf("out for j = %d\n",j);
+    for(;;);
     
 
     return 0;

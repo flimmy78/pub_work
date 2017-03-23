@@ -13,24 +13,27 @@
 
 #include <stdlib.h>
 
+#define FIFO_MODE 0664
+
+    /* 获得一个管道文件描述符 */
 int create_fifo(const char *filename){
     static int fd, retval;
 
-    if(filename == NULL){
+    if(filename == NULL){   /*传入的管道文件路径不能为空*/
         printf("No such file\n");return (-1);
     }
 
-    if((retval = access(filename, F_OK)) != 0){
-        if((retval = mkfifo(filename, 0777)) != 0){
+    if((retval = access(filename, F_OK)) != 0){ /*文件是否存在*/
+        if((retval = mkfifo(filename, FIFO_MODE)) != 0){    /*不存在则创建*/
             fprintf(stderr, "mkfifo %s err\n",filename);return (-2);
         }
     }
 
-    if((retval = chmod( filename, 0777)) != 0){
+    if((retval = chmod( filename, FIFO_MODE)) != 0){    /*改变文件权限*/
         fprintf(stderr, "chmod %s mode err\n",filename);return (-3);
     }
 
-    if((fd = open(filename, O_RDWR)) < 0){
+    if((fd = open(filename, O_RDWR)) < 0){  /*打开文件*/
         fprintf(stderr, "open %s err\n",filename);return (-4);
     }
     return fd;
