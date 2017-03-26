@@ -31,7 +31,7 @@ void printb_r(int x){
     puts("");
 }
 
-#if (0)
+#if (1)
 char *printb_rs(int x, int n){
     static char str[n] = {0};
     static int i = 0, j = 0;

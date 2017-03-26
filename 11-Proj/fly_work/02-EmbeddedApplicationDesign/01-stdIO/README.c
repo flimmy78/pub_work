@@ -49,6 +49,7 @@ int putchar(int c);
 2.按行输入\输出
 char *gets(char*s);
 char *fgets(char *s, int size, FILE*stream);
+/*遇到\n或者读取了size-1个字符后返回*/
 
 int puts(const char *s);
 int fputs(const char *s,FILE *stream);

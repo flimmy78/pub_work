@@ -8,6 +8,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+#include "mylock.h"
+
 int lock_set(int fd, int type){
     struct flock old_lock, lock;
     lock.l_whence = SEEK_SET;
