@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define TEST_DEBUG (1)
+
 char *menu[] = {
     "a - add new record",
     "d - delete record",
@@ -43,8 +45,16 @@ int getchoice(char *greet, char *choices[]){
             printf("%s\n", *option);
             option ++;
         }
+
+#if TEST_DEBUG
+        do{
+            selected = getchar();
+        }while(selected == '\n');
+#else
         selected = getchar();
+#endif
         option = choices;
+
         while(*option){
             if(selected == *option[0]){
                 chosen = 1;

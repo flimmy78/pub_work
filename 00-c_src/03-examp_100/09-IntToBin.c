@@ -14,8 +14,8 @@ void printb(int x, int n){
     if(n > 0){
         putchar('0' + ((x&(1 << (n - 1))) >> (n - 1)));
         if((n - 1) % 4 == 0)
-            putchar(' ');
-        printb(x, n - 1);
+            putchar(' ');   
+        printb(x, n - 1);/*递归*/
     }else if(n == 0)
         puts("");
 }
@@ -31,7 +31,7 @@ void printb_r(int x){
     puts("");
 }
 
-#if (1)
+#if (0)
 char *printb_rs(int x, int n){
     static char str[n] = {0};
     static int i = 0, j = 0;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     printb_r(0xFFFFFFF);
     printb(0xFFFFFFF,32);
 #endif
-#if (0)
+#if (1)
     if(argc > 2 || argc < 2){
         printf("\n\t\tUsage :%s  <Integer>\n", argv[0]);return (-1);
     }
@@ -59,6 +59,6 @@ int main(int argc, char *argv[])
     n = atoi(argv[1]);
     printb(n, sizeof(int)*8);
 #endif
-    printf("%s\n", printb_rs(15, 32));
+    //printf("%s\n", printb_rs(15, 32));
     return 0;
 }

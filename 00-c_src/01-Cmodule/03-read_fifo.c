@@ -62,6 +62,8 @@ int main(int argc, char* argv[])
     printf("ret = %d\n",ret);
     if(ret > 0){
         printf("read from stdin :%sEnd\n",BUF);
+    }else{
+        printf("No data\n");
     }
     
 

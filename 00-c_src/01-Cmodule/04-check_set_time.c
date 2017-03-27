@@ -36,8 +36,8 @@ int check_set_time(const char* tStr, int diffVal){
     stm.tm_year -= 1900;
     stm.tm_mon  -= 1;
 
-    set_sec = mktime(&stm);
-    sys_sec = time((time_t*)NULL);
+    set_sec = mktime(&stm);             /*转换成秒*/
+    sys_sec = time((time_t*)NULL);      /*获取当前时间*/
     //printf("\tset_sec :%ld  sys_sec :%ld\n", set_sec, sys_sec);
    
 #if (1) 
