@@ -4,9 +4,17 @@
  *   > Mail: XXXXXXXX@icode.com
  *   > Create Time: Tue 21 Mar 2017 10:49:54 PM CST
  ******************************************************************/
+#if (0)
+int fcntl(int fd, int cmd, ... /* arg */ );
+int fcntl(int fd, int cmd, struct flock *lock);
+l_whence: SEEK_SET,SEEK_CUR,SEEK_END;
+l_type:F_RDLCK,F_WRLCK,F_UNLCK;
+#endif
+
+#include <stdio.h>
+/*include for fcntl*/
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdio.h>
 
 #include "mylock.h"
 
@@ -37,7 +45,8 @@ int lock_set(int fd, int type){
     if((fcntl(fd, F_SETLKW, &lock)) < 0){
         printf("Lock failed :type = %d\n",lock.l_type);return (-1);
     }
-
+    
+    /* 上锁或者解锁后，判断文件被那个进程上锁 */
     switch(lock.l_type){
         case F_RDLCK:
             {

@@ -1,79 +1,72 @@
 /*******************************************************************
- *   > File Name: 01-menu1.c
+ *   > File Name: 02-menu2.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu 16 Mar 2017 01:16:43 PM CST
+ *   > Create Time: Tue 28 Mar 2017 01:55:24 PM CST
  ******************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
-
-#define TEST_DEBUG (1)
+#include <string.h>
 
 char *menu[] = {
     "a - add new record",
     "d - delete record",
     "q - quit",
-    NULL
+    NULL,
 };
 
 int getchoice(char *greet, char *choices[]);
 
-
 int main(int argc, char* argv[])
 {
-
     int choice = 0;
 
+    if(!isatty(fileno(stdout))){
+        fprintf(stderr,"You are not a terminal\n");
+        exit(1);
+    }
+
     do{
-        choice = getchoice("Please select an action", menu);
-        printf("You have chosen: %c\n\n", choice);
+        choice = getchoice("Please select an action",menu);
+        printf("You have chosen:%c\n",choice);
     }while(choice != 'q');
 
-#if (0)
-    int i;
-    for(i = 0; i<3; i++){
-        printf("%s\n",menu[i]);
-    }
-#endif
 
     return 0;
 }
 
-/*  负责显示菜单及读取用户输入的函数getchoice */
 int getchoice(char *greet, char *choices[]){
     int chosen = 0;
     int selected;
     char **option;
 
     do{
-        printf("Choice :%s\n", greet);
+        printf("Choice :%s\n",greet);
         option = choices;
+
+        /*打印菜单*/
         while(*option){
             printf("%s\n", *option);
-            option ++;
-        };
+            option++;
+        }
 
-#if TEST_DEBUG
         do{
-            selected = getchar();
+            selected = getchar();/* 获取一个字符 */
         }while(selected == '\n');
-#else
-        selected = getchar();
-#endif
         option = choices;
 
         while(*option){
-            if(selected == *option[0]){
+            if(selected == *option[0]){ /*输入的字符与菜单选项相符*/
                 chosen = 1;
                 break;
             }
             option ++;
         }
         if(!chosen){
-            printf("Incorrect choice, select again\n");
+            printf("Incorect choice, select again\n");
         }
 
     }while(!chosen);
+
     return selected;
 }

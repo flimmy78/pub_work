@@ -1,14 +1,18 @@
 /*******************************************************************
- *   > File Name: 1-0_hello.c
+ *   > File Name: 26-DataDeclarations.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 07 Feb 2017 10:02:49 AM CST
+ *   > Create Time: Tue 28 Mar 2017 10:47:42 AM CST
  ******************************************************************/
 
 #include <stdio.h>
 
 int main(int argc, char* argv[])
 {
-    printf("Hello , world !\n");
+    int a;  /*an integer*/
+    int *b; /*a pointer to an integer*/
+
+
+
     return 0;
 }

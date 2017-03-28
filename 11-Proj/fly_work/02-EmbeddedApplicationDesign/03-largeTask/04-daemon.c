@@ -65,7 +65,7 @@ void init_daemon(void)/*初始化守护进程*/
     dup(0);
     dup(0);
     /*8.修改守护进程的工作目录*/
-    chdir("/");
+    chdir("/tmp");
 }
 
 int main(int argc, char* argv[])
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     while(1)
     {
         time(&tm);
-        sprintf(buf, "%d:%s", count++,(char *)ctime(&tm));
+        sprintf(buf, "Daemon %2d:%s", count++,(char *)ctime(&tm));
         fputs(buf,fp);
         fflush(fp);
         printf("%s",buf);
