@@ -6,16 +6,20 @@
  ******************************************************************/
 #if (0)
 char *fgets(char *s, int size, FILE *stream);
+//读到指定的字节数或者换行符
 #endif
 
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
 
+#define BUFSIZE 128
+
 int main(int argc, char* argv[])
 {
+    int counter = 0;
     int line = 0;
-    char buf[128];
+    char buf[BUFSIZE];
     FILE * fp;
 
     if(argc > 2 || argc < 2){
@@ -26,7 +30,9 @@ int main(int argc, char* argv[])
         perror("fopen file err");return (errno);
     }
 
-    while((fgets(buf ,128 , fp)) != NULL){
+    while((fgets(buf ,BUFSIZE , fp)) != NULL){
+        counter ++;
+        printf("%2d :%s",counter, buf);
         if(buf[strlen(buf) - 1] == '\n')
             line++;
     }
