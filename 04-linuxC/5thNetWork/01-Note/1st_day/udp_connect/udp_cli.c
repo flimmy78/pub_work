@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 
     // create socket
     int ret;
-    int count = 5;
     //char *content = "hello server, come on baby";
     char wbuf[128];
 

@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <linux/in.h>
 
-
 #define SRV_PORT 9999
 #define SRV_IP  "192.168.7.5"
 
@@ -21,16 +20,16 @@ int main(int argc, char *argv[])
 
     if(argc < 2)
     {
-	printf("usage :  ./client  serverip\n");
-	exit(1);
+        printf("usage :  ./client  serverip\n");
+        exit(1);
     }
 
 
     int fd = socket(AF_INET, SOCK_STREAM, 0);
     if(fd < 0)
     {
-	perror("socket");
-	exit(1);
+        perror("socket");
+        exit(1);
     }
 
     // connect
@@ -43,19 +42,19 @@ int main(int argc, char *argv[])
     ret = connect(fd, (struct sockaddr *)&peer, sizeof(peer));
     if(ret < 0)
     {
-	perror("connect");
-	exit(1);
+        perror("connect");
+        exit(1);
     }    
 
     while(count--)
     {
-	ret = write(fd, content, strlen(content));
-	if(ret < 0)
-	{
-	    perror("write");
-	    exit(1);
-	}
-	sleep(1);    
+        ret = write(fd, content, strlen(content));
+        if(ret < 0)
+        {
+            perror("write");
+            exit(1);
+        }
+        sleep(1);    
     } 
 
 
