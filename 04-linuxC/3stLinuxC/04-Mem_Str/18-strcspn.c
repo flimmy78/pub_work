@@ -12,11 +12,15 @@ size_t strcspn(const char *s, const char *reject);
 #endif
 
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
-    char *str = "Linux wa";
-
+    char *str = "Linux was first developed for 386/486-based PCs.";
+    char *t1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ";
+    printf("%s\n%s\n", str, t1);
+    printf("%d\n",strcspn(str, t1));
 
     return 0;
 }
+

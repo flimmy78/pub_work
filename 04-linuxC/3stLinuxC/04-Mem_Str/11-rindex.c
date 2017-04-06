@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     printf("%s\n",s);
 
     p = rindex(s, '5');
-    printf("%s\n",p);
+    printf("rindex \'5\' :%s\n",p);
 
     return 0;
 }

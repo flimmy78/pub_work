@@ -18,5 +18,16 @@ int strcoll(const char *s1, const char *s2);
 
 int main(int argc, char* argv[])
 {
+    char *s1 = "abcde";
+    char *s2 = "ABCDE";
+    int ret;
+
+    ret = strcoll(s1, s2);
+    printf("ret = %2d\n",ret);
+    ret = strcoll(s1, s1);
+    printf("ret = %2d\n",ret);
+    ret = strcoll(s2, s1);
+    printf("ret = %2d\n",ret);
+
     return 0;
 }

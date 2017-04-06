@@ -1,5 +1,5 @@
 /*******************************************************************
- *   > File Name: 12-strcasecmp.c
+ *   > File Name: 12-strncasecmp.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
  *   > Create Time: Tue 07 Mar 2017 01:44:49 PM CST
@@ -14,7 +14,7 @@ int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
 #include <stdio.h>
-/*INC for strcasecmp*/
+/*INC for strncasecmp*/
 #include <strings.h>
 
 int main(int argc, char* argv[])
@@ -25,13 +25,20 @@ int main(int argc, char* argv[])
     char *str3 = "abcDEFG";
 
     int retval;
-
+#if (1)
     retval = strcasecmp(Base, str1);
     printf("strcasecmp :%s&%s\t retval = %d\n",Base, str1,retval);
     retval = strcasecmp(Base, str2);
     printf("strcasecmp :%s&%s\t retval = %d\n",Base, str2,retval);
     retval = strcasecmp(Base, str3);
     printf("strcasecmp :%s&%s\t retval = %d\n",Base, str3,retval);
-
+#else
+    retval = strncasecmp(Base, str1);//error
+    printf("strncasecmp :%s&%s\t retval = %d\n",Base, str1,retval);
+    retval = strncasecmp(Base, str2);
+    printf("strncasecmp :%s&%s\t retval = %d\n",Base, str2,retval);
+    retval = strncasecmp(Base, str3);
+    printf("strncasecmp :%s&%s\t retval = %d\n",Base, str3,retval);
+#endif
     return 0;
 }

@@ -27,12 +27,15 @@ int main(int argc, char* argv[])
     printf("a :%s\nb :%s\n",a,b);
 
     int i;
+#if (0)
     strcpy(a,b);
     printf("strcpy():");
     for(i = 0; i<30; i++){
         printf("%c",a[i]);
     }
     puts("");
+    printf("a :%s\nb :%s\n",a,b);
+#endif
 
     memcpy(a,b,sizeof b);
     printf("memcpy():");
