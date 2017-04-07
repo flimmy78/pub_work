@@ -2,45 +2,21 @@
  *   > File Name: 01-menu1.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu 16 Mar 2017 01:16:43 PM CST
+ *   > Create Time: Fri 07 Apr 2017 03:27:57 PM CST
  ******************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TEST_DEBUG (1)
-
 char *menu[] = {
     "a - add new record",
     "d - delete record",
     "q - quit",
-    NULL
+    NULL,
 };
 
 int getchoice(char *greet, char *choices[]);
 
-
-int main(int argc, char* argv[])
-{
-
-    int choice = 0;
-
-    do{
-        choice = getchoice("Please select an action", menu);
-        printf("You have chosen: %c\n\n", choice);
-    }while(choice != 'q');
-
-#if (0)
-    int i;
-    for(i = 0; i<3; i++){
-        printf("%s\n",menu[i]);
-    }
-#endif
-
-    return 0;
-}
-
-/*  负责显示菜单及读取用户输入的函数getchoice */
 int getchoice(char *greet, char *choices[]){
     int chosen = 0;
     int selected;
@@ -50,19 +26,11 @@ int getchoice(char *greet, char *choices[]){
         printf("Choice :%s\n", greet);
         option = choices;
         while(*option){
-            printf("%s\n", *option);
-            option ++;
-        };
-
-#if TEST_DEBUG
-        do{
-            selected = getchar();
-        }while(selected == '\n');
-#else
+           printf("%s\n", *option);
+           option++;
+        }
         selected = getchar();
-#endif
         option = choices;
-
         while(*option){
             if(selected == *option[0]){
                 chosen = 1;
@@ -71,9 +39,20 @@ int getchoice(char *greet, char *choices[]){
             option ++;
         }
         if(!chosen){
-            printf("Incorrect choice, select again\n");
+            printf("Incorrent choice , select again\n");
         }
-
     }while(!chosen);
     return selected;
+}
+
+int main(int argc, char* argv[])
+{
+    char **option;
+    option = menu;
+    while(*option){
+        printf("%s\n", *option);
+        option ++;
+    }
+
+    return 0;
 }

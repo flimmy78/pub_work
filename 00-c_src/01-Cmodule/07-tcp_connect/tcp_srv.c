@@ -51,6 +51,15 @@ p_tcp_fds tcp_srv(p_tcp_fds pfds){
         perror("socket");return (p_tcp_fds)NULL;
     }
 
+    int  enable = 1, on = 1;
+    if((setsockopt(fds.srv_fd, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on))) < 0){
+        perror("setsockopt failed");return (p_tcp_fds)NULL;
+    }
+
+    if((setsockopt(fds.srv_fd, SOL_SOCKET, SO_KEEPALIVE, (char*)&enable, sizeof(unsigned long int))) < 0){
+        printf("set socket keep alive failed\n");
+    }
+
     struct sockaddr_in self_addr, cli_addr;
     socklen_t srv_len, cli_len;
     
