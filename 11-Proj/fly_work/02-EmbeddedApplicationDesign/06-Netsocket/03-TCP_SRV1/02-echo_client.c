@@ -35,19 +35,23 @@ int main(int argc, char* argv[])
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(atoi(argv[2]));
-    servaddr.sin_addr = inet_addr(argv[1]);
-
+    servaddr.sin_addr.s_addr = inet_addr(argv[1]);
+    
+    /* connect */
     if(connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) == -1){
         perror("connect");exit(-1);
     }
 
     while(1){
         printf("input >");
+        /*input some massages from stdin*/
         fgets(buf, sizeof(buf), stdin);
         if(strcmp(buf, "quit\n") == 0)
             break;
+        /*send some massages to srv*/
         send(sockfd, buf, sizeof(buf), 0);
         bzero(buf, sizeof(buf));
+        /*recv some massages from srv*/
         recv(sockfd, buf, sizeof(buf), 0);
         printf("recv from server :%s\n", buf);
     }

@@ -2,7 +2,7 @@
  *   > File Name: 01-echo_server.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon 10 Apr 2017 05:25:28 PM CST
+ *   > Create Time: Tue 11 Apr 2017 10:33:24 AM CST
  ******************************************************************/
 
 #include <stdio.h>
@@ -13,12 +13,14 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <signal.h>
 
 #define BUFFER_SIZE     128
 
 int main(int argc, char* argv[])
 {
     int listenfd, connfd, n;
+    pid_t pid;
     struct sockaddr_in servaddr, cliaddr;
     socklen_t peerlen;
     char buf[BUFFER_SIZE];
@@ -28,7 +30,7 @@ int main(int argc, char* argv[])
     }
 
     /*create a socket*/
-    if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+    if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
         perror("socket");exit(-1);
     }
 
@@ -39,31 +41,39 @@ int main(int argc, char* argv[])
     servaddr.sin_addr.s_addr = inet_addr(argv[1]);
 
     /*bind*/
-    if((bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr))) == -1){
-        perror("bind");exit(-1);
+    if(bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) == -1){
+        perror("bind");exit(-2);
     }
 
     /*listen*/
     if(listen(listenfd, 10) == -1){
-        perror("listen");exit(-1);
+        perror("listen");exit(-3);
     }
-    printf("Listening ......\n");
+
+    /*ignore the signal of SIGCHLD*/
+    signal(SIGCHLD, SIG_IGN);
 
     peerlen = sizeof(cliaddr);
     while(1){
-        if((connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &peerlen)) < 0){
-            perror("accept");exit(-1);
+        if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &peerlen)) == -1){
+            perror("connfd");exit(-1);
         }
-        printf("Connection from [%s:%d]\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
-        while((n = recv(connfd, buf, BUFFER_SIZE, 0)) > 0){
-            printf("ehco : %s", buf);
-            send(connfd, buf, n, 0);
-            exit(-1);
+        printf("connection from [%s:%d]\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+        if((pid = fork()) < 0){
+            perror("fork");exit(-1);
+        }else if(pid == 0){
+            while((n = recv(connfd, buf, BUFFER_SIZE, 0)) > 0){
+                printf("echo : %s",buf);
+                send(connfd, buf, n, 0);
+                exit(-1);
+            }
+            printf("client is closed\n");exit(0);
+        }else{
+            close(connfd);
         }
-        printf("client is closed\n");
-        close(connfd);
     }
+
     close(listenfd);
 
     return 0;
