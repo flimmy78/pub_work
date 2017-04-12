@@ -99,7 +99,13 @@ int get_ntp_time(int sk, struct addrinfo *addr, struct ntp_packet *ret_time){
     char data[NTP_PCK_LEN * 8];
     int packet_len, data_len = addr->ai_addrlen, count = 0, result, i, re;
 
-    if(!(packlen_len = ))
+    if(!(packlen_len = construct_packet(data))){
+        return 0;
+    }
+    
+    if((result = sendto(sk, data, packet_len, 0, addr->ai_addr, data_len)) < 0){
+        perror("sendto");return 0;
+    }
     
 }
 #endif
