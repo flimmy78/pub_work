@@ -6,6 +6,15 @@
  ******************************************************************/
 
 #include <stdio.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define NTP_PORT        123                 /*NTP专用端口号*/
 #define TIME_PORT       37                  /*TIME/UDP端口号*/
@@ -25,7 +34,6 @@
 #define POLL            4
 #define PREC            (-6)
 
-
 #define JAN_1970        0x83aa7e80
 #define NTPFRAC(x)      (4294 * (x) + ((1981 * (x)) >> 11))
 #define USEC(x)         (((x) >> 12) - 759 * ((((x) >> 10) + 32768) >> 16))
@@ -43,14 +51,14 @@ struct ntp_packet{
     int root_delay;
     int root_dispersion;
     int reference_identifier;
-    ntp_time reference_timestamp;           /*8bytes */
+    ntp_time reference_timestamp;           /* 8bytes */
     ntp_time originage_timestamp;
     ntp_time receive_timestamp;
     ntp_time transmit_timestamp;
 };
 
 char protocol[32];
-#if (0)
+#if (1)
 /*使用construct_packet()构造NTP包*/
 int construct_packet(char *packet){
     char version = 1;
@@ -60,7 +68,7 @@ int construct_packet(char *packet){
 
     strcpy(protocol, NTPV3);
     /*判断协议版本*/
-    if(!strcmp(protocol, NTPV1) || !strcmp(protocol, NTPV2) || !strcmp(procotol, NTPV3) || !strcmp(procotol, NTPV4)){
+    if(!strcmp(protocol, NTPV1) || !strcmp(protocol, NTPV2) || !strcmp(protocol, NTPV3) || !strcmp(protocol, NTPV4)){
         memset(packet, 0, NTP_PCK_LEN);
         port = NTP_PORT;
         /*the packet head of 16 bytes*/
@@ -103,13 +111,59 @@ int get_ntp_time(int sk, struct addrinfo *addr, struct ntp_packet *ret_time){
         return 0;
     }
     
+    /*客户端给服务器发送NTP数据包*/
     if((result = sendto(sk, data, packet_len, 0, addr->ai_addr, data_len)) < 0){
         perror("sendto");return 0;
     }
-    
+
+    /*调用select（）函数，并设定超时时间为1s*/
+    FD_ZERO(&pending_data);
+    FD_SET(sk, &pending_data);
+    block_time.tv_sec = 10;
+    block_time.tv_usec = 0;
+    if((select(sk + 1, &pending_data, NULL, NULL, &block_time)) > 0){
+        /*接收服务器的信息*/
+        if((count = recvfrom(sk, data, NTP_PCK_LEN * 8, 0, addr->ai_addr, &data_len)) < 0){
+            perror("recvfrom");return 0;
+        }
+
+        if(protocol == TIME){
+            memcpy(&ret_time -> transmit_timestamp, data, 4);return 1;
+        }else if(count < NTP_PCK_LEN){
+            return 0;
+        }
+
+        /*设置接收NTP包的数据结构*/
+        ret_time -> leap_ver_mode = ntohl(data[0]);
+        ret_time -> startum = ntohl(data[1]);
+        ret_time -> poll = ntohl(data[2]);
+        ret_time -> precision = ntohl(data[3]);
+        ret_time -> root_delay = ntohl(*(int*)&(data[4]));
+        ret_time -> root_dispersion = ntohl(*(int*)&(data[8]));
+        ret_time -> reference_identifier = ntohl(*(int*)&(data[12]));
+        ret_time -> reference_timestamp.coarse = ntohl(*(int*)&(data[16]));
+        ret_time -> reference_timestamp.fine = ntohl(*(int*)&(data[20]));
+        ret_time -> reference_timestamp.coarse = ntohl(*(int*)&(data[24]));
+        ret_time -> reference_timestamp.fine = ntohl(*(int*)&(data[28]));
+        ret_time -> reference_timestamp.coarse = ntohl(*(int*)&(data[32]));
+        ret_time -> reference_timestamp.fine = ntohl(*(int*)&(data[36]));
+        ret_time -> reference_timestamp.coarse = ntohl(*(int*)&(data[40]));
+        ret_time -> reference_timestamp.fine = ntohl(*(int*)&(data[44]));
+        return 1;
+    }/*end of if select*/
+    return 0;
+}
+
+/*根据NTP数据包信息跟新本地的当前时间*/
+int set_local_time(struct ntp_packet * pnew_time_packet){
+    struct timeval tv;
+    tv.tv_sec = pnew_time_packet -> transmit_timestamp.coarse - JAN_1970;
+    tv.tv_usec = USEC(pnew_time_packet -> transmit_timestamp.fine);
+    return settimeofday(&tv, NULL);
 }
 #endif
 
+#define DEBUG
 #ifndef DEBUG
 int main()
 {
@@ -117,3 +171,37 @@ int main()
     printf("data-%d sizeof(int)-%d sizeof(long)-%d\n", sizeof(data), sizeof(int), sizeof(long));
 }
 #endif
+
+int main()
+{
+    int sockfd, rc;
+    struct addrinfo hints, *res = NULL;
+    struct ntp_packet new_time_packet;
+
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_DGRAM;
+    hints.ai_protocol = IPPROTO_UDP;
+
+    /*调用getaddrinfo()*/
+    rc = getaddrinfo(NTP_SERVER_IP, NTP_PORT_STR, &hints, &res);
+    if(rc != 0){
+        perror("getaddrinfo");return 1;
+    }
+
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if(sockfd < 0){
+        perror("socket");return 1;
+    }
+
+    /*调用取得NTP时间的函数*/
+    if(get_ntp_time(sockfd, res, &new_time_packet)){
+        /*调整本地时间*/
+        if(!set_local_time(&new_time_packet)){
+            printf("NTP client success !\n");
+        }
+    }
+
+    close(sockfd);
+    return 0;
+}
