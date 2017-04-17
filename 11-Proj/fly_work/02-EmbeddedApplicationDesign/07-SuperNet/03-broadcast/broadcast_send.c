@@ -27,21 +27,25 @@ int main(int argc, char* argv[])
     if(argc < 3){
         printf("Usage : <%s>  <ip>  <port>\n", argv[0]);return (-1);
     }
-
+    
+    /*create a UDP socket*/
     if((sockfd = socket(PF_INET, SOCK_DGRAM, 0)) == -1){
         perror("fail to socket");exit(-1);
     }
-
+    
+    /*set the params of struct sockaddr_in*/
     bzero(&dstaddr, sizeof(dstaddr));
     dstaddr.sin_family = PF_INET;
     dstaddr.sin_port = htons(atoi(argv[2]));
     dstaddr.sin_addr.s_addr = inet_addr(argv[1]);
 
+    /*set the socket options, allow broadcast packets*/
     if(setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0){
         perror("fail to setsockopt");exit(-1);
     }
 
     while(1){
+        /*set data pakeages*/
         sendto(sockfd, buf, N, 0, (SA*)&dstaddr, sizeof(dstaddr));
         sleep(1);
     }

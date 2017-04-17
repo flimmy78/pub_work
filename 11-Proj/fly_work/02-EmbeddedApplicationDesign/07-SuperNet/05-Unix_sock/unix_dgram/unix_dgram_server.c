@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
         printf("Usage : <%s> <sock_file>\n", argv[0]);return (-1);
     }
 
+    /* create a UDP socket */
     if((sockfd = socket(PF_UNIX, SOCK_DGRAM, 0)) == -1){
         perror("fail to socket");exit(-1);
     }
@@ -36,7 +37,8 @@ int main(int argc, char* argv[])
     bzero(&myaddr, sizeof(myaddr));
     myaddr.sun_family = PF_UNIX;
     strcpy(myaddr.sun_path, argv[1]);
-
+    
+    /*bind*/
     if(bind(sockfd, (SA*)&myaddr, sizeof(myaddr)) < 0){
         perror("fail to bind");exit(-1);
     }

@@ -27,21 +27,25 @@ int main(int argc, char* argv[])
     if(argc < 3){
         printf("Usage : <%s>  <ip>  <port>\n", argv[0]);exit(-1);
     }
-
+    
+    /*create a UDP socket*/
     if((sockfd = socket(PF_INET, SOCK_DGRAM, 0)) == -1){
         perror("fail to socket");exit(-1);
     }
 
+    /*set the params of struct sockaddr_in(IP&port)*/
     bzero(&myaddr, sizeof(myaddr));
     myaddr.sin_family = PF_INET;
     myaddr.sin_port = htons(atoi(argv[2]));
     myaddr.sin_addr.s_addr = inet_addr(argv[1]);
-
+    
+    /*bind*/
     if(bind(sockfd, (SA*)&myaddr, sizeof(myaddr)) < 0){
         perror("fail to bind");exit(-1);
     }
 
     while(1){
+        /*recv*/
         recvfrom(sockfd, buf, N, 0, (SA*)&peeraddr, &peerlen);
         printf("[%s : %d] %s\n", inet_ntoa(peeraddr.sin_addr), ntohs(peeraddr.sin_port), buf);
     }
