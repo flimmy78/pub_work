@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
     printf("%s\n", *menu);
     printf("%s\n", *(menu + 1));
     printf("%s\n", *(menu + 2));
-    //printf("%s\n", *(menu + 3));
+    //printf("%s\n", *(menu + 3));//Segmentation fault (core dumped)
+    if(*(menu + 3) == NULL)
+        printf("\tEnd\n");
     return 0;
 }
