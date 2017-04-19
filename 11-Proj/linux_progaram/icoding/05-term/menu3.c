@@ -1,11 +1,12 @@
 /*******************************************************************
- *   > File Name: menu1.c
+ *   > File Name: menu3.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 18 Apr 2017 10:26:57 AM CST
+ *   > Create Time: Wed 19 Apr 2017 10:41:09 AM CST
  ******************************************************************/
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 
 char *menu[] = {
@@ -15,45 +16,48 @@ char *menu[] = {
     NULL,
 };
 
-int getchoice(char *greet, char *choices[]);
+int getchoice(char *greet, char *choices[], FILE *in, FILE *out);
 
 int main(int argc, char* argv[])
 {
     int choice = 0;
+    FILE *input;
+    FILE *output;
 
     if(!isatty(fileno(stdout))){
-        fprintf(stderr, "You are not a terminal !\n");
+        fprintf(stderr, "You are not a terminal , OK.\n");
+    }
+
+    input = fopen("/dev/tty", "r");
+    output = fopen("/dev/tty", "w");
+    if(!input || !output){
+        fprintf(stderr , "Unable to open /dev/tty\n");
         exit(1);
-    }else{
-        fprintf(stdout, "isTerminal !\n");
     }
 
     do{
-        choice = getchoice("Please select an action", menu);
-        printf("You have chosen: %c\n", choice);
+        choice = getchoice("Please select an action", menu, input, output);
+        printf("You have chosen :%c\n", choice);
     }while(choice != 'q');
 
     return 0;
 }
 
-int getchoice(char *greet, char *choices[]){
+int getchoice(char *greet, char *choices[], FILE *in, FILE *out){
     int chosen = 0;
-    int selected ;
+    int selected;
     char **option;
 
     do{
-        printf("Choice :%s\n", greet);
+        fprintf(out, "Choice : %s\n", greet);
         option = choices;
-
-        /*输出字符串数组*/
         while(*option){
-            printf("%s\n", *option);
+            fprintf(out , "%s\n", *option);
             option ++;
         }
-        
-        /*输入选项*/
+
         do{
-            selected = getchar();
+            selected = fgetc(in);
         }while(selected == '\n');
 
         option = choices;
@@ -66,7 +70,7 @@ int getchoice(char *greet, char *choices[]){
         }
 
         if(!chosen){
-            printf("Incorrent choice, select again\n");
+            fprintf(out, "Incorrent choice ,select again\n");
         }
     }while(!chosen);
     return selected;
