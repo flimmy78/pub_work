@@ -15,7 +15,7 @@ int main()
     initscr();
 
 /*  Then we fill the base window with characters,
-    refreshing the actual screen once the logical screen has been filled:
+    refreshing the actual screen once the logical screen has been filled:*/
     move(5, 5);
     printw("%s", "Testing multiple windows");
     refresh();
