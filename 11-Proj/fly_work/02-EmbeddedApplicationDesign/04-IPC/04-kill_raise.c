@@ -10,11 +10,12 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 int main(int argc, char* argv[])
 {
     pid_t pid;
-    int ret;
+    //int ret;
 
     /*创建一个子进程*/
     if((pid = fork()) > 0){

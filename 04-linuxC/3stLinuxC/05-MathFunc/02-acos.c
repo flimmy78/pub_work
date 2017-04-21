@@ -17,9 +17,24 @@ double acos(double x);/*取反余弦函数*/
 #include <math.h>
 
 int main(int argc, char* argv[])
-{
+{   
+#if (0)
     double angle;
     angle = acos(0.5);
     printf("angle = %f\n",angle);
+#else
+    double angle;
+    double value;
+
+    while(1){
+        printf("Pls input a double integer :");
+        if(scanf("%lf", &angle) != 1){
+            printf("Input error\n");break;
+        }
+        
+        value = acos(angle); 
+        printf("acos(%lf) = %lf\n", angle, value);
+    }
+#endif
     return 0;
 }

@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#include <unistd.h>
 /*宏定义*/
 #define MYFIFO  "/tmp/myfifo"   /*有名管道文件名*/
 
