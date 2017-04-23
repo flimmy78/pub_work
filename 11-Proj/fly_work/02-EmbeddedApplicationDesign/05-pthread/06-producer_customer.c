@@ -15,6 +15,8 @@
 #include <sys/ipc.h>
 #include <time.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 /*宏定义*/
 #define MYFIFO              "myfifo"    /*缓冲区有名管道的名字*/

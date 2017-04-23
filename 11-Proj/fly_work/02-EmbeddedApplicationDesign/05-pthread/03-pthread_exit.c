@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 
 /*线程一*/  
 void thread_1(void)  

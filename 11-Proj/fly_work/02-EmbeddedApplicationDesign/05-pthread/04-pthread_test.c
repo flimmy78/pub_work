@@ -14,6 +14,7 @@ int pthread_join(pthread_t thread, void **retval);
 /*头文件*/
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 
 /*函数声明*/
 int pthread_setstacksize(pthread_attr_t *attr, size_t stacksize);

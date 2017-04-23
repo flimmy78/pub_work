@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 /*全局变量*/
 char massage[] = "this is a test";
 /*函数声明*/

@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <unistd.h>
 /*宏定义*/
 #define REPEAT_NUM  3   /*线程中的小任务*/
 #define DELAY_TIME_LEVELS   6.0 /*小任务之间的最大时间间隔*/
