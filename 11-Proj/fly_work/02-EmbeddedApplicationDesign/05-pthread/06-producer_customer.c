@@ -45,7 +45,7 @@ void *producer(void *arg){
         /*生产者写入数据*/
         if((real_write = write(fd, "hello", UNIT_SIZE)) == -1){
             if(errno == EAGAIN){
-                printf("The FIFO has not been read yet.Please try later\n");
+                printf("The FIFO has not been read yet .Please try later\n");
             }
         }else{
             printf("Write %d to the FIFO\n",real_write);

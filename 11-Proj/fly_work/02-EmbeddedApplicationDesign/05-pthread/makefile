@@ -12,7 +12,7 @@ $(BIN):%:%.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
-	$(RM) a.out $(BIN) .*.*.sw?
+	$(RM) a.out $(BIN) .*.*.sw? myfifo
 
 .PHONY:all clean
 
