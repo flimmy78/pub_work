@@ -10,7 +10,8 @@
 int main(int argc, char* argv[])
 {
     char z = *(char *)0;
-    printf("I read from location zero :%c\n", z);
+    /*Err : read date from the NULL pointer*/
+    printf("I read from location zero :%c\n", z);//Segmentation fault (core dumped)
 
     return 0;
 }

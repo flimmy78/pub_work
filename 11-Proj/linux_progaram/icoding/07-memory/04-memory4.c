@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     scan_ptr = some_memory;
     while(1){
         *scan_ptr = '\0';
-        scan_ptr ++;
+        scan_ptr ++;//Segmentation fault (core dumped)
     }
 
     exit(EXIT_SUCCESS);

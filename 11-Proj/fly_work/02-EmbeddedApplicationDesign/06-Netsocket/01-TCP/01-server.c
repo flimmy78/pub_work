@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
     /*建立socket连接*/
     if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
-        perror("socket");exit(-1);
+        perror("socket err");exit(-1);
     }
 
     printf("listenfd = %d\n",listenfd);
@@ -42,13 +42,13 @@ int main(int argc, char* argv[])
 
     /*绑定函数bind（）*/
     if(bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0){
-        perror("bind");exit(-1);
+        perror("bind err");exit(-1);
     }
     printf("bind success!\n");
 
     /*调用listen（）函数，设置监听模式*/
     if(listen(listenfd, 10) == -1){
-        perror("listen");exit(-1);
+        perror("listen err");exit(-1);
     }
     printf("Listening...\n");
 
@@ -56,15 +56,15 @@ int main(int argc, char* argv[])
     peerlen = sizeof(cliaddr);
     while(1){
         if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &peerlen)) < 0){
-            perror("accept");exit(-1);
+            perror("accept err");exit(-1);
         }
 
         /*调用recv（）函数接收客户端发送的数据*/
         memset(buf, 0, sizeof(buf));
         if(recv(connfd, buf, BUFFER_SIZE, 0) == -1){
-            perror("recv");exit(-1);
+            perror("recv err");exit(-1);
         }
-        printf("Received a message :%s\n", buf);
+        printf("Received a message from cli:%s\n", buf);
 
         strcpy(buf, "Welcome to server");
         send(connfd, buf, BUFFER_SIZE, 0);

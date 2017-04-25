@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 
     /* 创建socket */
     if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
-        perror("socket");exit(-1);
+        perror("socket err");exit(-1);
     }
 
     /* 设置sockaddr_in结构体中的相关参数 */
@@ -39,13 +39,13 @@ int main(int argc, char* argv[])
 
     /* connect */
     if((connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr))) == -1){
-        perror("connect");exit(-1);
+        perror("connect err");exit(-1);
     }
 
     /* send massage */
     send(sockfd, buf, sizeof(buf), 0);
     if(recv(sockfd, buf, sizeof(buf), 0)  == -1){
-        perror("recv");exit(-1);
+        perror("recv err");exit(-1);
     }
 
     printf("recv from server :%s\n", buf);
