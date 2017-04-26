@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#include <ndbm.h>
-/* On some systems you need to replace the above with
+//#include <ndbm.h>
+/* On some systems you need to replace the above with*/
 #include <gdbm-ndbm.h>
-*/
+//#include <gdbm.h>
 
 
 #include <string.h>

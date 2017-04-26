@@ -23,19 +23,19 @@ int main()
 
     pid = fork();
     switch(pid) {
-    case -1:
-      /* Failure */
-      perror("fork failed");
-      exit(1);
-    case 0:
-      /* child */
-        sleep(5);
-        kill(getppid(), SIGALRM);
-        exit(0);
+        case -1:
+            /* Failure */
+            perror("fork failed");
+            exit(1);
+        case 0:
+            /* child */
+            sleep(5);
+            kill(getppid(), SIGALRM);
+            exit(0);
     }
 
-/*  The parent process arranges to catch SIGALRM with a call to signal
-    and then waits for the inevitable.  */
+    /*  The parent process arranges to catch SIGALRM with a call to signal
+        and then waits for the inevitable.  */
 
     printf("waiting for alarm to go off\n");
     (void) signal(SIGALRM, ding);

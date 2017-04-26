@@ -70,7 +70,7 @@ int main()
     region_to_lock.l_whence = SEEK_SET;
     region_to_lock.l_start = 16;
     region_to_lock.l_len = 5;
-    printf("Process %d, trying F_WRLCK, region %d \n", getpid(),\
+    printf("Process %d, trying F_WRLCK, region %d to %d\n", getpid(),\
             (int)region_to_lock.l_start, (int)(region_to_lock.l_start + region_to_lock.l_len));
     res = fcntl(file_desc, F_SETLK, &region_to_lock);
     if(res == -1){
@@ -84,7 +84,7 @@ int main()
     region_to_lock.l_whence = SEEK_SET;
     region_to_lock.l_start = 40;
     region_to_lock.l_len = 10;
-    printf("Process %d, trying F_RDLCK, region %d \n", getpid(),\
+    printf("Process %d, trying F_RDLCK, region %d to %d \n", getpid(),\
             (int)region_to_lock.l_start, (int)(region_to_lock.l_start + region_to_lock.l_len));
     res = fcntl(file_desc, F_SETLK, &region_to_lock);
     if(res == -1){
@@ -93,6 +93,5 @@ int main()
         printf("Process %d - unlocked region\n", getpid());
     }
 
-
-
+    return 0;
 }
