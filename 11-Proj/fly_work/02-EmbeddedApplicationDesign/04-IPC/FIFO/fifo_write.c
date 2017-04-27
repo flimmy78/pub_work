@@ -10,6 +10,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#include <unistd.h>
+
 #define MYFIFO  "/tmp/myfifo"
 
 int main(int argc, char* argv[])

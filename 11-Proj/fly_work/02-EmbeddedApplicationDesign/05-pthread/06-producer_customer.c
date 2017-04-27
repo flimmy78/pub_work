@@ -90,7 +90,7 @@ void* customer(void *arg){
 int main(int argc, char* argv[])
 {
     pthread_t thrd_prd_id, thrd_cst_id;
-    pthread_t mon_th_id;
+    //pthread_t mon_th_id;
     int ret;
 
     srand(time(NULL));

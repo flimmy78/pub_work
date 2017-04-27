@@ -36,7 +36,8 @@ void thread_2(void)
 int main(int argc, char* argv[])
 {
     pthread_t id_1,id_2;  
-    int i,ret;  
+    //int i;
+    int ret;  
     /*创建线程一*/  
     ret=pthread_create(&id_1,NULL,(void  *) thread_1,NULL);  
     if(ret!=0)  

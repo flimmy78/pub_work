@@ -11,3 +11,14 @@ clean:
 	$(RM) a.out $(BIN) .*.*.sw?
 
 .PHONY:all clean
+
+#int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+#
+#
+#
+#
+#
+#
+#
+#
+#

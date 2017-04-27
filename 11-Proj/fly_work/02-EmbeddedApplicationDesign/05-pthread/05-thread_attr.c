@@ -36,8 +36,9 @@ int main(int argc, char* argv[])
 {
     pthread_t thread;
     pthread_attr_t attr;
-    int no = 0,res;
-    void * thrd_ret;
+    //int no = 0;
+    int res;
+    //void * thrd_ret;
 
     srand(time(NULL));
     /*初始化线程属性对象*/
