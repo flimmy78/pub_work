@@ -22,19 +22,23 @@ char message[] = "This is a test\n";
 int main(int argc, char* argv[])
 {
     int res;
-    pthread_t a_thread;
-    void *thread_result;
-
+    pthread_t a_thread;     /*定义一个线程ID*/
+    void *thread_result;    /*定义一个泛类指针，用于接收线程退出的参数*/
+    
+    /*创建线程*/
     res = pthread_create(&a_thread, NULL, thread_function, (void*)message);
     if(res != 0){
         perror("Thread creation failed");exit(EXIT_FAILURE);
     }
 
     printf("Waiting for thread to finish...\n");
+#if (1)
+    /*等待线程退出，接收线程返回的信息*/
     res = pthread_join(a_thread, &thread_result);
     if(res != 0){
         perror("Thread join failed");exit(EXIT_FAILURE);
     }
+#endif
 
     printf("Thread joined, it returned %s\n", (char*)thread_result);
     printf("Message is now %s\n", message);
