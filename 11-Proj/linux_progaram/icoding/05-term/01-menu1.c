@@ -1,32 +1,25 @@
 /*******************************************************************
- *   > File Name: menu1.c
+ *   > File Name: 01-menu1.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 18 Apr 2017 10:26:57 AM CST
+ *   > Create Time: Tue 02 May 2017 01:45:06 PM CST
  ******************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
-
+    
 char *menu[] = {
     "a - add new record",
     "d - delete record",
     "q - quit",
     NULL,
-};
+};//字符数组指针
 
 int getchoice(char *greet, char *choices[]);
 
 int main(int argc, char* argv[])
 {
     int choice = 0;
-
-    if(!isatty(fileno(stdout))){
-        fprintf(stderr, "You are not a terminal !\n");
-        exit(1);
-    }else{
-        fprintf(stdout, "isTerminal !\n");
-    }
 
     do{
         choice = getchoice("Please select an action", menu);
@@ -38,25 +31,20 @@ int main(int argc, char* argv[])
 
 int getchoice(char *greet, char *choices[]){
     int chosen = 0;
-    int selected ;
+    int selected;
     char **option;
 
     do{
         printf("Choice :%s\n", greet);
         option = choices;
-
-        /*输出字符串数组*/
         while(*option){
             printf("%s\n", *option);
             option ++;
         }
-        
-        /*输入选项*/
-        do{
-            selected = getchar();
-        }while(selected == '\n');
 
+        selected = getchar();
         option = choices;
+
         while(*option){
             if(selected == *option[0]){
                 chosen = 1;
@@ -64,10 +52,10 @@ int getchoice(char *greet, char *choices[]){
             }
             option ++;
         }
-
         if(!chosen){
-            printf("Incorrent choice, select again\n");
+            printf("Incorrect choice, select again\n");
         }
     }while(!chosen);
+
     return selected;
 }
