@@ -16,7 +16,7 @@ char *menu[] = {
 
 int main(int argc, char* argv[])
 {
-#if (0)
+#if (1)
     printf("%s\n", *menu);
     //printf("%s\n", *menu + 1);
     printf("%s\n", *(menu + 1));
