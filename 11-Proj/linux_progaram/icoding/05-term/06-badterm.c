@@ -1,17 +1,19 @@
 /*******************************************************************
- *   > File Name: 06-memory5b.c
+ *   > File Name: 06-setupterm.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon 24 Apr 2017 06:04:26 PM CST
+ *   > Create Time: Thu 04 May 2017 04:34:16 PM CST
  ******************************************************************/
 
 #include <stdio.h>
+#include <term.h>
+#include <curses.h>
+#include <stdlib.h>
 
 int main(int argc, char* argv[])
 {
-    char z = *(char *)0;
-    /*Err : read date from the NULL pointer*/
-    printf("I read from location zero :%c\n", z);//Segmentation fault (core dumped)
+    setupterm("unlisted", fileno(stdout), (int*)0);
+    printf("Done.\n");
 
     return 0;
 }

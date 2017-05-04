@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define DEBUG
 
@@ -25,12 +26,18 @@ int main(int argc, char* argv[])
 {
     int choice = 0;
 
+    if(!isatty(fileno(stdout))){
+        fprintf(stderr, "You are not a terminal !\n");exit(1);
+    }else{
+        fprintf(stdout, "You are a terminal !\n");
+    }
+
     do{
         choice = getchoice("Please select an action", menu);
-        printf("You hava chosen :%c\n", choice);
+        printf("You have chosen :%c\n", choice);
     }while(choice != 'q');
 
-    return 0;
+    exit(0);
 }
 
 int getchoice(char *greet, char *choices[]){
