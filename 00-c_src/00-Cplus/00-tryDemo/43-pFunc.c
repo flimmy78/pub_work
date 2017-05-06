@@ -18,11 +18,17 @@ int main(int argc, char* argv[])
     str = fun1();
 
     printf("%s\n", str);
+#if (1)
     *str = 'H'; //.data区数据可读写
     *(str + 1) = 'E';
     *(str + 2) = 'L';
     *(str + 3) = 'L';
     *(str + 4) = 'O';
+#else
+    while(*(str ++) != 'w'){//error
+        *str -= ('a' - 'A');
+    }
+#endif
     printf("%s\n", str);
 
 

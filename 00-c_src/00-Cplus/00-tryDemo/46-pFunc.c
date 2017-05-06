@@ -1,22 +1,28 @@
 /*******************************************************************
- *   > File Name: 1-2Pointer_calc.c
+ *   > File Name: 46-pFunc.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Wed 26 Apr 2017 04:14:17 PM CST
+ *   > Create Time: Sat 06 May 2017 03:42:12 PM CST
  ******************************************************************/
 
 #include <stdio.h>
 
+typedef void(*TYPE)(void);
+
+void fun(void){
+    printf("Hello world\n");
+}
+
+TYPE fun1(void){
+    return fun;
+}
+
 int main(int argc, char* argv[])
 {
-    int hoge;
-    int *hoge_p;
+    void (*p)(void);
 
-    /*将指向hoge的指针赋予hoge_p*/
-    hoge_p = &hoge;
-    /*输出hoge_p的值*/
-    printf("hoge_p..%p\n", hoge_p);
-
+    p = fun1();
+    p();
 
     return 0;
 }
