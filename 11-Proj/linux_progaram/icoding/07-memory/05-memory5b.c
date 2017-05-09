@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-    char z = *(const char *)0;
+    char z = *(const char *)0;//取出零地址处的数据,error
     printf("I read from location zero %c\n", z);
 
     return 0;

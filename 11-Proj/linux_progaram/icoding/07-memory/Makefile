@@ -5,8 +5,8 @@ CFLAGS = -g -Wall
 all:$(BIN)
 
 $(BIN):%:%.c
-	@echo $(SRC) 
-	@echo $(BIN)
+	#@echo $(SRC) 
+	#@echo $(BIN)
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
