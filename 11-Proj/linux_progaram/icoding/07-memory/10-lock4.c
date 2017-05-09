@@ -2,7 +2,7 @@
  *   > File Name: 10-lock4.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 09 May 2017 11:15:18 AM CST
+ *   > Create Time: Tue 09 May 2017 01:41:01 PM CST
  ******************************************************************/
 
 #include <stdio.h>
@@ -21,13 +21,15 @@ int main(int argc, char* argv[])
     int res;
     struct flock region_to_test;
     int start_byte;
-
-    file_desc = open(test_file, O_RDWR| O_CREAT, 0666);
+    
+    /*open a file descriptor*/
+    file_desc = open(test_file, O_RDWR | O_CREAT, 0666);
     if(!file_desc){
-        fprintf(stderr, "Unable to open %s for read/write", test_file);exit(EXIT_FAILURE);
+        fprintf(stderr, "Unable to open %s for read/write\n", test_file);exit(EXIT_FAILURE);
     }
 
     for(start_byte = 0; start_byte < 99; start_byte += SIZE_TO_TRY){
+        /**/
         region_to_test.l_type = F_WRLCK;
         region_to_test.l_whence = SEEK_SET;
         region_to_test.l_start = start_byte;
@@ -36,6 +38,7 @@ int main(int argc, char* argv[])
 
         printf("Testing F_WRLCK on region from %d to %d\n", start_byte, start_byte + SIZE_TO_TRY);
 
+        /**/
         res = fcntl(file_desc, F_GETLK, &region_to_test);
         if(res == -1){
             fprintf(stderr, "F_GETLK failed\n");exit(EXIT_FAILURE);
@@ -48,14 +51,16 @@ int main(int argc, char* argv[])
             printf("F_WRLCK - Lock would succeed\n");
         }
 
+        /**/
         region_to_test.l_type = F_RDLCK;
         region_to_test.l_whence = SEEK_SET;
         region_to_test.l_start = start_byte;
         region_to_test.l_len = SIZE_TO_TRY;
         region_to_test.l_pid = -1;
-    
-        printf("Testing F_RDLCK on region from %d to %d\n", start_byte, start_byte + SIZE_TO_TRY);
 
+        printf("Testing F_WRLCK on region from %d to %d\n", start_byte, start_byte + SIZE_TO_TRY);
+        
+        /**/
         res = fcntl(file_desc, F_GETLK, &region_to_test);
         if(res == -1){
             fprintf(stderr, "F_GETLK failed\n");exit(EXIT_FAILURE);
@@ -72,11 +77,12 @@ int main(int argc, char* argv[])
     close(file_desc);
     exit(EXIT_SUCCESS);
 }
-
+    
+    /*显示文件加锁信息*/
 void show_lock_info(struct flock *to_show){
     printf("\tl_type %d, ", to_show->l_type);
     printf("l_whence %d, ", to_show->l_whence);
-    printf("l_start %d, ", to_show->l_start);
-    printf("l_len %d, ", to_show->l_len);
+    printf("l_start %ld, ", to_show->l_start);
+    printf("l_len %ld, ", to_show->l_len);
     printf("l_pid %d\n", to_show->l_pid);
 }

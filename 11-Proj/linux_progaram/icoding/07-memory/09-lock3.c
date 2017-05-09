@@ -33,18 +33,21 @@ int main(int argc, char* argv[])
     for(byte_count = 0; byte_count < 100; byte_count ++){
         (void)write(file_desc, byte_to_write, 1);
     }
-
+    
+    /*region_1 10~30bytes 加只读锁,锁定参数*/
     region_1.l_type = F_RDLCK;
     region_1.l_whence = SEEK_SET;
     region_1.l_start = 10;
     region_1.l_len = 20;
 
+    /*region_2 40~50bytes 加只写锁,锁定参数*/
     region_2.l_type = F_WRLCK;
     region_2.l_whence = SEEK_SET;
     region_2.l_start = 40;
     region_2.l_len = 10;
 
     printf("Process %d locking file\n", getpid());
+    /*加锁*/
     res = fcntl(file_desc, F_SETLK, &region_1);
     if(res == -1){
         fprintf(stderr, "Failed to lock region 1\n");
