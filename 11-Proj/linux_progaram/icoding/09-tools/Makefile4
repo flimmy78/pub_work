@@ -1,0 +1,6 @@
+.SUFFIXES:	.cpp
+.cpp.o:
+	$(CC) -xc++ $(CFLAGS) -I$(INCLUDE) -c $<
+
+%.cpp:%o
+	$(CC) -xc++ $(CFLAGS) -I$(INCLUDE) -c $<

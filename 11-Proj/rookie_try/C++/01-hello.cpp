@@ -10,7 +10,11 @@ using namespace std;
 
 int main(void)
 {
+#if (0)
     cout << "Hello, the world of C++ !" << endl;//可以用“\n”代替“endl”
+#else
+    cout << "Hello, the world of C++!\n";
+#endif
 
     return 0;
 }

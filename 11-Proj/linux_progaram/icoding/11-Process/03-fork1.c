@@ -2,53 +2,40 @@
  *   > File Name: 03-fork1.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Wed 26 Apr 2017 04:29:55 PM CST
+ *   > Create Time: Thu 11 May 2017 02:20:15 PM CST
  ******************************************************************/
 
 #include <stdio.h>
-#include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
     pid_t pid;
-    char *message;
+    char *MSG;
     int n;
-    //int m;
-
-    printf("fork program starting\n");
+    
+    printf("Starting fork the process\n");
     pid = fork();
-
     switch(pid){
-        case -1:
-            perror("fork error");
+        case (-1):
+            printf("fork err\n");
             exit(EXIT_FAILURE);
-        case 0:
-            message = "\tThis is the child";
-            n = 5;
-            //m = 5;
             break;
-        default:
-            message = "This is the parent";
+        case 0:
+            MSG = "\tThis is child process";
             n = 3;
             break;
+        default:
+            MSG = "This is parent process";
+            n = 10;
+            break;
     }
 
-#if (0)
-    for(; m > 0; m--){
-        puts(message);
-        sleep(1);
-    }
-#endif
-
-    for(; n > 0; n--){
-        puts(message);
+    for(;n >0; n--){
+        puts(MSG);
         sleep(1);
     }
 
-    wait(NULL);
-
-    return 0;
+    exit(EXIT_SUCCESS);
 }

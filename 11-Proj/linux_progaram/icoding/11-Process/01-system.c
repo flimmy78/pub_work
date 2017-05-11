@@ -2,7 +2,7 @@
  *   > File Name: 01-system.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Wed 26 Apr 2017 02:47:28 PM CST
+ *   > Create Time: Thu 11 May 2017 01:24:01 PM CST
  ******************************************************************/
 
 #include <stdio.h>
@@ -10,9 +10,13 @@
 
 int main(int argc, char* argv[])
 {
-    printf("Running ps with system");
+    printf("Running ps with system\n");
+#if (0)
     system("ps ax");
+#else
+    system("ps ax &");
+#endif
     printf("Done.\n");
-    
+
     exit(EXIT_SUCCESS);
 }

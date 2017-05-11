@@ -1,20 +1,16 @@
 /*******************************************************************
- *   > File Name: 05-upper.c
+ *   > File Name: foo.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu 11 May 2017 03:43:29 PM CST
+ *   > Create Time: Thu 11 May 2017 10:08:21 AM CST
  ******************************************************************/
 
 #include <stdio.h>
-#include <ctype.h>
 #include <stdlib.h>
 
 int main(int argc, char* argv[])
 {
-    int ch;
-    while((ch = getchar()) != EOF){
-        putchar(toupper(ch));
-    }
-    
+    printf("Hello , world!\n");
+
     exit(EXIT_SUCCESS);
 }

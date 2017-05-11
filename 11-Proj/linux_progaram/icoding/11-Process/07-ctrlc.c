@@ -2,26 +2,25 @@
  *   > File Name: 07-ctrlc.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu 27 Apr 2017 10:17:33 AM CST
+ *   > Create Time: Thu 11 May 2017 05:51:15 PM CST
  ******************************************************************/
 
 #include <stdio.h>
-#include <signal.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <signal.h>
 
 void ouch(int sig){
-    printf("OUCH! - I got signal %d\n", sig);
-    /*the default action associated with the SIGINT signal occurs*/
-    (void)signal(SIGINT, SIG_DFL);
+    printf("OUCH ! - I got signal %d\n", sig);
+    (void)signal(SIGINT, SIG_DFL);  /*恢复默认行为*/
 }
 
 int main(int argc, char* argv[])
-{   
-    /*the  SIGINT signal will run the ouch*/
+{
     (void)signal(SIGINT, ouch);
 
     while(1){
-        printf("This is a test\n");
+        printf("Hello World!\n");
         sleep(1);
     }
 
