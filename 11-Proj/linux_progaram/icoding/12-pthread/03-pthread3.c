@@ -2,7 +2,7 @@
  *   > File Name: 03-pthread3.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Fri 28 Apr 2017 03:50:09 PM CST
+ *   > Create Time: Fri 12 May 2017 01:40:29 PM CST
  ******************************************************************/
 
 #include <stdio.h>
@@ -10,62 +10,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 void *thread_function(void *arg);
-char message[] = "Hello World";
-int run_now = 1;
+sem_t bin_sem;
+
+#define WORK_SIZE   1024
+char work_area[WORK_SIZE];
 
 int main(int argc, char* argv[])
 {
     int res;
-    pthread_t a_thread; 
+    pthread_t a_thread;
     void *thread_result;
     
-    /* create a pthread */
-    if((res = pthread_create(&a_thread, NULL, thread_function, (void*)message)) != 0){
-        perror("pthread creation failed");exit(EXIT_FAILURE);
-    }
-
-    int print_count1 = 0;
-
-    while(print_count1 ++ < 20){
-        if(run_now == 1){
-            printf("1");
-            fflush(stdout);
-            run_now = 2;
-        }else{
-            sleep(1);
-        }
-    }
-
-    /* join a pthread */
-    printf("Waiting for thread to finish...\n");
-    if((res = pthread_join(a_thread, &thread_result)) != 0){
-        perror("pthread join error");exit(EXIT_FAILURE);
+    /*初始化一个信号量,信号量初始值设为0*/
+    res = sem_init(&bin_sem, 0, 0);
+    if(res != 0){
+        perror("Semaphore initialization failed");exit(EXIT_FAILURE);
     }
     
-    printf("Thread joined , it returned %s\n", (char*)thread_result);
-    printf("Message is now %s\n", message);
+    /*创建新线程*/
+    res = pthread_create(&a_thread, NULL, thread_function, NULL);
+    if(res != 0){
+        perror("Thread creation failed");exit(EXIT_FAILURE);
+    }
+    
+    /*获得字符串输入*/
+    printf("Input some text. Enter 'end' to finish\n");
+    while(strncmp("end", work_area, 3) != 0){
+        fgets(work_area, WORK_SIZE, stdin);
+        sem_post(&bin_sem);//增加信号量
+    }
+
+    printf("\nWaiting for thread to finish...\n");
+    res = pthread_join(a_thread, &thread_result);
+    if(res != 0){
+        perror("Thread join failed");exit(EXIT_FAILURE);
+    }
+    
+    printf("Thread joined\n");
+    sem_destroy(&bin_sem);
 
     exit(EXIT_SUCCESS);
 }
 
 void *thread_function(void *arg){
-#if (1)
-    int print_count2 = 0;
-
-    while(print_count2 ++ < 20){
-        if(run_now == 2){
-            printf("2");
-            fflush(stdout);
-            run_now = 1;
-        }else{
-            sleep(1);
-        }
+    sem_wait(&bin_sem); //减去信号量,当信号量大于0时才减
+    while(strncmp("end", work_area, 3) != 0){
+        printf("You input %d characters\n", strlen(work_area) - 1);
+        sem_wait(&bin_sem); //减去信号量
     }
-#endif
-    printf("thread_function is running . Arguments was %s\n", (char*)arg);
-    sleep(3);
-    strcpy(message, "Bye!");
-    pthread_exit("Thank you for the CPU time");
+    pthread_exit(NULL);
 }

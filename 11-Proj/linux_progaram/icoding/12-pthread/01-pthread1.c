@@ -1,44 +1,43 @@
 /*******************************************************************
- *   > File Name: 01-thread1.c
+ *   > File Name: 01-pthread1.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu 27 Apr 2017 01:51:23 PM CST
+ *   > Create Time: Fri 12 May 2017 11:13:23 AM CST
  ******************************************************************/
 #if (0)
-int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);
 int pthread_join(pthread_t thread, void **retval);
-void pthread_exit(void  *retval);
+void pthread_exit(void *retval);
 #endif
 
 #include <stdio.h>
-#include <pthread.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
 void *thread_function(void *arg);
-char message[] = "This is a test\n";
+char message[] = "Hello world";
 
 int main(int argc, char* argv[])
 {
-    int res;
-    pthread_t a_thread;     /*定义一个线程ID*/
-    void *thread_result;    /*定义一个泛类指针，用于接收线程退出的参数*/
+    int res ;
+    pthread_t a_thread;
+    void *thread_result;
     
-    /*创建线程*/
+    /*create a pthread*/
     res = pthread_create(&a_thread, NULL, thread_function, (void*)message);
     if(res != 0){
         perror("Thread creation failed");exit(EXIT_FAILURE);
     }
 
     printf("Waiting for thread to finish...\n");
-#if (1)
-    /*等待线程退出，接收线程返回的信息*/
+    
+    /*join the pthread*/
     res = pthread_join(a_thread, &thread_result);
     if(res != 0){
         perror("Thread join failed");exit(EXIT_FAILURE);
     }
-#endif
 
     printf("Thread joined, it returned %s\n", (char*)thread_result);
     printf("Message is now %s\n", message);
@@ -47,13 +46,8 @@ int main(int argc, char* argv[])
 }
 
 void *thread_function(void *arg){
-    static int i = 0;
-    printf("thread_function is running . Argument was %s\n", (char*)arg);//获取参数
-    //sleep(3);
-    for(i = 0; i< 3; i++){
-        printf("\tPthread running\n");sleep(1);
-    }
-
-    strcpy(message, "Bye!");    //修改全局变量
+    printf("thread_function is running. Argument was %s\n", (char *)arg);
+    sleep(3);
+    strcpy(message, "Bye!");//修改全局变量
     pthread_exit("Thank you for the CPU time");
 }
