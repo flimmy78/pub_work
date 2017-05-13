@@ -1,8 +1,8 @@
 /*******************************************************************
- *   > File Name: 05-pthread5.c
+ *   > File Name: 06-pthread6.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Sat 13 May 2017 12:08:02 PM CST
+ *   > Create Time: Sat 13 May 2017 12:51:12 PM CST
  ******************************************************************/
 
 #include <stdio.h>
@@ -11,39 +11,58 @@
 #include <pthread.h>
 
 void *thread_function(void *arg);
-
 char message[] = "Hello World";
 int thread_finished = 0;
 
 int main(int argc, char* argv[])
 {
     int res;
-    pthread_t a_thread;     /*定义一个线程ID*/
+    pthread_t a_thread;         /*定义一个线程ID*/
     pthread_attr_t thread_attr; /*定义一个线程属性*/
+
+    int max_priority;
+    int min_priority;
+    struct sched_param scheduling_value;
     
-    /*初始化线程属性*/
+    /*初始化一个线程属性*/
     res = pthread_attr_init(&thread_attr);
     if(res != 0){
         perror("pthread_attr_init error");exit(EXIT_FAILURE);
     }
-
+    
     /*设置线程的分离属性*/
     res = pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_DETACHED);
     if(res != 0){
         perror("pthread_attr_setdetachstate error");exit(EXIT_FAILURE);
     }
-        
+    
+    /*设置调度测量*/
+    res = pthread_attr_setschedpolicy(&thread_attr, SCHED_OTHER);
+    if(res != 0){
+        perror("Setting scheduling policy failed");exit(EXIT_FAILURE);
+    }
+    
+    /*查找允许的优先级范围*/
+    max_priority = sched_get_priority_max(SCHED_OTHER);
+    min_priority = sched_get_priority_min(SCHED_OTHER);
+    
+    /*设置优先级*/
+    scheduling_value.sched_priority = min_priority;
+    res = pthread_attr_setschedparam(&thread_attr, &scheduling_value);
+    if(res != 0){
+        perror("Setting scheduling priority failed");exit(EXIT_FAILURE);
+    }
+    
     /*创建线程*/
     res = pthread_create(&a_thread, &thread_attr, thread_function, (void*)message);
     if(res != 0){
-        perror("pthread_create error");exit(EXIT_FAILURE);
+        perror("Thread create error");exit(EXIT_FAILURE);
     }
     
     /*摧毁线程属性*/
     (void)pthread_attr_destroy(&thread_attr);
-
     while(!thread_finished){
-        printf("Waiting for thread to say it's finished...\n");
+        printf("Waiting for thread to say it's finished....\n");
         sleep(1);
     }
     
@@ -52,9 +71,9 @@ int main(int argc, char* argv[])
 }
 
 void *thread_function(void *arg){
-    printf("thread_function is running . Argument was %s\n", (char*)arg);
+    printf("thread_function is running .Argument was %s\n", (char*)arg);
     sleep(4);
-    printf("Second thread setting finished flag, and exiting now\n");
+    printf("Second thread setting finished flag , and exiting now\n");
     thread_finished = 1;
     pthread_exit(NULL);
 }
