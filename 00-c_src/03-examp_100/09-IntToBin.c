@@ -9,6 +9,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void printb(int x, int n){
     if(n > 0){

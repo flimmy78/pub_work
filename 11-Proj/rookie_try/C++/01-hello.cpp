@@ -6,7 +6,9 @@
  ******************************************************************/
 
 #include <iostream>
-using namespace std;
+using namespace std;    //告诉编译器使用std命名空间
+
+//typedef int c32;
 
 int main(void)
 {

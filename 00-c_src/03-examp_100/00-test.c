@@ -68,5 +68,5 @@ int main()
 
     puts("");
 #endif
-
+    return 0;
 }

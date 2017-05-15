@@ -5,10 +5,11 @@ CFLAGS = -g -Wall
 all:$(BIN)
 
 $(BIN):%:%.c
+#echo $(SRC)
+#echo $(BIN)
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	$(RM) a.out .*.*.sw? $(BIN)
 
-.PHONY:all clean
-
+.PHONY:clean all

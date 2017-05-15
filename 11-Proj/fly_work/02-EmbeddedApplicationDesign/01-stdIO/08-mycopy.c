@@ -8,6 +8,8 @@
 /*头文件*/
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
+#include <unistd.h>
 /*宏定义*/
 #define N 64
 

@@ -81,6 +81,7 @@ int main(void)
         /*换行*/
         puts("");
     }
+    return 0;
 }
 
 #endif

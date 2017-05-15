@@ -19,8 +19,8 @@
 
 int main(int argc, char* argv[])
 {
-    int n;
-    char buf[N];
+    //int n;
+    //char buf[N];
 
     FILE* fp;
     time_t t;
