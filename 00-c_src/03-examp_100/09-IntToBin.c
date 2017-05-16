@@ -47,7 +47,7 @@ char *printb_rs(int x, int n){
 
 int main(int argc, char *argv[])
 {
-#if (0)
+#if 1
     printb_r(0xFFFFFFF);
     printb(0xFFFFFFF,32);
 #endif
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     int n;
     n = atoi(argv[1]);
     printb(n, sizeof(int)*8);
+    printb(n, 8);
 #endif
     //printf("%s\n", printb_rs(15, 32));
     return 0;

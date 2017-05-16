@@ -8,9 +8,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int main(int argc, char* argv[])
 {
+#if 0
     int open_mode = 0;
     int RDONLY = 1;
     int WRONLY = 2;
@@ -43,6 +45,10 @@ int main(int argc, char* argv[])
         open_mode &= NONBLOCK;
         printf("Open_mode :%d\n", open_mode);
     }
+#endif
+#define BUFFER_SIZE     PIPE_BUF*1204
+    char buffer[BUFFER_SIZE + 1];
+    printf("%s\n", buffer);
 
     return 0;
 }
