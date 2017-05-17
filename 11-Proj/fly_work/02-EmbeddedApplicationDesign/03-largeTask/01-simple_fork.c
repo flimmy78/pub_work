@@ -4,6 +4,10 @@
  *   > Mail: XXXXXXXXXX@icode.com
  *   > Create Time: Mon 13 Feb 2017 11:08:27 PM CST
  ******************************************************************/
+#if (0)
+pid_t fork(void);//create a child process
+
+#endif
 
 #include <stdio.h>
 #include <sys/types.h>

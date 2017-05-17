@@ -9,7 +9,7 @@
      |    |   |   |    |   |   |    |   |    |   |
 	bin	boot dev etc home lib mnt root usr proc ...
 	                ___|_         ______|_________
-	            user1  user1      bin local lib src
+	            user1  user2      bin local lib src
 								________|_______
 								bin etc lib share
 

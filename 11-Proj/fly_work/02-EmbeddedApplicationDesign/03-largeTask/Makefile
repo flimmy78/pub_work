@@ -8,6 +8,6 @@ $(BIN):%:%.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	$(RM) a.out .*.*.sw? $(BIN)
+	$(RM) a.out .*.*sw? $(BIN)
 
 .PHONY:all clean

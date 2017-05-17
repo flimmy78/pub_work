@@ -4,6 +4,9 @@
  *   > Mail: XXXXXXXXXX@icode.com
  *   > Create Time: Mon 13 Feb 2017 11:25:44 PM CST
  ******************************************************************/
+#if (0)
+int execlp(const char *file, const char *arg, ...);
+#endif
 
 #include <stdio.h>
 #include <stdio.h>
@@ -23,6 +26,7 @@ int main(int argc, char* argv[])
             printf("execlp error\n");
         }
     }
+    printf("Done .\n");
 
     return 0;
 }
