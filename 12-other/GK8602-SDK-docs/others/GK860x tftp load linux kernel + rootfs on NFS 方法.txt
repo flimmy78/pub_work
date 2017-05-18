@@ -1,0 +1,29 @@
+GK860x tftp load linux kernel + rootfs on NFS 方法：
+(Edited By 邓海绍 on 2016-04-14，if have any problems, pls contact me.)
+
+1. 在linux host 上面安装 tftpd/nfsd，并配置对应的路径；
+
+2. PC通过串口连接开发板，按住PC的ENTER键的同时，给开发板上电，可以进入 uboot 的shell模式；
+
+3. 输入 printenv 可以看到当前使用的 环境变量，这里需要通过" setenv {要配置的变量名} '{变量值}' " 的方式配置如下变量：
+	（建议修改前先备份当前 printenv 的结果，方便出问题时还原）
+	bootcmd=run tftpboot
+	
+	bootfile=zImage 
+	gatewayip=
+	ipaddr
+	netmask
+	nfsserver
+	phytype=0		//这里0代表使用eth，1代表 wlan
+	rootpath=
+	serverip
+	
+	还有 sensor/wifi 模组等要根据板子实际情况设置；(注意 tftpboot 的内容中： setenv bootargs 参数要和环境变量 bootargs 对应，才可以正常跑。)
+	修改完后执行 saveenv 保存；
+	
+4. 再次上电时开发板就会从 PC host 上通过tftp下载 zImage 名字的kernel，并挂载 NFS 上面的rootfs；
+
+
+bootargs=console=ttySGK0 noinitrd root=/dev/mtdblock3 rootfstype=squashfs mem=60m sensor=OV2710 wifi=RTL8188 product=WIFI_DVR rtc=0 version=1.2.2.8 phytype=1 rootfstype=squashfs switch_printk=0 video=gk_fb0:720x480,720x480,8,0
+
+tftpboot=setenv bootargs root=/dev/nfs nfsroot=${nfsserver}:${rootpath},proto=tcp,nfsvers=3,nolock ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}:${netdev} mac=${ethaddr} phytype=${phytype} sensor=${sensor} wifi=${wifi} console=${consoledev},${baudrate} mem=${mem} video=${cvbs} product=${product} rtc=0;tftpboot ${bootfile} ;bootm
