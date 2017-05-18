@@ -2,28 +2,29 @@
  *   > File Name: 01-isalnum.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Sun 05 Feb 2017 02:21:12 PM CST
+ *   > Create Time: Thu 18 May 2017 11:25:08 AM CST
  ******************************************************************/
-
-#include <stdio.h>
-#include <ctype.h>
-
 #if (0)
-int isalnum(int c);/*测试字符是否为英文或数字*/
+/*测试字符是否为英文或数字
+ * 若参数c为字符或数字，则返回TRUE，否则返回NULL（0）；
+ * */
+int isalnum(int c);
 #endif
 
+#include <stdio.h>
+/*INC for isalnum*/
+#include <ctype.h>
+
 int main(int argc, char* argv[])
-{   
-    int ret, i;
-    char str[] = "123c@#FDsP[e?";
-    printf("String : %s\n",str);
-    
-    for(i = 0;str[i] != 0; i++)
-    {
-        if(ret = isalnum(str[i]))
-            printf("ret = %d  %c is an alphanumeric character\n",ret, str[i]);
-        else
-            printf("ret = %d\n",ret);
+{
+    char str[] = "123@#$%^&AsdFG.\n";
+    printf("str :%s",str);
+
+    int i;
+    for(i = 0; str[i] != '\0'; i++){
+        if(isalnum(str[i])){
+            printf("%c is an alphanummeric character\n", str[i]);
+        }
     }
 
     return 0;
