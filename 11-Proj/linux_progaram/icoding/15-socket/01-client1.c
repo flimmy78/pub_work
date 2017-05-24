@@ -35,7 +35,6 @@ int main(int argc, char* argv[])
         perror("sockfd");exit(EXIT_FAILURE);
     }
     
-
     address.sun_family = AF_UNIX;   /*Local communication*/
     strcpy(address.sun_path, "server_socket");
     address_len = sizeof(address);
