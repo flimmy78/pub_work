@@ -55,7 +55,6 @@ endif
 
 
 "=====================================================================================
-set t_Co=256    "添加256颜色支持
 set mouse=a	"使用鼠标,可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set selection=exclusive
 set selectmode=mouse,key
@@ -64,12 +63,11 @@ set laststatus=2	"显示状态行
 set cmdheight=1		"命令行（在状态行下）的高度
 
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-set statusline=%F%m%r%h%w\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "显示状态行的内容
+"状态行显示的内容
+set statusline=%F%m%r%h%w\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "状态行显示的内容
 
 set cindent		"C代码自动缩进
-set autoindent  "自动缩进
 
-filetype on             "检测文件类型
 filetype indent on		"自适应不同语言的职能缩进
 set expandtab			"将制表符扩展为空格
 set tabstop=4			"设置编辑时制表符占用空格数
@@ -81,7 +79,7 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936 "编码设置
 set termencoding=utf-8
 set encoding=utf-8
 
-set scrolloff=5	 "光标移动到Buffer顶部和底部保持5行间距
+set scrolloff=2	 "光标移动到Buffer顶部和底部保持5行间距
 
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
 
@@ -89,7 +87,7 @@ set matchtime=1		"匹配括号高亮的时间（单位是十分之一秒）
 
 set number			"显示行号
 set cursorline		"高亮显示当前行
-set cursorcolumn	"高亮显示当前列
+"set cursorcolumn	"高亮显示当前列
 set ruler			"开启行号显示
 set hlsearch		"高亮显示搜索结果
 
@@ -112,7 +110,7 @@ func SetTitle()
         call setline(1,"\###################################################################")
         call append(line(".")+0,"\  # File Name: ".expand("%"))
         call append(line(".")+1,"\  # Author: fly")
-        call append(line(".")+2,"\  # Mail: 12345678@qq.com")
+        call append(line(".")+2,"\  # Mail: XXXXXXXX@icode.com")
         call append(line(".")+3,"\  # Created Time: ".strftime("%c"))
         call append(line(".")+4,"\###################################################################")
         call append(line(".")+5,"\#!/bin/bash")
@@ -121,7 +119,7 @@ func SetTitle()
         call setline(1,"/*******************************************************************")
         call append(line(".")+0," *   > File Name: ".expand("%"))
         call append(line(".")+1," *   > Author: fly")
-        call append(line(".")+2," *   > Mail: 1234578@qq.com")
+        call append(line(".")+2," *   > Mail: XXXXXXXX@icode.com")
         call append(line(".")+3," *   > Create Time: ".strftime("%c"))
         call append(line(".")+4," ******************************************************************/")
         call append(line(".")+5,"")
@@ -145,11 +143,12 @@ func SetTitle()
     if &filetype == 'c'
         call append(line(".")+6,"#include <stdio.h>")
         call append(line(".")+7,"")
-        call append(line(".")+8,"int main(void)")
+        call append(line(".")+8,"int main(int argc, char* argv[])")
         call append(line(".")+9,"{")
         call append(line(".")+10,"    return 0;")
         call append(line(".")+11,"}")
     endif
-    "新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
 endfunc
+"新建文件后，自动定位到文件末尾
+autocmd BufNewFile * normal G
+
