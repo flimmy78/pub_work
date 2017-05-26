@@ -1,14 +1,29 @@
-.PHONY:clean
+##.PHONY:clean
+##
+##CC=g++
+##CFLAGS= -g -Wall
+##
+##hello=00_hello
+##sizeof=01_sizeof
+##
+##all=$(hello) $(sizeof)
+##
+##ALL:$(all)
+##
+##clean:
+##	$(RM) a.out  $(all)
 
-CC=g++
-CFLAGS= -g -Wall
+SRC = ${wildcard *.cpp}
+BIN = ${patsubst %.cpp, %, $(SRC)}
+CFLAGS = -g -Wall
+CC = g++
 
-hello=00_hello
-sizeof=01_sizeof
+all:$(BIN)
 
-all=$(hello) $(sizeof)
-
-ALL:$(all)
+$(BIN):%:%.cpp
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	$(RM) a.out  $(all)
+	$(RM) a.out $(BIN)
+
+.PHONY:clean all
