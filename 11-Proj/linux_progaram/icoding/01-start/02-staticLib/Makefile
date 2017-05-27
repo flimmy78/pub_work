@@ -18,7 +18,9 @@ program:lib
 #-lfoo 告诉编译器使用名为libfoo.a的函数库
 
 clean:
-	$(RM) *.o program .*.*.sw?
+	$(RM) *.o program .*.*.sw? *.a
+
+.PHONY:clean program lib obj all
 
 
 
