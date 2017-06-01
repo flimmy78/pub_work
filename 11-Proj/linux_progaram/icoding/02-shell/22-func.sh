@@ -1,8 +1,8 @@
 ###################################################################
-  # File Name: func.sh
+  # File Name: 22-func.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 05:03:33 PM CST
+  # Created Time: Thu 01 Jun 2017 03:14:41 PM CST
 ###################################################################
 #!/bin/bash
 
@@ -10,6 +10,8 @@ foo(){
     echo "Function foo is executing"
 }
 
-echo -e "\e[1;31mScript starting\e[0m"
+echo "Script starting"
 foo
-echo -e "\e[1;31mScript starting\e[0m"
+echo "script ended"
+
+exit 0

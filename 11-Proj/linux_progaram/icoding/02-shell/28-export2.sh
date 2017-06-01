@@ -1,15 +1,10 @@
 ###################################################################
-  # File Name: grep.sh
+  # File Name: 28-export2.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 10:02:09 AM CST
+  # Created Time: Thu 01 Jun 2017 05:40:15 PM CST
 ###################################################################
 #!/bin/bash
 
-for file in *
-do
-    if grep -l POSIX $file
-    then
-        more $file
-    fi
-done
+echo "$foo"
+echo "$bar"

@@ -1,14 +1,12 @@
 ###################################################################
-  # File Name: for1.sh
+  # File Name: 29-export1.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 02:21:13 PM CST
+  # Created Time: Thu 01 Jun 2017 05:41:09 PM CST
 ###################################################################
 #!/bin/bash
 
-for file in $(ls *.sh)
-do
-    echo  $file
-done
+foo="The first meta-syntactic variable"
+export bar="The second meta-syntactic variable"
 
-exit 0
+./28-export2.sh

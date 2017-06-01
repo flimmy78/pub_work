@@ -1,20 +1,21 @@
 ###################################################################
-  # File Name: val.sh
+  # File Name: 02-val.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 10:40:33 AM CST
+  # Created Time: Thu 01 Jun 2017 11:04:05 AM CST
 ###################################################################
 #!/bin/bash
 
-myval="Hi there"
+myvar="Hi there"
 
-echo $myval
-echo "$myval"
-echo '$myval'
-echo \$myval
+echo $myvar
+echo "$myvar"
+echo '$myvar'
+echo \$myvar
 
 echo Enter some text
-read myval
+read myvar
 
-echo '$myval' now equals $myval
+echo '$myvar' now equals $myvar
+
 exit 0

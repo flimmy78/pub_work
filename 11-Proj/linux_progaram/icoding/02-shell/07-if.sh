@@ -1,23 +1,19 @@
 ###################################################################
-  # File Name: elif.sh
+  # File Name: 07-if.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 02:02:11 PM CST
+  # Created Time: Thu 01 Jun 2017 01:19:17 PM CST
 ###################################################################
 #!/bin/bash
 
-echo "Is is morning ? Please anwser yes or no"
+echo "Is it morning ? Please answer yes or no"
 read timeofday
 
 if [ $timeofday = "yes" ]
 then
     echo "Good morning"
-elif [ $timeofday = "no" ]
-then
-    echo "Good ofternoon"
 else
-    echo "Sorry , $timeofday not recognized . Enter yes or no"
-    exit 1
+    echo "Good afternoon"
 fi
 
 exit 0

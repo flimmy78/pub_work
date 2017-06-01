@@ -1,8 +1,8 @@
 ###################################################################
-  # File Name: until.sh
+  # File Name: 13-until.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 02:32:39 PM CST
+  # Created Time: Thu 01 Jun 2017 02:06:14 PM CST
 ###################################################################
 #!/bin/bash
 
@@ -11,9 +11,9 @@ do
     sleep 60
 done
 
-# now ring the bell and announce the expected user .
+# now ring the bell and announce the expected user
 
-echo -e '\e'
-echo "**** $1 has just logged in ****"
+echo -e '\a'
+echo "******** $1 has just logged in ********"
 
 exit 0

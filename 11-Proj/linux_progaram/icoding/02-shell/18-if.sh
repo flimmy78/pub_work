@@ -1,23 +1,25 @@
 ###################################################################
-  # File Name: if2.sh
+  # File Name: 18-if.sh
   # Author: fly
   # Mail: XXXXXXXX@icode.com
-  # Created Time: Sat 27 May 2017 04:39:19 PM CST
+  # Created Time: Thu 01 Jun 2017 02:44:30 PM CST
 ###################################################################
 #!/bin/bash
 
 if [ -f this_file ]
 then
     foo="true"
-elif [ -f if1.sh ]
+elif [ -f that_file ]
 then
-    foo="True"
+    foo="true"
 elif [ -f the_other_file ]
 then
-    foo="False"
+    foo="true"
+else
+    foo="false"
 fi
 
 if [ "$foo"="True" ]
 then
-    echo "one of the files exists"
+    echo "One of the files exists"
 fi
