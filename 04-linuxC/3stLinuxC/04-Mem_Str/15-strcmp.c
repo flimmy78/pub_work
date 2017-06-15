@@ -2,40 +2,32 @@
  *   > File Name: 15-strcmp.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 07 Mar 2017 05:47:22 PM CST
+ *   > Create Time: Fri Jun  9 14:42:43 2017
  ******************************************************************/
 #if (0)
-/*比较字符串*/
 int strcmp(const char *s1, const char *s2);
-/**/
-int strncmp(const char *s1, const char *s2, size_t n);
+//@FUNC:用来比较参数 s1 和 s2 字符串。字符串大小的比较是以
+//ASCII 码表上的顺序来决定，此顺序亦为字符的值。strcmp（）首
+//先将 s1 第一个字符值减去 s2 第一个字符值，若差值为 0 则再继续
+//比较下个字符，若差值不为 0 则将差值返回。例如字符串“Ac”和
+//“ba”比较则会返回字符“A”（65）和‘b’（98）的差值（－33）。
+//@Return:若参数 s1 和 s2 字符串相同则返回 0。s1 若大于 s2 则返回大于 0 的
+//值。s1 若小于 s2 则返回小于 0 的值。
 #endif
 
 #include <stdio.h>
-/*INC for strcmp*/
 #include <string.h>
 
 int main(int argc, char* argv[])
 {
-#if (0)
-    char *a = "ABCDE";
-    char *b = "ABCDE";
-    char *c = "abcde";
-    char *d = "@AAAA";
-#else
     char *a = "aBcDeF";
-    char *b = "AbCeEf";
-    char *c = "aacdef";
+    char *b = "AbCdEf";
+    char *c = "abcdeF";
     char *d = "aBcDeF";
-#endif
 
-    printf("a :%s\tb :%s\tc :%s\td :%s\n",a,b,c,d);
-    /*s1中'a'大于s2中'A'，返回1*/
-    printf("strcmp(a,b) :%d\n",strcmp(a,b));
-    /*s1中'A'小于s2中'a'，返回-1*/
-    printf("strcmp(a,c) :%d\n",strcmp(a,c));
-    /*相同，返回0*/
-    printf("strcmp(a,d) :%d\n",strcmp(a,d));
+    printf("strcmp(a, b) :%d\n", strcmp(a, b));
+    printf("strcmp(a, c) :%d\n", strcmp(a, c));
+    printf("strcmp(a, d) :%d\n", strcmp(a, d));
 
     return 0;
 }

@@ -2,54 +2,43 @@
  *   > File Name: 01-bcmp.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon 13 Feb 2017 04:24:38 PM CST
+ *   > Create Time: Fri Jun  9 10:10:29 2017
  ******************************************************************/
 #if (0)
-int bcmp(const void *s1, const void *s2, size_t n);
-//@func:比较s1与s2内存前n个字节，
-//相同返回0，若n为0，返回0，否则返回非0值
-//返回-1，S1大于S2
-//返回1，S1小于S2
+bcmp(const void *s1, const void *s2, size_t n);//比较内存内容
+//@FUNC：用来比较 s1 和 s2 所指的内存区间前 n 个字节，若参数 n
+//为 0，则返回 0。将s1减去s2
+//@RETUEN:若参数 s1 和 s2 所指的内存内容都完全相同则返回 0 值，否则返回
+//非零值
 #endif
 
 #include <stdio.h>
-/*include for bcmp*/
 #include <strings.h>
-
-#define S1  "abcdE6789"
-#define S2  "abcde6789"
-#define N   6
 
 int main(int argc, char* argv[])
 {
-    int ret;
-    
-    ret = bcmp((const void *)S1, (const void *)S2, N);
-    printf("ret = %d\n",ret);
+    char s1[] = "123GHjkl456#";
+    char s2[] = "125QAjK=456%";
 
-
-#if (0)
-    char *str1 = "abcde123456";
-    char *str2 = "abcde7894567";
-    int ret,n;
-
-    printf("str1 :%s\nstr2 :%s\n",str1,str2);
-    n = 5;
-    /*比较字符串str1、str2前5个字节*/
-    ret = bcmp((void*)str1,(void*)str2,n);
-    if(ret != 0){
-        printf("bcmp is error\n");return (-1);
-    }else{
-        printf("ret = %d %dbyte is same\n",ret,n);
+    int  ret;
+#if 0
+    for(i = 0; s1[i] != 0; i++){
+        printf("s1[%d] = %c\n",i,s1+i );
     }
 
-    n = 6;
-    /*比较字符串str1、str2的前6个字节*/
-    ret = bcmp((void*)str1,(void*)str2,n);
-    if(ret != 0){
-        printf("ret = %d bcmp is error\n",ret);return (-1);
+
+    for(i = 0; si[i] != 0; i++){
+        if((ret = bcmp((void *)s1[i], (void *)s2[i], 1)) == 0){
+            
+        }
     }
 #endif
+
+    if((ret = bcmp((void*)s1, (void*)s2, 3)) == 0){
+        printf("ret = %d\n", ret);
+    }else{
+        printf("ret = %d\n", ret);
+    }
 
     return 0;
 }

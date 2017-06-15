@@ -25,7 +25,7 @@ int main(int argc,char **argv)
 	char str[] = "ABC def\a\b\t\v\f\r123456 !@#$%^&*";
 	int i = 0;
 
-	printf("STR:%s\nsizeof(str) = %d\n",str,sizeof(str));
+	printf("STR:%s\nsizeof(str) = %ld\n",str,sizeof(str));
 
 	/*-----------------------isalnum-------------------*/
 	for(i = 0; str[i] != 0; i++)

@@ -1,15 +1,27 @@
-#include <stdlib.h>
-#include <stdio.h>
-
+/*******************************************************************
+ *   > File Name: 02-atoi.c
+ *   > Author: fly
+ *   > Mail: XXXXXXXX@icode.com
+ *   > Create Time: Thu Jun  8 13:35:53 2017
+ ******************************************************************/
 #if (0)
-int atoi(const char *nptr);/*将字符串转换成整型数*/
+int atoi(const char *nptr);
+//convert a string to an integer
 #endif
 
-int main(void)
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char* argv[])
 {
-    char a[]="-100";
-    char b[]="456";
-    int c;
-    c = atoi(a)+atoi(b);
-    printf("c = %d\n",c);
+    char *a = "-100.23";
+    char *b = "200e-2";
+    float c;
+
+    printf("a = %s, b = %s\n", a,b);
+    printf("atof(a) = %f, atof(b) = %f\n", atof(a), atof(b));
+    c = atof(a) + atof(b);
+    printf("c = %.2f\n", c);
+
+    return 0;
 }

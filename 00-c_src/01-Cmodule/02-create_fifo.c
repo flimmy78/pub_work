@@ -14,7 +14,7 @@
 
 #define FIFO_MODE 0664
 
-    /* 获得一个管道文件描述符 */
+    /* 获得一个管道文件描述符:新建并打开文件 */
 int create_fifo(const char *filename){
     static int fd, retval;
 

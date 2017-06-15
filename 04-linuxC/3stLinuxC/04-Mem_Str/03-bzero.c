@@ -2,34 +2,31 @@
  *   > File Name: 03-bzero.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Tue 14 Feb 2017 02:19:59 PM CST
+ *   > Create Time: Fri Jun  9 11:28:46 2017
  ******************************************************************/
+#if (0)
+void bzero(void *s, int n);
+//@FUNC:将一段内存区域全部清为零；
+//相当于memset((void*)s, 0, size_t n);
+#endif
 
 #include <stdio.h>
 #include <string.h>
 
-#if (0)
-#include <strings.h>
-void bzero(void *s, size_t n);
-//@function:将s所指的内存区域的前n个字节置为0
-#endif
-
 int main(int argc, char* argv[])
 {
-    char ZERO = 0;
-    printf("\"Zero\":%d\n",ZERO);
-
-    char STR[10] = "ABCDEFGHIJ";
-    printf("%s\n",STR);
-    printf("sizeof STR %d\tsizeof STR[10] %d\n",sizeof(STR),sizeof STR[10]);
-    printf("strlen STR %d\tbyte\n",strlen(STR));
-    /*将字符串STR处sizeof STR个字节置0*/
-    bzero(STR,sizeof STR);
-    printf("Bzero :%s\n",STR);
-
+    char s[10] = "abcdef";
+    
+    printf("%s\n", s);
     int i;
-    for(i=0 ; i < 15; i++){
-        printf("%d--%d\n",i,STR[i]);
+
+    for(i = 0; s[i] != 0; i++){
+        printf("s[i] = %d\n", s[i]);
+    }
+    //bzero();
+    bzero((void*)s, 10);
+    for(i = 0; i< 10; i++){
+        printf("s[i] = %d\n", s[i]);
     }
 
     return 0;

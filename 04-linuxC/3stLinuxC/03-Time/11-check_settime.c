@@ -5,6 +5,8 @@
 
 #define DEBUG_TEST
 
+/*比较设定时间time_str与系统时间的绝对值，小于10s，返回1；大于10s，返回0；
+ * */
 int check_settime(char *time_str){
 	time_t set_sec,sys_sec;	/*定义系统和设定时间*/
 	char t_str[19];

@@ -2,50 +2,27 @@
  *   > File Name: 17-strcpy.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Wed 08 Mar 2017 10:03:14 AM CST
+ *   > Create Time: Fri Jun  9 14:58:40 2017
  ******************************************************************/
 #if (0)
 char *strcpy(char *dest, const char *src);
-//@FUNC:复制字符串src（包括'\0'）,如果dest指向的空间不够大
-//可能会溢出，建议使用strncpy（）；
-//@Return:返回指针dest
-
-char *strncpy(char *dest, const char *src, size_t n);
+//@FUNC:将参数src字符串拷贝至参数dest所指向的地址
+//@Return:返回参数dest的字符串起始地址；
+//如果参数 dest 所指的内存空间不够大，可能会造成缓冲溢出（buffer
+//Overflow）的错误情况，在编写程序时请特别留意，或者用 strncpy
+//（）来取代
 #endif
 
 #include <stdio.h>
-/*INC for strcpy*/
 #include <string.h>
-
-char *mystrncpy(char *dest, const char *src, size_t n){
-    size_t i;
-    
-    /*复制src的n个字节到dest，直到遇到结束符*/
-    for(i = 0; i < n && src[i] != '\0'; i++){
-        dest[i] = src[i];
-        printf("[%c]-%d  ",dest[i],dest[i]);
-    }
-    for(;i < n; i++){
-        dest[i] = '\0';
-        printf("[%c]-%d  ",dest[i],dest[i]);
-    }
-    puts("");
-    return dest;
-}
 
 int main(int argc, char* argv[])
 {
-    char S1[30] = "STRING[a]IHaveAGoodIdear";
-    char S2[] = "string[b]";
-    
-    printf("Before copy :%s\n",S1);
-#if (0)
-    printf("strcpy :%s\n",strcpy(S1, S2));
-#else
-    //printf("strncpy :%s\n",strncpy(S1, S2, 5));
-    //printf("strncpy :%s\n",strncpy(S2, S1, 30));
-    printf("mystrncpy :%s\n",mystrncpy(S2, S1, 30));
-#endif
+    char a[30] = "string(1)";
+    char b[] = "string(2)";
+
+    printf("Before strcpy() :%s\n", a);
+    printf("After strcpy(): %s\n", strcpy(a,b));
 
     return 0;
 }

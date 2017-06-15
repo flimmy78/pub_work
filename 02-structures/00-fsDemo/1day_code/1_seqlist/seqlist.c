@@ -42,7 +42,7 @@ bool insert_seqlist(seq_plist l,datatype data)
     //2.移动数据
     for(j = l->last; j >= i; j--)
         l->data[j+1] = l->data[j];
-    //3。插入
+    //3.插入
     l->data[i] = data;
     //4.last加1
     l->last++;
