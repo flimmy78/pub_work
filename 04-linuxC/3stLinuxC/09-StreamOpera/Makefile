@@ -1,6 +1,5 @@
 SRC=${wildcard *.c}
 BIN=${patsubst %.c, %, $(SRC)}
-
 CFLAGS= -g -Wall
 
 all:$(BIN)
@@ -11,4 +10,4 @@ $(BIN):%:%.c
 clean:
 	$(RM) a.out .*.*.sw? $(BIN) test.file
 
-.PHONY:all clean
+.PHONY: all clean
