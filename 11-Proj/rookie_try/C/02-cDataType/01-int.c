@@ -1,16 +1,16 @@
 /*******************************************************************
- *   > File Name: support.c
+ *   > File Name: 01-int.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon Jun 26 15:46:26 2017
+ *   > Create Time: 2017年07月04日 星期二 20时51分36秒
  ******************************************************************/
 
 #include <stdio.h>
+#include <limits.h>
 
-extern int count;
-
-void write_extern(void)
+int main(int argc, char* argv[])
 {
-    printf("count is %d\n", count);
-}
+    printf("int 存储大小: %lu\n", sizeof(int));
 
+    return 0;
+}

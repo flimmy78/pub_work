@@ -1,24 +1,24 @@
 /*******************************************************************
- *   > File Name: 06-define.c
+ *   > File Name: 01-const.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Mon Jun 26 15:21:44 2017
+ *   > Create Time: 2017年07月04日 星期二 21时23分26秒
  ******************************************************************/
 
 #include <stdio.h>
 
-#define LENGTH  10
-#define WIDTH   5
-#define NEWLINE '\n'
-
 int main(int argc, char* argv[])
 {
+    const int LENGTH = 10;
+    const int WIDTH = 5;
+    const char NEWLINE = '\n';
+
     int area;
 
-    area = LENGTH *WIDTH;
-
-    printf("Value of area : %d\n", area);
+    area = LENGTH * WIDTH;
+    printf("Value of area :%d", area);
     printf("%c", NEWLINE);
+    
 
     return 0;
 }
