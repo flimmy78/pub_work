@@ -1,22 +1,24 @@
 /*******************************************************************
- *   > File Name: 4_scanf.c
+ *   > File Name: 16-goto.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Thu Jun 15 13:20:20 2017
+ *   > Create Time: Mon 10 Jul 2017 11:17:24 PM CST
  ******************************************************************/
 
 #include <stdio.h>
 
 int main(int argc, char* argv[])
 {
-    int a,ret;
-    float b;
-    double c;
+    int i;
+    i = 1;
 
-    ret = scanf("%d%f%lf", &a,&b,&c);
-    printf("ret = %d\n", ret);
-    printf("a = %d,b = %d,c = %f\n", a,b,c);
-
+A:
+    if(i % 2 == 0)
+        goto B;
+    i++;
+    printf("i = %d\n", i);
+    goto A;
+B:
 
     return 0;
 }

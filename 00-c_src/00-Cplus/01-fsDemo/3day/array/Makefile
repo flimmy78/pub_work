@@ -10,4 +10,4 @@ $(BIN):%:%.c
 clean:
 	$(RM) a.out $(BIN)
 
-.PHONY:all clean
+.PHONY:clean all
