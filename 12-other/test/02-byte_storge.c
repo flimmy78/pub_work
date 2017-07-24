@@ -1,20 +1,27 @@
 /*******************************************************************
- *   > File Name: 01-arr_pointer.c
+ *   > File Name: 01-byte_storge.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Sat Jul 15 13:19:25 2017
+ *   > Create Time: Thu 20 Jul 2017 09:18:52 AM CST
  ******************************************************************/
 
 #include <stdio.h>
 
+struct A{
+    char a;
+    int b;
+    short c;
+}st1;
+
+struct B{
+    char a;
+    short c;
+    int b;
+}st2;
+
 int main(int argc, char* argv[])
 {
-    int a[5] = {1, 2, 3, 4, 5};
-
-    printf("&a[0] = %p\n", &a[0]);
-    printf("&a[0] +  1 = %p\n", &a[0] + 1);
-    printf("a = %p\n", a);
-    printf("a + 1 =%p\n", a + 1);
+    printf("%d\t%d\n", sizeof(st1), sizeof(st2));
 
     return 0;
 }
