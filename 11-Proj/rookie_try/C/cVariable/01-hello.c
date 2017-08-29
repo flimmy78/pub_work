@@ -2,15 +2,14 @@
  *   > File Name: 01-hello.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: 2017年07月04日 星期二 20时48分16秒
+ *   > Create Time: Wed Aug 23 10:22:53 2017
  ******************************************************************/
 
 #include <stdio.h>
 
 int main(int argc, char* argv[])
 {
-    /*这是一个c程序*/
-    printf("Hello, world !\n");
+    printf("Hello\tWorld!\n\n");
 
     return 0;
 }

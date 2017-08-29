@@ -2,7 +2,7 @@
  *   > File Name: 02-float.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: 2017年07月04日 星期二 20时53分34秒
+ *   > Create Time: Tue Aug 22 19:38:46 2017
  ******************************************************************/
 
 #include <stdio.h>
@@ -10,10 +10,10 @@
 
 int main(int argc, char* argv[])
 {
-    printf("float 存储最大字节数: %lu\n", sizeof(float));
-    printf("float 最小值：%E\n", FLT_MIN);
-    printf("float 最大值: %E\n", FLT_MAX);
-    printf("精度值: %d\n", FLT_DIG);
+    printf("sizeof(float) = %d\n", sizeof(float));
+    printf("the min value of float :%E\n", FLT_MIN);
+    printf("the max valeu of float :%E\n", FLT_MAX);
+    printf("the digit of float :%d\n", FLT_DIG);
 
     return 0;
 }
