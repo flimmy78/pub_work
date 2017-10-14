@@ -1,5 +1,13 @@
+SRC=${wildcard *.c}
+BIN=${patsubst %.c, %, $(SRC)}
+CFLAGS= -g -Wall
 
-all:
+all:$(BIN)
+
+$(BIN):%:%.c
+	$(CC) -o $@ $^ ${CFLAGS}
+
+hello:
 	@echo "预处理"
 	gcc -E Hello.c -o hello.i
 	@echo "编译"
@@ -10,6 +18,6 @@ all:
 	gcc hello.o -o hello
 
 clean:
-	$(RM) hello hello.*
+	$(RM) hello hello.* $(BIN)
 
-.PHONY:all clean
+.PhONY:all clean hello

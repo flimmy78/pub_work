@@ -1,20 +1,22 @@
 /*******************************************************************
- *   > File Name: Hello.c
+ *   > File Name: 01-recursionFunc.c
  *   > Author: fly
  *   > Mail: XXXXXXXX@icode.com
- *   > Create Time: Sun 17 Sep 2017 11:36:07 AM CST
+ *   > Create Time: Sat 16 Sep 2017 05:19:38 PM CST
  ******************************************************************/
 
-#include <stdio.h>
-#define PI  3.14
+#include <stdio.h> 
+
+void fun(int n){
+    printf("n = %d\n", n);
+    n --;
+    if(n > 0){
+        fun(n);
+    }
+}
 
 int main(int argc, char* argv[])
 {
-    //printf("Hello, world !\n");
-    int a = 5, b;
-
-    b = a*PI;
-    printf("b = %d\n", b);
-
+    fun(5);
     return 0;
 }
