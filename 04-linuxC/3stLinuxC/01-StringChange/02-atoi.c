@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     float c;
 
     printf("a = %s, b = %s\n", a,b);
-    printf("atof(a) = %f, atof(b) = %f\n", atof(a), atof(b));
+    printf("atoi(a) = %d, atoi(b) = %d\n", atoi(a), atoi(b));
     c = atof(a) + atof(b);
     printf("c = %.2f\n", c);
 
