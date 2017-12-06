@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <math.h>
 
-void Display_circle(unsigned int radius){
+#define GREEN   "\e[0;32;32m"
+#define NONE    "\e[m"
+
+void Display_circle(void){
     double y;
     int x, m;
 
@@ -19,15 +22,15 @@ void Display_circle(unsigned int radius){
         m = 2.5 * sqrt(100 - y * y);
         for(x = 1; x < 30 - m; x ++)
             printf(" ");    /*图形左侧空白控制*/
-        printf("*");        /*圆的左侧*/
+        printf(GREEN"*"NONE);        /*圆的左侧*/
         for(;x < 30 + m; x ++)  /*圆形的空心部分*/
             printf(" ");        /*圆的右侧*/
-        printf("*\n");
+        printf(GREEN"*\n"NONE);
     }
 }
 
 int main(int argc, char* argv[])
 {
-    Display_circle(0);
+    Display_circle();
     return 0;
 }

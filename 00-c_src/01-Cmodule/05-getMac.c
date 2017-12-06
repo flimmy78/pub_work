@@ -12,6 +12,7 @@
 #include <string.h>
 #include <net/if.h>
 #include <linux/sockios.h>
+#include <sys/ioctl.h>
 
 int getMac(const char *in_name, char *MAC, size_t MAC_LEN){
     struct ifreq ifreq;

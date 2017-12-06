@@ -3,7 +3,7 @@
 int main(void)
 {
 	int a = 5,b = 3;
-
+    
 #if 0
 	if(a < b &&(a = 100))
 		printf("断路运算测试！\n");

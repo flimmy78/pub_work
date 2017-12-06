@@ -14,11 +14,13 @@ unsigned int fline(const char *filepathname){
     static unsigned int line = 0;
     static char buf[128];
     static FILE* fp;
-
+    
+    /*传入的文件路径不能为空*/
     if(filepathname == NULL){
         fprintf(stderr, "No such file\n");return (-1);
     }
 
+    /*以可读方式打开文件*/
     if((fp = fopen(filepathname, "r")) == NULL){
         fprintf(stderr, "Fopen file err\n");return (-2);
     }

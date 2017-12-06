@@ -1,0 +1,3 @@
+/home/fly/pub_work/12-other/CMake/HelloWorld/CMakeFiles/rebuild_cache.dir
+/home/fly/pub_work/12-other/CMake/HelloWorld/CMakeFiles/edit_cache.dir
+/home/fly/pub_work/12-other/CMake/HelloWorld/CMakeFiles/hello.dir

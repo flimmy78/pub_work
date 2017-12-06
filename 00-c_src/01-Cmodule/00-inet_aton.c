@@ -21,7 +21,7 @@ main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    if (ret = inet_aton(argv[1], &addr) == 0) {
+    if ((ret = inet_aton(argv[1], &addr)) == 0) {
         fprintf(stderr, "Invalid address\n");
         exit(EXIT_FAILURE);
     }

@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <linux/in.h>
 
-
-
 int main(int argc, char *argv[])
 {
     int fd1;
@@ -35,7 +33,7 @@ int main(int argc, char *argv[])
     struct sockaddr_in  self_addr;
     self_addr.sin_family = AF_INET;
     self_addr.sin_port = htons(9999);
-    self_addr.sin_addr.s_addr = inet_addr("192.168.7.5");
+    self_addr.sin_addr.s_addr = inet_addr("0.0.0.0");//inet_addr("192.168.7.5");
 
     ret = bind(fd1, (const struct sockaddr * )&self_addr,   sizeof(self_addr));
     if(ret < 0)

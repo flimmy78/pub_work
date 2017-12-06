@@ -1,0 +1,6 @@
+#http://www.cppblog.com/Roger/archive/2011/11/17/160368.html
+PROJECT(HELLO)
+SET(SRC_LIST main.c)
+MESSAGE(STATUS "This is BINARY dir" ${HELLO_BINARY_DIR})
+MESSAGE(STATUS "This is SOURCE dir" ${HELLO_SOURCE_DIR})
+ADD_EXECUTABLE(hello ${SRC_LIST})
