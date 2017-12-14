@@ -1,0 +1,23 @@
+/*只读段：代码段、只读数据段*/
+00400000-00401000 r-xp 00000000 08:01 3017668                            /home/fly/WorkSpace/Emb-2017/embeddedApplicationDesign/03-MultiTask/test
+00600000-00601000 r--p 00000000 08:01 3017668                            /home/fly/WorkSpace/Emb-2017/embeddedApplicationDesign/03-MultiTask/test
+/*可读写数据段*/
+00601000-00602000 rw-p 00001000 08:01 3017668                            /home/fly/WorkSpace/Emb-2017/embeddedApplicationDesign/03-MultiTask/test
+/*动态共享库*/
+7fa7426d9000-7fa742897000 r-xp 00000000 08:01 4077797                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fa742897000-7fa742a97000 ---p 001be000 08:01 4077797                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fa742a97000-7fa742a9b000 r--p 001be000 08:01 4077797                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fa742a9b000-7fa742a9d000 rw-p 001c2000 08:01 4077797                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fa742a9d000-7fa742aa2000 rw-p 00000000 00:00 0 
+/*动态链接器*/
+7fa742aa2000-7fa742ac5000 r-xp 00000000 08:01 4077805                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fa742ca6000-7fa742ca9000 rw-p 00000000 00:00 0 
+7fa742cc1000-7fa742cc4000 rw-p 00000000 00:00 0 
+7fa742cc4000-7fa742cc5000 r--p 00022000 08:01 4077805                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fa742cc5000-7fa742cc6000 rw-p 00023000 08:01 4077805                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fa742cc6000-7fa742cc7000 rw-p 00000000 00:00 0 
+7fffc8d55000-7fffc8d76000 rw-p 00000000 00:00 0                          [stack]/*堆栈*/
+7fffc8dcb000-7fffc8dcd000 r--p 00000000 00:00 0                          [vvar]
+7fffc8dcd000-7fffc8dcf000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
