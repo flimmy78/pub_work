@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     for(j = 999; j >= 100; j --){
         if(i % j == 0){ /*所求的约数的可能取值是从999到100，j从大到小*/
             printf("The max factor with 3 digits is %ld is :%d .\n", i, j);
-            break;
+            break;/*跳出for循环*/
         }
     }
 
