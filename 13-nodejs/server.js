@@ -7,7 +7,7 @@ http.createServer(function (request, response){
 	response.writeHead(200, {'Content-Type': 'text/plain'});
 	
 	//发送响应数据"Hello"
-	response.end('Hello YueXia! ^o^---fly@叶岚飞\n');
+	response.end('^o^---fly@叶岚飞\n');
 	
 }).listen(8888);
 

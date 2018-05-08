@@ -91,6 +91,9 @@ char *debug_color_str[COLOR_MAX]={
     "\e[1;37m",
 };
 
+#define     DISABLE  0
+#define     ENABLE   1
+
 int main(int argc, char* argv[])
 {
     puts(RED"RED"NONE);
@@ -115,11 +118,13 @@ int main(int argc, char* argv[])
     puts(LIGHT_GRAY"LIGHT_GRAY"NONE);
     puts(WHITE"WHITE"NONE);
 
+#if (DISABLE)
     puts("Output color_debug:");
     int i;
     for(i = 0; i< COLOR_MAX; i++){
         printf("%s\n", debug_color_str[i]);
     }
+#endif
 
     puts(LIGHT_RED4"This is a test !"NONE);
     
